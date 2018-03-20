@@ -40,6 +40,7 @@ import vos.Bebedor;
 @Path("bebedores")
 public class BebedoresService {
 
+	
 	//----------------------------------------------------------------------------------------------------------------------------------
 	// ATRIBUTOS
 	//----------------------------------------------------------------------------------------------------------------------------------
@@ -119,7 +120,7 @@ public class BebedoresService {
 	}
 	
 	/**
-	 * Metodo que trae a los bebedores de la Base de Datos que viven en la ciudad y tienen el presupuesto dados por parámetro <br/>
+	 * Metodo que trae a los bebedores de la Base de Datos que viven en la ciudad y tienen el presupuesto dados por parï¿½metro <br/>
 	 * <b>Precondicion: </b> el archivo <em>'conectionData'</em> ha sido inicializado con las credenciales del usuario <br/>
 	 * <b>URL: </b> http://localhost:8080/TutorialParranderos/rest/bebedores/filterBy?nombre=---&apellido=--- <br/>
 	 * @param ciudad - <em>[QueryParam]</em> parametro que indica la ciudad de los bebedores
@@ -127,21 +128,17 @@ public class BebedoresService {
 	 * @return	<b>Response Status 200</b> - JSONs que contienen a los bebedores que tengan el nombre o el apellido correspondiente<br/>
 	 * 			<b>Response Status 500</b> - Excepcion durante el transcurso de la transaccion
 	 */
-	//TODO Requerimiento 2A: Identifique e implemente la anotacion correcta para la realizacion del metodo
 
+	@GET
 	@Path( "/filterBy" )
-	//TODO Requerimiento 2B: Identifique e implemente las anotaciones que indican el tipo de contenido que produce y/o consume el metodo 
-
-	//TODO Requerimiento 2C: Complete la signatura del metodo (parametros) a partir de la documentacion dada.
-	public Response getBebedoresByCiudadAndPresupuesto(@QueryParam("ciudad")String ciudad){
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response getBebedoresByCiudadAndPresupuesto(@QueryParam("ciudad")String ciudad,@QueryParam("presupuesto")String presupuesto){
 		
 		try{
 			ParranderosTransactionManager tm = new ParranderosTransactionManager( getPath( ) );
 			List<Bebedor>bebedores;
 			
-			//TODO Requerimiento 2D: Llame al metodo del ParranderosTransactionManager que retorne el resultado esperado a partir de los criterios establecidos
-
-			bebedores = null;
+			bebedores = tm.getBebedoresByCiudadAndPresupuesto(ciudad, presupuesto);
 			return Response.status( 200 ).entity( bebedores ).build( );			
 		}
 		catch( Exception e )
@@ -159,20 +156,23 @@ public class BebedoresService {
 	 * @return	<b>Response Status 200</b> - JSON que contiene al bebedor que ha sido agregado <br/>
 	 * 			<b>Response Status 500</b> - Excepcion durante el transcurso de la transaccion
 	 */
-	//TODO Requerimiento 3A: Identifique e implemente la anotacion correcta para la realizacion del metodo
 
-	//TODO Requerimiento 3B: Identifique e implemente las anotaciones que indican el tipo de contenido que produce Y consume el metodo 
-
-	
+	@POST
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({MediaType.APPLICATION_JSON})
 	public Response addBebedor(Bebedor bebedor) {
-		
-		//TODO Requerimiento 3C: Implemente el metodo a partir de los ejemplos anteriores y utilizando el Transaction Manager de Parranderos 
-		return null;
+		try {
+			ParranderosTransactionManager tm = new ParranderosTransactionManager(getPath());
+			tm.addBebedor(bebedor);
+			return Response.status( 200 ).entity( bebedor ).build( );			
+		} catch (Exception e) {
+			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
+		}
 	}
 	
 	/**
 	 * Metodo POST que recibe un bebedor en formato JSON y lo agrega a la Base de Datos unicamente 
-	 * si el número de bebedores que existen en su ciudad es menor la constante CANTIDAD_MAXIMA <br/>
+	 * si el nï¿½mero de bebedores que existen en su ciudad es menor la constante CANTIDAD_MAXIMA <br/>
 	 * <b>Precondicion: </b> El archivo <em>'conectionData'</em> ha sido inicializado con las credenciales del usuario <br/>
 	 * <b>Postcondicion: </b> Se agrega a la Base de datos la informacion correspondiente al bebedor. <br/>
 	 * <b>URL: </b> http://localhost:8080/TutorialParranderos/rest/bebedores <br/>
@@ -185,9 +185,13 @@ public class BebedoresService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response addBebedorWithLimitations(Bebedor bebedor) {
-		
-		//TODO Requerimiento 4A: Implemente el metodo a partir de los ejemplos anteriores y utilizando el Transaction Manager de Parranderos 
-		return null;
+		try {
+			ParranderosTransactionManager tm = new ParranderosTransactionManager(getPath());
+			tm.addBebedorWithLimitations(bebedor);
+			return Response.status( 200 ).entity( bebedor ).build( );			
+		} catch (Exception e) {
+			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
+		}
 	}
 	
 	
@@ -200,14 +204,19 @@ public class BebedoresService {
 	 * @return	<b>Response Status 200</b> - JSON que contiene al bebedor que se desea modificar <br/>
 	 * 			<b>Response Status 500</b> - Excepcion durante el transcurso de la transaccion
 	 */
-	//TODO Requerimiento 5A: Identifique e implemente la anotacion correcta para la realizacion del metodo
 
-	//TODO Requerimiento 5B: Identifique e implemente las anotaciones que indican el tipo de contenido que produce Y consume el metodo 
 
-	
+	@PUT
+	@Consumes({ MediaType.APPLICATION_JSON })
+	@Produces({MediaType.APPLICATION_JSON})
 	public Response updateBebedor(Bebedor bebedor) {
-		//TODO Requerimiento 5B: Implemente el metodo a partir de los ejemplos anteriores y utilizando el Transaction Manager de Parranderos 
-		return null;
+		try {
+			ParranderosTransactionManager tm = new ParranderosTransactionManager(getPath());
+			tm.updateBebedor(bebedor);
+			return Response.status( 200 ).entity( bebedor ).build( );
+		} catch (Exception e) {
+			return Response.status( 500 ).entity( doErrorMessage( e ) ).build( );
+		}
 	}
 
 	/**

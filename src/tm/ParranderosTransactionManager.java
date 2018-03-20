@@ -290,12 +290,9 @@ public class ParranderosTransactionManager {
 		DAOBebedor daoBebedor = new DAOBebedor( );
 		try
 		{
-			//TODO Requerimiento 3D: Obtenga la conexion a la Base de Datos (revise los metodos de la clase)
-
-			//TODO Requerimiento 3E: Establezca la conexion en el objeto DAOBebedor (revise los metodos de la clase DAOBebedor)
-
+			this.conn = darConexion();
+			daoBebedor.setConn(conn);
 			daoBebedor.addBebedor(bebedor);
-
 		}
 		catch (SQLException sqlException) {
 			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
@@ -324,7 +321,7 @@ public class ParranderosTransactionManager {
 	
 	/**
 	 * Metodo que modela la transaccion que agrega un bebedor a la base de datos  <br/>
-	 * unicamente si el número de bebedores que existen en su ciudad es menor la constante CANTIDAD_MAXIMA <br/>
+	 * unicamente si el nï¿½mero de bebedores que existen en su ciudad es menor la constante CANTIDAD_MAXIMA <br/>
 	 * <b> post: </b> Si se cumple la condicion, se ha agregado el bebedor que entra como parametro  <br/>
 	 * @param bebedor - el bebedor a agregar. bebedor != null
 	 * @param cantidadMaxima -representa la cantidad maxima de bebedores que pueden haber en la misma ciudad
@@ -335,14 +332,11 @@ public class ParranderosTransactionManager {
 		DAOBebedor daoBebedor = new DAOBebedor( );
 		try
 		{
-			//TODO Requerimiento 4B: Obtenga la conexion a la Base de Datos (revise los metodos de la clase)
-
-			//TODO Requerimiento 4C: Establezca la conexion del DaoBebedor a la Base de datos (revise los metodos de DAOBebedor)
-		
-			
-			//TODO Requerimiento 4C: Verifique la regla de negocio descrita en la documentacion. En caso que no se cumpla, lance una excepcion explicando lo sucedido
-			//						 (Solo se agrega el bebedor si la cantidad de bebedores, en la Base de Datos, de su misma ciudad es inferior al valor de la constante CANTIDAD_MAXIMA.
-			
+			this.conn = darConexion();
+			daoBebedor.setConn(conn);
+			if(daoBebedor.getCountBebedoresByCiudad(bebedor.getCiudad()) < CANTIDAD_MAXIMA){
+				daoBebedor.addBebedor(bebedor);
+			}			
 			
 		}
 		catch (SQLException sqlException) {
@@ -385,12 +379,13 @@ public class ParranderosTransactionManager {
 		try
 		{
 			this.conn = darConexion();
-			daoBebedor.setConn( conn );
-			//TODO Requerimiento 5C: Utilizando los Metodos de DaoBebedor, verifique que exista el bebedor con el ID dado en el parametro. 
-			//						 Si no existe un bebedor con el ID ingresado, lance una excepcion en donde se explique lo sucedido
-			//						 De lo contrario, se actualiza la informacion del bebedor de la Base de Datos
-
-
+			daoBebedor.setConn(conn);
+			bebedor = daoBebedor.findBebedorById(bebedor.getId());
+			if(bebedor == null)
+			{
+				throw new Exception("El bebedor con el id seleccionado no se encuentra persistido en la base de datos.");				
+			}
+			else daoBebedor.updateBebedor(bebedor);
 		}
 		catch (SQLException sqlException) {
 			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
@@ -430,6 +425,12 @@ public class ParranderosTransactionManager {
 		{
 			this.conn = darConexion();
 			daoBebedor.setConn( conn );
+			bebedor = daoBebedor.findBebedorById(bebedor.getId());
+			if(bebedor == null)
+			{
+				throw new Exception("El bebedor con el id seleccionado no se encuentra persistido en la base de datos.");				
+			}
+			else daoBebedor.deleteBebedor(bebedor);
 			//TODO Requerimiento 6D: Utilizando los Metodos de DaoBebedor, verifique que exista el bebedor con el ID dado en el parametro. 
 			//						 Si no existe un bebedor con el ID ingresado, lance una excepcion en donde se explique lo sucedido
 			//						 De lo contrario, se elimina la informacion del bebedor de la Base de Datos

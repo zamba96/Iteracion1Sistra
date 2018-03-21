@@ -62,11 +62,10 @@ CREATE TABLE ViviendaURoom (
 	
 --Inmueble
 CREATE TABLE Inmueble (
-	Id number,
 	Amoblado number,
 	Servicios number,
 	Cable number,
-	Administracion number,
+	Administracion number,  
 	Precio float,
 	Direccion varchar(50),
 	Dueno VARCHAR(30) --FK USUARIO.CEDULA

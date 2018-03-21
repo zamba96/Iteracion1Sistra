@@ -3,7 +3,8 @@ CREATE TABLE Hostal (
 	Apertura number, 
 	Cierre number, 
 	Direccion varchar(50), 
-	Nombre varchar(30)
+	Nombre varchar(30),
+    Desayuno number
 	);
 
 /*Hotel*/
@@ -13,7 +14,8 @@ CREATE TABLE Hotel (
 	Restaurante number,
 	Piscina number,
 	parqueadero number,
-	horario number
+	horario number,
+    nombre varchar(30)
 	);
 
 /*ViviendaU*/
@@ -24,7 +26,7 @@ CREATE TABLE ViviendaU (
 
 --HostalRoom
 CREATE TABLE HostalRoom (
-	Id number,
+	Cuarto number,
 	Capacidad number,
 	Precio float,
 	Direccion varchar(50),
@@ -33,6 +35,7 @@ CREATE TABLE HostalRoom (
 	
 --HotelRoom
 CREATE TABLE HotelRoom (
+    Tipo varchar(10),
 	Cuarto number,
 	Banera number,
 	Jacuzzi number,
@@ -54,8 +57,7 @@ CREATE TABLE ViviendaURoom (
 	SalaEsparcimiento float,
 	Gym float,
 	Precio float,
-	Direccion varchar(50), --FK
-	NombreVivienta varchar(30) --FK
+	NombreVivienda varchar(30) --FK
 	);
 	
 --Inmueble
@@ -67,7 +69,7 @@ CREATE TABLE Inmueble (
 	Administracion number,
 	Precio float,
 	Direccion varchar(50),
-	Dueno number --FK Usuario.ID
+	Dueno VARCHAR(30) --FK USUARIO.CEDULA
 	);
 	
 --VecinoRoom
@@ -75,46 +77,49 @@ CREATE TABLE VecinoRoom (
 	Habitaciones number,
 	Banos number,
 	Direccion varchar(50),
-	Menaje varchar(30),
+	Menaje varchar(140),
 	Precio float,
-	Dueno number --FK Vecino.ID
+	Dueno VARCHAR(30) --FK Vecino.ID
 	);
 	
 --ReservaHostal
 CREATE TABLE ReservaHostal (
 	FechaInicio varchar(30),
 	FechaFin varchar(30),
-	Usuario number,
-	Cuarto float --FK HostalRoom.Id
+	Usuario VARCHAR(30), --USUARIO.CEDULA
+	Cuarto float, --FK HostalRoom.Id
+    Nombre varchar(30)
 	);
 	
 --ReservaHotel
 CREATE TABLE ReservaHotel (
 	FechaInicio varchar(30),
 	FechaFin varchar(30),
-	Usuario number,
-	Cuarto number --FK HotelRoom.Id
+	Usuario VARCHAR(30),
+	Cuarto number, --FK HotelRoom.Id
+    Nombre varchar(30)
 	);
 	
 --ContratoResidencia
 CREATE TABLE ContratoResidencia (
 	FechaInicio varchar(30),
 	FechaFin varchar(30),
-	Usuario number,
-	Cuarto number --FK Residencia.Id
+	Usuario VARCHAR(30),
+	Cuarto number, --FK Residencia.Id
+    Nombre VARCHAR(30)
 	);
 	
 --ContratoInmueble
 CREATE TABLE ContratoInmueble (
 	FechaInicio varchar(30),
 	FechaFin varchar(30),
-	Usuario number,
-	Cuarto number --FK Inmueble.Id
+	Usuario VARCHAR(30),
+	Dueno varchar(30),
+    Direccion varchar(30)
 	);
 	
 --Usuario
 CREATE TABLE Usuario (
-	Id number,
 	Cedula varchar(30),
 	Nombre varchar(30),
 	FechaNacimiento varchar(30)
@@ -122,41 +127,54 @@ CREATE TABLE Usuario (
 	
 --Relacionado
 CREATE TABLE Relacionado (
-	Id number --FK Usuario.Id
+	CEDULA VARCHAR(30) --FK USUARIO.CEDULA
 	);
 	
 --Estudiante
 CREATE TABLE Estudiante (
-	Id number, --FK Relacionado.Id
+	CEDULA VARCHAR(30), --FK Relacionado.CEDULA
 	Carnet varchar(30) --CK Carnet
 	);
 
 --Profesor
 CREATE TABLE Profesor (
-	Id number --FK Relacionado.Id
+	CEDULA VARCHAR(30) --FK Relacionado.CEDULA
 	);
 	
 --Empleado
 CREATE TABLE Empleado (
-	Id number --Relacionado.Id
+	CEDULA VARCHAR(30) --Relacionado.CEDULA
 	);
 
 --Padre
 CREATE TABLE Padre (
-	Id number, --FK Usuario.id
-	Hijo number --FK Estudiante.id
+	CEDULA VARCHAR(30) --FK USUARIO.CEDULA
 	);
 
 --Egresado
 CREATE TABLE Egresado (
-	Id number --FK Usuario.Id
+	CEDULA VARCHAR(30) --FK USUARIO.CEDULA
 	);
 	
 --Vecino
 CREATE TABLE Vecino (
-	Id number,
 	Cedula varchar(30),
 	Nombre varchar(30),
 	FechaNacimiento varchar(30)
 	);
+    
+--PARESEHIJOS
+CREATE TABLE PADRESEHIJOS (
+    CEDULA_PADRE VARCHAR(30), --FK PADRE.CEDULA
+    CEDULA_HIJO VARCHAR(30) --FK ESTUDIANTE.CEDULA
+    );
+    
+--CONTRATOVECINO
+CREATE TABLE CONTRATOVECINO (
+    FechaInicio varchar(30),
+	FechaFin varchar(30),
+	Usuario VARCHAR(30),
+	Dueno varchar(30),
+    Direccion varchar(30)
+    );
 	

@@ -112,7 +112,7 @@ public class DAOReservaHostal {
 		 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 		 * @throws Exception Si se genera un error dentro del metodo.
 		 */
-		public void addBebedor(ReservaHostalVO reserva) throws SQLException, Exception {
+		public void addReservaHostal(ReservaHostalVO reserva) throws SQLException, Exception {
 
 			String sql = String.format("INSERT INTO %1$s.RESERVASHOSTALES (FECHAI, FECHAF, CUARTO, USUARIO) VALUES (%2$s, '%3$s', '%4$s', '%5$s')", 
 										USUARIO, 

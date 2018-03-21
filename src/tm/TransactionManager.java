@@ -227,7 +227,7 @@ public class TransactionManager {
 		 * @param reservaHostal - el reservaHostal a agregar. reservaHostal != null
 		 * @throws Exception - Cualquier error que se genere agregando el reservaHostal
 		 */
-		public void addBebedor(ReservaHostalVO reserva) throws Exception 
+		public void addReservaHostal(ReservaHostalVO reserva) throws Exception 
 		{
 			
 			DAOReservaHostal daoReservaHostal = new DAOReservaHostal( );
@@ -270,7 +270,7 @@ public class TransactionManager {
 		 * @param reservaHostal - ReservaHostalVO a actualizar. reservaHostal != null
 		 * @throws Exception - Cualquier error que se genere actualizando al reservaHostal.
 		 */
-		public void updateBebedor(ReservaHostalVO reservaHostal) throws Exception 
+		public void updateReservaHostal(ReservaHostalVO reservaHostal) throws Exception 
 		{
 			DAOReservaHostal daoReservaHostal = new DAOReservaHostal( );
 			try
@@ -315,7 +315,7 @@ public class TransactionManager {
 		 * @param ReservaHostalVO - reservaHostal a eliminar. reservaHostal != null
 		 * @throws Exception - Cualquier error que se genere eliminando al reservaHostal.
 		 */
-		public void deleteBebedor(ReservaHostalVO reservaHostal) throws Exception 
+		public void deleteReservaHostal(ReservaHostalVO reservaHostal) throws Exception 
 		{
 			DAOReservaHostal daoReservaHostal = new DAOReservaHostal( );
 			try

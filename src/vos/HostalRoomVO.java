@@ -41,6 +41,18 @@ public class HostalRoomVO {
 		this.precio = precio;
 		this.reservas = reservas;
 	}
+	
+	public HostalRoomVO(@JsonProperty(value="cuarto")Integer cuarto,
+			@JsonProperty(value="capacidad")Integer capacidad,
+			@JsonProperty(value="precio")Double precio,
+			@JsonProperty(value="hostal")HostalVO hostal,
+			@JsonProperty(value="nombre")String nombre){
+
+		this.cuarto = cuarto;
+		this.capacidad = capacidad;
+		this.hostal = hostal;
+		this.precio = precio;
+	}
 
 	/**
 	 * @return the cuarto

@@ -18,21 +18,20 @@ public class ContratoViviendaVO {
 	@JsonProperty(value="cuarto")
 	private ViviendaRoomVO cuarto;
 	
-	/*
-	 * @JsonProperty(value="usuario")
-	private UsuarioVO usuario;
-	 */
+	@JsonProperty(value="relacionado")
+	private RelacionadoVO relacionado;
+	
 	
 	public ContratoViviendaVO(@JsonProperty(value="fechaI")String fechaI,
 			@JsonProperty(value="fechaF")String fechaF,
-			@JsonProperty(value="cuarto")ViviendaRoomVO cuarto
-			//,@JsonProperty(value="usuario")Usuario usuario
+			@JsonProperty(value="cuarto")ViviendaRoomVO cuarto,
+			@JsonProperty(value="usuario")RelacionadoVO relacionado
 			) {
 
 		this.fechaI = fechaI;
 		this.fechaF = fechaF;
 		this.cuarto = cuarto;
-		//this.usuario = usuario;
+		this.relacionado = relacionado;
 	}
 
 	/**
@@ -75,6 +74,20 @@ public class ContratoViviendaVO {
 	 */
 	public void setCuarto(ViviendaRoomVO cuarto) {
 		this.cuarto = cuarto;
+	}
+
+	/**
+	 * @return the usuario
+	 */
+	public UsuarioVO getUsuario() {
+		return relacionado;
+	}
+
+	/**
+	 * @param usuario the usuario to set
+	 */
+	public void setUsuario(RelacionadoVO relacionado) {
+		this.relacionado = relacionado;
 	}
 	
 	

@@ -20,21 +20,29 @@ public class ReservaHostalVO {
 	@JsonProperty(value="cuarto")
 	private HostalRoomVO cuarto;
 	
-	/*
-	 * @JsonProperty(value="usuario")
+	@JsonProperty(value="usuario")
 	private UsuarioVO usuario;
-	 */
+	 
 	
 	public ReservaHostalVO(@JsonProperty(value="fechaI")String fechaI,
 			@JsonProperty(value="fechaF")String fechaF,
-			@JsonProperty(value="cuarto")HostalRoomVO cuarto
-			//,@JsonProperty(value="usuario")Usuario usuario
+			@JsonProperty(value="cuarto")HostalRoomVO cuarto,
+			@JsonProperty(value="usuario")UsuarioVO usuario
 			) {
 
 		this.fechaI = fechaI;
 		this.fechaF = fechaF;
 		this.cuarto = cuarto;
-		//this.usuario = usuario;
+		this.usuario = usuario;
+	}
+
+	public ReservaHostalVO(@JsonProperty(value="fechaI")String fechaI,
+			@JsonProperty(value="fechaF")String fechaF,
+			@JsonProperty(value="cuarto")HostalRoomVO cuarto) {
+		
+		this.fechaI = fechaI;
+		this.fechaF = fechaF;
+		this.cuarto = cuarto;
 	}
 
 	/**
@@ -77,6 +85,20 @@ public class ReservaHostalVO {
 	 */
 	public void setCuarto(HostalRoomVO cuarto) {
 		this.cuarto = cuarto;
+	}
+
+	/**
+	 * @return the usuario
+	 */
+	public UsuarioVO getUsuario() {
+		return usuario;
+	}
+
+	/**
+	 * @param usuario the usuario to set
+	 */
+	public void setUsuario(UsuarioVO usuario) {
+		this.usuario = usuario;
 	}
 
 	

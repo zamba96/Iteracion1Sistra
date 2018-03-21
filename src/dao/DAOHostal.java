@@ -91,7 +91,7 @@ public class DAOHostal {
 		 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 		 * @throws Exception Si se genera un error dentro del metodo.
 		 */
-		public HostalVO findbyNombre(String nombre) throws SQLException, Exception 
+		public HostalVO getHostal(String nombre) throws SQLException, Exception 
 		{
 			HostalVO hostal = null;
 
@@ -117,7 +117,7 @@ public class DAOHostal {
 		 */
 		public void addHostal(HostalVO hostal) throws SQLException, Exception {
 
-			String sql = String.format("INSERT INTO %1$s.HOSTALES (APERTURA, CIERRE, DESAYUNO, DIRECCION,NOMBRE,CUARTOS) VALUES (%2$s, '%3$s', '%4$s', '%5$s')", 
+			String sql = String.format("INSERT INTO %1$s.HOSTALES (APERTURA, CIERRE, DESAYUNO, DIRECCION,NOMBRE,CUARTOS) VALUES (%2$s, '%3$s', '%4$s', '%5$s','%6$s','%7$s')", 
 										USUARIO, 
 										hostal.getApertura(), 
 										hostal.getNombre(),
@@ -165,7 +165,7 @@ public class DAOHostal {
 		 */
 		public void deleteHostal(HostalVO hostal) throws SQLException, Exception {
 
-			String sql = String.format("DELETE FROM %1$s.HOSTALES WHERE ID = %2$d", USUARIO, hostal.getNombre());
+			String sql = String.format("DELETE FROM %1$s.HOSTALES WHERE NOMBRE = %2$d", USUARIO, hostal.getNombre());
 
 			System.out.println(sql);
 			
@@ -212,7 +212,6 @@ public class DAOHostal {
 		 */
 		public HostalVO convertResultSetToHostal(ResultSet resultSet) throws SQLException {
 		
-			
 			Integer apertura = resultSet.getInt("APERTURA");
 			Integer cierre = resultSet.getInt("CIERRE");
 			Integer desayunoI = resultSet.getInt("DESAYUNO");

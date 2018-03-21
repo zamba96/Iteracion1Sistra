@@ -9,17 +9,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
 import vos.HostalRoomVO;
-import vos.ReservaHostalVO;
+import vos.HostalVO;
 
 
 /**
  * @author camilo
  *
  */
-public class DAOReservaHostal {
-
+public class DAOHostalRoom {
 	//----------------------------------------------------------------------------------------------------------------------------------
 		// CONSTANTES
 		//----------------------------------------------------------------------------------------------------------------------------------
@@ -51,11 +49,14 @@ public class DAOReservaHostal {
 		/**
 		 * Metodo constructor de la clase DAOBebedor <br/>
 		*/
-		public DAOReservaHostal() {
+		public DAOHostalRoom() {
 			recursos = new ArrayList<Object>();
 		}
 		
-		
+		//----------------------------------------------------------------------------------------------------------------------------------
+		// METODOS DE COMUNICACION CON LA BASE DE DATOS
+		//----------------------------------------------------------------------------------------------------------------------------------
+
 		/**
 		 * Metodo que obtiene la informacion de todos los bebedores en la Base de Datos <br/>
 		 * <b>Precondicion: </b> la conexion a sido inicializadoa <br/>
@@ -63,63 +64,91 @@ public class DAOReservaHostal {
 		 * @throws SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 		 * @throws Exception Si se genera un error dentro del metodo.
 		 */
-		public ArrayList<ReservaHostalVO> getReservasHostales() throws SQLException, Exception {
-			ArrayList<ReservaHostalVO> reservas = new ArrayList<ReservaHostalVO>();
+		public ArrayList<HostalRoomVO> getHostalRooms() throws SQLException, Exception {
+			ArrayList<HostalRoomVO> cuartos = new ArrayList<HostalRoomVO>();
 
 			//Aclaracion: Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
-			String sql = String.format("SELECT * FROM %1$s.RESERVASHOSTALES WHERE ROWNUM <= 50", USUARIO);
+			String sql = String.format("SELECT * FROM %1$s.HOSTALROOMS WHERE ROWNUM <= 50", USUARIO);
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
 			ResultSet rs = prepStmt.executeQuery();
 
 			while (rs.next()) {
-				reservas.add(convertResultSetToReservaHostal(rs));
+				cuartos.add(convertResultSetToHostalRoom(rs));
 			}
-			return reservas;
+			return cuartos;
 		}
 		
+		
 		/**
-		 * Metodo que obtiene la informacion del reserva en la Base de Datos que tiene el identificador dado por parametro<br/>
+		 * Metodo que obtiene la informacion del hostalroom en la Base de Datos que tiene el identificador dado por parametro<br/>
 		 * <b>Precondicion: </b> la conexion a sido inicializadoa <br/> 
-		 * @param id el identificador del reserva
-		 * @return la informacion del reserva que cumple con los criterios de la sentecia SQL
-		 * 			Null si no existe el reserva conlos criterios establecidos
+		 * @param id el identificador del hostalroom
+		 * @return la informacion del hostalroom que cumple con los criterios de la sentecia SQL
+		 * 			Null si no existe el hostalroom conlos criterios establecidos
 		 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 		 * @throws Exception Si se genera un error dentro del metodo.
 		 */
-		public ReservaHostalVO getReservaHostal(String fechaI,String fechaF, String usuario) throws SQLException, Exception 
+		public HostalRoomVO findRoomByHotel(String hotel) throws SQLException, Exception 
 		{
-			ReservaHostalVO reserva = null;
+			HostalRoomVO hostalroom = null;
 
-			String sql = String.format("SELECT * FROM %1$s.RESERVASHOSTALES WHERE FECHAI = '%1$s' AND FECHAF = '%2$s' AND USUARIO = '%3$s'", USUARIO ); 
+			String sql = String.format("SELECT * FROM %1$s.HOSTALROOMS WHERE HOTEL = %2$d", USUARIO, hotel); 
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
 			ResultSet rs = prepStmt.executeQuery();
 
 			if(rs.next()) {
-				reserva = convertResultSetToReservaHostal(rs);
+				hostalroom = convertResultSetToHostalRoom(rs);
 			}
 
-			return reserva;
+			return hostalroom;
 		}
 		
 		/**
-		 * Metodo que agregar la informacion de un nuevo reserva en la Base de Datos a partir del parametro ingresado<br/>
-		 * <b>Precondicion: </b> la conexion a sido inicializadoa <br/>  
-		 * @param reserva ReservaHostalVO que desea agregar a la Base de Datos
+		 * Metodo que obtiene la informacion del hostalroom en la Base de Datos que tiene el identificador dado por parametro<br/>
+		 * <b>Precondicion: </b> la conexion a sido inicializadoa <br/> 
+		 * @param id el identificador del hostalroom
+		 * @return la informacion del hostalroom que cumple con los criterios de la sentecia SQL
+		 * 			Null si no existe el hostalroom conlos criterios establecidos
 		 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 		 * @throws Exception Si se genera un error dentro del metodo.
 		 */
-		public void addBebedor(ReservaHostalVO reserva) throws SQLException, Exception {
+		public HostalRoomVO getHotelRoom(String hotel,Integer cuarto) throws SQLException, Exception 
+		{
+			HostalRoomVO hostalroom = null;
 
-			String sql = String.format("INSERT INTO %1$s.RESERVASHOSTALES (FECHAI, FECHAF, CUARTO, USUARIO) VALUES (%2$s, '%3$s', '%4$s', '%5$s')", 
+			String sql = String.format("SELECT * FROM %1$s.HOSTALROOMS WHERE HOTEL = %2$d AND CUARTO = %3$d" , USUARIO, hotel,cuarto); 
+
+			PreparedStatement prepStmt = conn.prepareStatement(sql);
+			recursos.add(prepStmt);
+			ResultSet rs = prepStmt.executeQuery();
+
+			if(rs.next()) {
+				hostalroom = convertResultSetToHostalRoom(rs);
+			}
+
+			return hostalroom;
+		}
+		
+		/**
+		 * Metodo que agregar la informacion de un nuevo hostalroom en la Base de Datos a partir del parametro ingresado<br/>
+		 * <b>Precondicion: </b> la conexion a sido inicializadoa <br/>  
+		 * @param hostalroom HostalRoomVO que desea agregar a la Base de Datos
+		 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
+		 * @throws Exception Si se genera un error dentro del metodo.
+		 */
+		public void addHostalRoom(HostalRoomVO hostalroom) throws SQLException, Exception {
+
+			String sql = String.format("INSERT INTO %1$s.HOSTALROOMS (CUARTO, CAPACIDAD, PRECIO, HOSTAL,RESERVAS) VALUES (%2$s, '%3$s', '%4$s', '%5$s','%6$s')", 
 										USUARIO, 
-										reserva.getFechaI(), 
-										reserva.getFechaF(),
-										reserva.getCuarto(), 
-										reserva.getUsuario());
+										hostalroom.getCuarto(), 
+										hostalroom.getCapacidad(),
+										hostalroom.getPrecio(), 
+										hostalroom.getHostal(),
+										hostalroom.getReservas());
 			System.out.println(sql);
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -129,17 +158,19 @@ public class DAOReservaHostal {
 		}
 		
 		/**
-		 * Metodo que actualiza la informacion del reserva en la Base de Datos que tiene el identificador dado por parametro<br/>
+		 * Metodo que actualiza la informacion del hostalroom en la Base de Datos que tiene el identificador dado por parametro<br/>
 		 * <b>Precondicion: </b> la conexion a sido inicializadoa <br/>  
-		 * @param reserva ReservaHostalVO que desea actualizar a la Base de Datos
+		 * @param hostalroom HostalRoomVO que desea actualizar a la Base de Datos
 		 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 		 * @throws Exception Si se genera un error dentro del metodo.
 		 */
-		public void updateBebedor(ReservaHostalVO reserva) throws SQLException, Exception {
+		public void updateHostalRoom(HostalRoomVO hostalroom) throws SQLException, Exception {
 
 			StringBuilder sql = new StringBuilder();
-			sql.append(String.format("UPDATE %s.RESERVASHOSTALES SET ", USUARIO));
-			sql.append(String.format("FECHAI = '%1$s' AND FECHAF = '%2$s' AND CUARTO = '%3$s' AND USUARIO = '%4$s' ", reserva.getFechaI(), reserva.getFechaF(), reserva.getCuarto()));
+			sql.append(String.format("UPDATE %s.HOSTALROOMS SET ", USUARIO));
+			sql.append(String.format("CUARTO = '%1$s' AND CAPACIDAD = '%2$s' AND PRECIO = '%3$s' AND HOSTAL = '%4$s' AND RESERVAS = '%5$s' ",
+					hostalroom.getCuarto(),hostalroom.getCapacidad(),hostalroom.getPrecio(),hostalroom.getHostal(),
+					hostalroom.getReservas()));
 			
 			System.out.println(sql);
 			
@@ -149,15 +180,15 @@ public class DAOReservaHostal {
 		}
 
 		/**
-		 * Metodo que actualiza la informacion del reserva en la Base de Datos que tiene el identificador dado por parametro<br/>
+		 * Metodo que actualiza la informacion del hostalroom en la Base de Datos que tiene el identificador dado por parametro<br/>
 		 * <b>Precondicion: </b> la conexion a sido inicializadoa <br/>  
-		 * @param reserva ReservaHostalVO que desea actualizar a la Base de Datos
+		 * @param hostalroom HostalRoomVO que desea actualizar a la Base de Datos
 		 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 		 * @throws Exception Si se genera un error dentro del metodo.
 		 */
-		public void deleteBebedor(ReservaHostalVO reserva) throws SQLException, Exception {
+		public void deleteHostalRoom(HostalRoomVO hostalroom) throws SQLException, Exception {
 
-			String sql = String.format("DELETE FROM %1$s.RESERVASHOSTALES WHERE FECHAI = %2$d AND FECHAI = %3$d AND FECHAI = %4$d", USUARIO, reserva.getFechaI(),reserva.getFechaF(),reserva.getUsuario());
+			String sql = String.format("DELETE FROM %1$s.HOSTALROOMS WHERE HOSTAL = %2$d AND CUARTO = %3$d", USUARIO, hostalroom.getHostal(),hostalroom.getCuarto());
 
 			System.out.println(sql);
 			
@@ -165,8 +196,6 @@ public class DAOReservaHostal {
 			recursos.add(prepStmt);
 			prepStmt.executeQuery();
 		}
-		
-		
 		
 		//----------------------------------------------------------------------------------------------------------------------------------
 		// METODOS AUXILIARES
@@ -197,29 +226,31 @@ public class DAOReservaHostal {
 		}
 		
 		/**
-		 * Metodo que transforma el resultado obtenido de una consulta SQL (sobre la tabla RESERVASHOSTALES) en una instancia de la clase ReservaHostalVO.
-		 * @param resultSet ResultSet con la informacion de un reserva que se obtuvo de la base de datos.
-		 * @return ReservaHostalVO cuyos atributos corresponden a los valores asociados a un registro particular de la tabla RESERVASHOSTALES.
+		 * Metodo que transforma el resultado obtenido de una consulta SQL (sobre la tabla HOSTALROOMS) en una instancia de la clase HostalRoomVO.
+		 * @param resultSet ResultSet con la informacion de un hostalroom que se obtuvo de la base de datos.
+		 * @return HostalRoomVO cuyos atributos corresponden a los valores asociados a un registro particular de la tabla HOSTALROOMS.
 		 * @throws SQLException Si existe algun problema al extraer la informacion del ResultSet.
 		 */
-		public ReservaHostalVO convertResultSetToReservaHostal(ResultSet resultSet) throws SQLException {
+		public HostalRoomVO convertResultSetToHostalRoom(ResultSet resultSet) throws SQLException {
 		
-			DAOHostalRoom dao = new DAOHostalRoom();
-			HostalRoomVO cuarto;
+			DAOHostal dao = new DAOHostal();
+			HostalVO hostal;
 			try {
-				String fechaI = resultSet.getString("FECHAI");
-				String fechaF = resultSet.getString("FECHAF");
-				Integer cuartoS = resultSet.getInt("CUARTO");
-				String usuario = resultSet.getString("USUARIO");
-				String hotelS = resultSet.getString("HOTEL");
-				cuarto = dao.getHotelRoom(hotelS, cuartoS);
-				
-				ReservaHostalVO beb = new ReservaHostalVO(fechaI, fechaF, cuarto);
-				return beb;
+				Integer cuarto = resultSet.getInt("CUARTO");
+				Integer capacidad = resultSet.getInt("CAPACIDAD");
+				Double precio = resultSet.getDouble("PRECIO");
+				String hostalS = resultSet.getString("HOSTAL");
+				String nombre = resultSet.getString("NOMBRE");
+				hostal = dao.getHostal(hostalS);
+				HostalRoomVO hostR = new HostalRoomVO(cuarto, capacidad, precio, hostal,nombre);
+				return hostR;
+
 			} catch (Exception e) {
 				e.printStackTrace();
 				return null;
 			}
+
 			
+
 		}
 }

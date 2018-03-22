@@ -135,7 +135,7 @@ public class DAOReservaHostal {
 		 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 		 * @throws Exception Si se genera un error dentro del metodo.
 		 */
-		public void updateBebedor(ReservaHostalVO reserva) throws SQLException, Exception {
+		public void updateReservaHostal(ReservaHostalVO reserva) throws SQLException, Exception {
 
 			StringBuilder sql = new StringBuilder();
 			sql.append(String.format("UPDATE %s.RESERVASHOSTALES SET ", USUARIO));
@@ -155,7 +155,7 @@ public class DAOReservaHostal {
 		 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 		 * @throws Exception Si se genera un error dentro del metodo.
 		 */
-		public void deleteBebedor(ReservaHostalVO reserva) throws SQLException, Exception {
+		public void deleteReservaHostal(ReservaHostalVO reserva) throws SQLException, Exception {
 
 			String sql = String.format("DELETE FROM %1$s.RESERVASHOSTALES WHERE FECHAI = %2$d AND FECHAI = %3$d AND FECHAI = %4$d", USUARIO, reserva.getFechaI(),reserva.getFechaF(),reserva.getUsuario());
 
@@ -210,9 +210,8 @@ public class DAOReservaHostal {
 				String fechaI = resultSet.getString("FECHAI");
 				String fechaF = resultSet.getString("FECHAF");
 				Integer cuartoS = resultSet.getInt("CUARTO");
-				String usuario = resultSet.getString("USUARIO");
 				String hotelS = resultSet.getString("HOTEL");
-				cuarto = dao.getHotelRoom(hotelS, cuartoS);
+				cuarto = dao.getHostalRoom(hotelS, cuartoS);
 				
 				ReservaHostalVO beb = new ReservaHostalVO(fechaI, fechaF, cuarto);
 				return beb;

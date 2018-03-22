@@ -64,6 +64,29 @@ public class HotelRoomVO {
 		this.reservas = reservas;
 	}
 
+	public HotelRoomVO(@JsonProperty(value="banera")Boolean banera,
+			@JsonProperty(value="yakuzi")Boolean yakuzi,
+			@JsonProperty(value="sala")Boolean sala,
+			@JsonProperty(value="cocina")Boolean cocina,
+			@JsonProperty(value="cable")Boolean cable,
+			@JsonProperty(value="precio")Double precio,
+			@JsonProperty(value="hotel")HotelVO hotel,
+	        @JsonProperty(value="tipo")String tipo,
+	        @JsonProperty(value="capacidad")Integer capacidad,
+	        @JsonProperty(value="cuarto")Integer cuarto) {
+		
+		this.banera = banera;
+		this.yakuzi = yakuzi;
+		this.sala = sala;
+		this.cocina = cocina;
+		this.cable = cable;
+		this.precio = precio;
+		this.hotel = hotel;
+		this.tipo = tipo;
+		this.capacidad = capacidad;
+		this.cuarto = cuarto;
+	}
+
 	/**
 	 * @return the banera
 	 */

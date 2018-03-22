@@ -36,6 +36,9 @@ public class ViviendaRoomVO {
 	@JsonProperty(value="vivienda")
 	private ViviendaUVO vivienda;
 	
+	@JsonProperty(value="cuarto")
+	private Integer cuarto;
+	
 	@JsonProperty(value="reservas")
 	private List<ContratoViviendaVO> reservas;
 	
@@ -46,6 +49,7 @@ public class ViviendaRoomVO {
 			@JsonProperty(value="gym")Double gym,
 			@JsonProperty(value="precio")Double precio,
 			@JsonProperty(value="vivienda")ViviendaUVO vivienda,
+			@JsonProperty(value="cuarto")Integer cuarto,
 			@JsonProperty(value="reservas")List<ContratoViviendaVO> reservas) {
 
 		this.compartida = compartida;
@@ -55,7 +59,27 @@ public class ViviendaRoomVO {
 		this.gym = gym;
 		this.precio = precio;
 		this.vivienda = vivienda;
+		this.cuarto = cuarto;
 		this.reservas = reservas;
+	}
+
+	public ViviendaRoomVO(@JsonProperty(value="compartida")Integer compartida,
+			@JsonProperty(value="restaurante")Double restaurante,
+			@JsonProperty(value="SalaDeEstudio")Double SalaDeEstudio,
+			@JsonProperty(value="SalaDeEsparcimiento")Double SalaDeEsparcimiento,
+			@JsonProperty(value="gym")Double gym,
+			@JsonProperty(value="precio")Double precio,
+			@JsonProperty(value="vivienda")ViviendaUVO vivienda,
+			@JsonProperty(value="cuarto")Integer cuarto) {
+		
+		this.compartida = compartida;
+		this.restaurante = restaurante;
+		this.SalaDeEstudio = SalaDeEstudio;
+		this.SalaDeEsparcimiento = SalaDeEsparcimiento;
+		this.gym = gym;
+		this.precio = precio;
+		this.vivienda = vivienda;
+		this.cuarto = cuarto;
 	}
 
 	/**
@@ -168,6 +192,20 @@ public class ViviendaRoomVO {
 	 */
 	public void setReservas(List<ContratoViviendaVO> reservas) {
 		this.reservas = reservas;
+	}
+
+	/**
+	 * @return the cuarto
+	 */
+	public Integer getCuarto() {
+		return cuarto;
+	}
+
+	/**
+	 * @param cuarto the cuarto to set
+	 */
+	public void setCuarto(Integer cuarto) {
+		this.cuarto = cuarto;
 	}
 	
 	

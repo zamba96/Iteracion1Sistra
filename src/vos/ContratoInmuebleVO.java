@@ -12,14 +12,27 @@ public class ContratoInmuebleVO {
 
 	@JsonProperty(value = "usuario")
 	private UsuarioVO usuario;
+	
+	@JsonProperty(value = "inmueble")
+	private InmuebleVO inmueble;
+
+	public InmuebleVO getInmueble() {
+		return inmueble;
+	}
+
+	public void setInmueble(InmuebleVO inmueble) {
+		this.inmueble = inmueble;
+	}
 
 	public ContratoInmuebleVO(@JsonProperty(value = "fechaInicio")String fechaInicio,
 			@JsonProperty(value = "fechaFinal") String fechaFinal,
-			@JsonProperty(value = "usuario") UsuarioVO usuario)
+			@JsonProperty(value = "usuario") UsuarioVO usuario,
+			@JsonProperty(value = "inmueble") InmuebleVO inmueble)
 	{
 		this.fechaInicio = fechaInicio;
 		this.fechaFinal = fechaFinal;
 		this.usuario = usuario;
+		this.inmueble = inmueble;
 	}
 
 	public ContratoInmuebleVO(@JsonProperty(value = "fechaInicio")String fechaInicio,

@@ -23,6 +23,7 @@ import vos.ReservaHotelVO;
  * @author camilo
  *
  */
+@Path("reservasHoteles")
 public class ReservaHotelService {
 	//----------------------------------------------------------------------------------------------------------------------------------
 			// ATRIBUTOS

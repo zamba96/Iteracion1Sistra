@@ -68,7 +68,7 @@ public class DAOHostal {
 			ArrayList<HostalVO> hostales = new ArrayList<HostalVO>();
 
 			//Aclaracion: Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
-			String sql = String.format("SELECT * FROM %1$s.HOSTALES WHERE ROWNUM <= 50", USUARIO);
+			String sql = String.format("SELECT * FROM HOSTALES WHERE ROWNUM <= 50", USUARIO);
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
@@ -95,7 +95,7 @@ public class DAOHostal {
 		{
 			HostalVO hostal = null;
 
-			String sql = String.format("SELECT * FROM %1$s.HOSTALES WHERE NOMBRE = %2$d", USUARIO, nombre); 
+			String sql = String.format("SELECT * FROM HOSTALES WHERE NOMBRE = %1$d", USUARIO, nombre); 
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
@@ -117,7 +117,7 @@ public class DAOHostal {
 		 */
 		public void addHostal(HostalVO hostal) throws SQLException, Exception {
 
-			String sql = String.format("INSERT INTO %1$s.HOSTALES (APERTURA, CIERRE, DESAYUNO, DIRECCION,NOMBRE,CUARTOS) VALUES (%2$s, '%3$s', '%4$s', '%5$s','%6$s','%7$s')", 
+			String sql = String.format("INSERT INTO HOSTALES (APERTURA, CIERRE, DESAYUNO, DIRECCION,NOMBRE,CUARTOS) VALUES (%1$s, '%2$s', '%3$s', '%4$s','%5$s','%6$s')", 
 										USUARIO, 
 										hostal.getApertura(), 
 										hostal.getCierre(), 
@@ -144,7 +144,7 @@ public class DAOHostal {
 		public void updateHostal(HostalVO hostal) throws SQLException, Exception {
 
 			StringBuilder sql = new StringBuilder();
-			sql.append(String.format("UPDATE %s.HOSTALES SET ", USUARIO));
+			sql.append(String.format("UPDATE HOSTALES SET ", USUARIO));
 			sql.append(String.format("APERTURA = '%1$s' AND CIERRE = '%2$s' AND DESAYUNO = '%3$s' AND DIRECCION = '%4$s' AND NOMBRE = '%5$s' AND CUARTOS = '%6$s' ",
 					hostal.getApertura(), 
 					hostal.getCierre(),
@@ -169,7 +169,7 @@ public class DAOHostal {
 		 */
 		public void deleteHostal(HostalVO hostal) throws SQLException, Exception {
 
-			String sql = String.format("DELETE FROM %1$s.HOSTALES WHERE NOMBRE = %2$d", USUARIO, hostal.getNombre());
+			String sql = String.format("DELETE FROM HOSTALES WHERE NOMBRE = %1$d", USUARIO, hostal.getNombre());
 
 			System.out.println(sql);
 			

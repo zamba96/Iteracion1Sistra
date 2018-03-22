@@ -29,7 +29,6 @@ CREATE TABLE HostalRoom (
 	Cuarto number,
 	Capacidad number,
 	Precio float,
-	Direccion varchar(50),
 	NombreHostal varchar(30)
 	);
 	
@@ -44,7 +43,6 @@ CREATE TABLE HotelRoom (
 	Cable number,
 	Precio float,
 	Capacidad number,
-	Direccion varchar(50),
 	NombreHotel varchar(30)
 	);
 

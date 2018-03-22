@@ -37,8 +37,28 @@ public class HotelVO {
 			@JsonProperty(value="nombre")String nombre,
 			@JsonProperty(value="parqueadero")Boolean parqueadero,
 			@JsonProperty(value="horario")Boolean horario,
-			@JsonProperty(value="cuartos")List<HotelRoomVO> cuartos) {
+			@JsonProperty(value="cuartos")List<HotelRoomVO> cuartos) 
+	{
 
+		this.restaurante = restaurante;
+		this.desayuno = desayuno;
+		this.piscina = piscina;
+		this.direccion = direccion;
+		this.nombre = nombre;
+		this.parqueadero = parqueadero;
+		this.horario = horario;
+		this.cuartos = cuartos;
+	}
+
+	public HotelVO(@JsonProperty(value="desayuno")Boolean desayuno,
+			@JsonProperty(value="restaurante")Boolean restaurante,
+			@JsonProperty(value="piscina")Boolean piscina,
+			@JsonProperty(value="direccion")String direccion,
+			@JsonProperty(value="nombre")String nombre,
+			@JsonProperty(value="parqueadero")Boolean parqueadero,
+			@JsonProperty(value="horario")Boolean horario) 
+	{
+		
 		this.restaurante = restaurante;
 		this.desayuno = desayuno;
 		this.piscina = piscina;

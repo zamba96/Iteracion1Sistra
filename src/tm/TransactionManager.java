@@ -282,7 +282,7 @@ public class TransactionManager {
 				{
 					throw new Exception("El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");				
 				}
-				else daoReservaHostal.updateBebedor(reservaHostal);
+				else daoReservaHostal.updateReservaHostal(reservaHostal);
 			}
 			catch (SQLException sqlException) {
 				System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
@@ -327,7 +327,7 @@ public class TransactionManager {
 				{
 					throw new Exception("El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");				
 				}
-				else daoReservaHostal.deleteBebedor(reservaHostal);
+				else daoReservaHostal.deleteReservaHostal(reservaHostal);
 			}
 			catch (SQLException sqlException) {
 				System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());

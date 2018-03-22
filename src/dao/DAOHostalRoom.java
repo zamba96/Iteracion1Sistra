@@ -90,11 +90,11 @@ public class DAOHostalRoom {
 		 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 		 * @throws Exception Si se genera un error dentro del metodo.
 		 */
-		public HostalRoomVO findRoomByHotel(String hotel) throws SQLException, Exception 
+		public HostalRoomVO findRoomByHostal(String hotel) throws SQLException, Exception 
 		{
 			HostalRoomVO hostalroom = null;
 
-			String sql = String.format("SELECT * FROM %1$s.HOSTALROOMS WHERE HOTEL = %2$d", USUARIO, hotel); 
+			String sql = String.format("SELECT * FROM %1$s.HOSTALROOMS WHERE HOSTAL = %2$d", USUARIO, hotel); 
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
@@ -116,11 +116,11 @@ public class DAOHostalRoom {
 		 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 		 * @throws Exception Si se genera un error dentro del metodo.
 		 */
-		public HostalRoomVO getHotelRoom(String hotel,Integer cuarto) throws SQLException, Exception 
+		public HostalRoomVO getHostalRoom(String hotel,Integer cuarto) throws SQLException, Exception 
 		{
 			HostalRoomVO hostalroom = null;
 
-			String sql = String.format("SELECT * FROM %1$s.HOSTALROOMS WHERE HOTEL = %2$d AND CUARTO = %3$d" , USUARIO, hotel,cuarto); 
+			String sql = String.format("SELECT * FROM %1$s.HOSTALROOMS WHERE HOSTAL = %2$d AND CUARTO = %3$d" , USUARIO, hotel,cuarto); 
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);

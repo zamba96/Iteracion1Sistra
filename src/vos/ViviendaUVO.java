@@ -31,6 +31,13 @@ public class ViviendaUVO {
 		this.cuartos = cuartos;
 	}
 
+	public ViviendaUVO(@JsonProperty(value="direccion")String direccion,
+			@JsonProperty(value="nombre")String nombre) {
+		
+		this.direccion = direccion;
+		this.nombre = nombre;
+	}
+
 	/**
 	 * @return the direccion
 	 */

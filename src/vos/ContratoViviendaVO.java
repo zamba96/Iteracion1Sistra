@@ -34,6 +34,15 @@ public class ContratoViviendaVO {
 		this.relacionado = relacionado;
 	}
 
+	public ContratoViviendaVO(@JsonProperty(value="fechaI")String fechaI,
+			@JsonProperty(value="fechaF")String fechaF,
+			@JsonProperty(value="cuarto")ViviendaRoomVO cuarto) {
+		
+				this.fechaI = fechaI;
+				this.fechaF = fechaF;
+				this.cuarto = cuarto;
+	}
+
 	/**
 	 * @return the fechaI
 	 */

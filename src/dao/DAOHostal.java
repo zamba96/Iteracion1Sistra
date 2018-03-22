@@ -120,11 +120,10 @@ public class DAOHostal {
 			String sql = String.format("INSERT INTO %1$s.HOSTALES (APERTURA, CIERRE, DESAYUNO, DIRECCION,NOMBRE,CUARTOS) VALUES (%2$s, '%3$s', '%4$s', '%5$s','%6$s','%7$s')", 
 										USUARIO, 
 										hostal.getApertura(), 
-										hostal.getNombre(),
 										hostal.getCierre(), 
-										hostal.getCuartos(),
 										hostal.getDesayuno(), 
 										hostal.getDireccion(),
+										hostal.getNombre(),
 										hostal.getCuartos()
 										);
 			System.out.println(sql);
@@ -146,8 +145,13 @@ public class DAOHostal {
 
 			StringBuilder sql = new StringBuilder();
 			sql.append(String.format("UPDATE %s.HOSTALES SET ", USUARIO));
-			sql.append(String.format("APERTURA = '%1$s' AND CIERRE = '%2$s' AND DESAYUNO = '%3$s' AND DIRECCION = '%4$s' AND NOMBRE = '%5$s' AND CUARTOS = '%6$s' "
-					, hostal.getApertura(), hostal.getCierre(), hostal.getDesayuno(),hostal.getDireccion(),hostal.getNombre(),hostal.getCuartos()));
+			sql.append(String.format("APERTURA = '%1$s' AND CIERRE = '%2$s' AND DESAYUNO = '%3$s' AND DIRECCION = '%4$s' AND NOMBRE = '%5$s' AND CUARTOS = '%6$s' ",
+					hostal.getApertura(), 
+					hostal.getCierre(),
+					hostal.getDesayuno(),
+					hostal.getDireccion(),
+					hostal.getNombre(),
+					hostal.getCuartos()));
 			
 			System.out.println(sql);
 			
@@ -218,11 +222,8 @@ public class DAOHostal {
 			String direccion = resultSet.getString("DIRECCION");
 			String nombre = resultSet.getString("NOMBRE");
 			
-			boolean desayuno;
-			if(desayunoI == 1){
-				desayuno= true;
-			}
-			else desayuno= false;
+			boolean desayuno = desayunoI == 1;
+			
 			HostalVO beb = new HostalVO(apertura, cierre, desayuno, direccion,nombre);
 
 			return beb;

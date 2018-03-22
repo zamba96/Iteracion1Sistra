@@ -36,6 +36,15 @@ public class ReservaHotelVO {
 		this.usuario = usuario;
 	}
 
+	public ReservaHotelVO(@JsonProperty(value="fechaI")String fechaI,
+			@JsonProperty(value="fechaF")String fechaF,
+			@JsonProperty(value="cuarto")HotelRoomVO cuarto) {
+		
+		this.fechaI = fechaI;
+		this.fechaF = fechaF;
+		this.cuarto = cuarto;
+	}
+
 	/**
 	 * @return the fechaI
 	 */

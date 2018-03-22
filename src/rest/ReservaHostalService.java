@@ -75,7 +75,7 @@ public class ReservaHostalService {
 				
 				List<ReservaHostalVO> bebedores;
 				//Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
-				bebedores = tm.getAllReservasHostales();
+				bebedores = tm.getReservasHostales();
 				return Response.status(200).entity(bebedores).build();
 			} 
 			catch (Exception e) {

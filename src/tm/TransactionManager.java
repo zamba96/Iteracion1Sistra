@@ -12,8 +12,12 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Properties;
 
+import dao.DAOContratoVivienda;
 import dao.DAOReservaHostal;
+import dao.DAOReservaHotel;
+import vos.ContratoViviendaVO;
 import vos.ReservaHostalVO;
+import vos.ReservaHotelVO;
 
 /**
  * @author camilo
@@ -138,7 +142,7 @@ public class TransactionManager {
 		 * @return List<ReservaHostalVO> - Lista de reservasHostales que contiene el resultado de la consulta.
 		 * @throws Exception -  Cualquier error que se genere durante la transaccion
 		 */
-		public List<ReservaHostalVO> getAllReservasHostales() throws Exception {
+		public List<ReservaHostalVO> getReservasHostales() throws Exception {
 			DAOReservaHostal daoReservaHostal = new DAOReservaHostal();
 			List<ReservaHostalVO> reservasHostales;
 			try 
@@ -354,5 +358,446 @@ public class TransactionManager {
 			}	
 		}
 
+		/**
+		 * Metodo que modela la transaccion que retorna todos los reservasHostales de la base de datos. <br/>
+		 * @return List<ReservaHostalVO> - Lista de reservasHostales que contiene el resultado de la consulta.
+		 * @throws Exception -  Cualquier error que se genere durante la transaccion
+		 */
+		public List<ReservaHotelVO> getReservasHoteles() throws Exception {
+			DAOReservaHotel daoReservaHostal = new DAOReservaHotel();
+			List<ReservaHotelVO> reservasHoteles;
+			try 
+			{
+				this.conn = darConexion();
+				daoReservaHostal.setConn(conn);
+				
+				//Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
+				reservasHoteles = daoReservaHostal.getReservasHoteles();
+			}
+			catch (SQLException sqlException) {
+				System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
+				sqlException.printStackTrace();
+				throw sqlException;
+			} 
+			catch (Exception exception) {
+				System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			} 
+			finally {
+				try {
+					daoReservaHostal.cerrarRecursos();
+					if(this.conn!=null){
+						this.conn.close();					
+					}
+				}
+				catch (SQLException exception) {
+					System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}
+			return reservasHoteles;
+		}
+		
+		/**
+		 * Metodo que modela la transaccion que busca el reservaHostal en la base de datos que tiene el ID dado por parametro. <br/>
+		 * @param name -id del reservaHostal a buscar. id != null
+		 * @return ReservaHostalVO - ReservaHostalVO que se obtiene como resultado de la consulta.
+		 * @throws Exception -  cualquier error que se genere durante la transaccion
+		 */
+		public ReservaHotelVO getReservaHotel(String fechaI, String fechaF,String usuario) throws Exception {
+			DAOReservaHotel daoReservaHotel = new DAOReservaHotel();
+			ReservaHotelVO reservaHotel = null;
+			try 
+			{
+				this.conn = darConexion();
+				daoReservaHotel.setConn(conn);
+				reservaHotel = daoReservaHotel.getReservaHotel(fechaI, fechaF, usuario);
+				if(reservaHotel == null)
+				{
+					throw new Exception("El reservaHostal con la fecha inicial para el usuario = " + fechaI + ", " + usuario + " no se encuentra persistido en la base de datos.");				
+				}
+			} 
+			catch (SQLException sqlException) {
+				System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
+				sqlException.printStackTrace();
+				throw sqlException;
+			} 
+			catch (Exception exception) {
+				System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			} 
+			finally {
+				try {
+					daoReservaHotel.cerrarRecursos();
+					if(this.conn!=null){
+						this.conn.close();					
+					}
+				}
+				catch (SQLException exception) {
+					System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}
+			return reservaHotel;
+		}
+		
+
+		/**
+		 * Metodo que modela la transaccion que agrega un reservaHostal a la base de datos. <br/>
+		 * <b> post: </b> se ha agregado el reservaHostal que entra como parametro <br/>
+		 * @param reservaHostal - el reservaHostal a agregar. reservaHostal != null
+		 * @throws Exception - Cualquier error que se genere agregando el reservaHostal
+		 */
+		public void addReservaHotel(ReservaHotelVO reserva) throws Exception 
+		{
+			
+			DAOReservaHotel daoReservaHotel = new DAOReservaHotel( );
+			try
+			{
+				this.conn = darConexion();
+				daoReservaHotel.setConn(conn);
+				daoReservaHotel.addReservaHotel(reserva);
+			}
+			catch (SQLException sqlException) {
+				System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
+				sqlException.printStackTrace();
+				throw sqlException;
+			} 
+			catch (Exception exception) {
+				System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			} 
+			finally {
+				try {
+					daoReservaHotel.cerrarRecursos();
+					if(this.conn!=null){
+						this.conn.close();					
+					}
+				}
+				catch (SQLException exception) {
+					System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}
+		}
+		
+		
+		/**
+		 * Metodo que modela la transaccion que actualiza en la base de datos al reservaHostal que entra por parametro.<br/>
+		 * Solamente se actualiza si existe el reservaHostal en la Base de Datos <br/>
+		 * <b> post: </b> se ha actualizado el reservaHostal que entra como parametro <br/>
+		 * @param reservaHostal - ReservaHostalVO a actualizar. reservaHostal != null
+		 * @throws Exception - Cualquier error que se genere actualizando al reservaHostal.
+		 */
+		public void updateReservaHotel(ReservaHotelVO reservaHotel) throws Exception 
+		{
+			DAOReservaHotel daoReservaHotel = new DAOReservaHotel( );
+			try
+			{
+				this.conn = darConexion();
+				daoReservaHotel.setConn(conn);
+				reservaHotel = daoReservaHotel.getReservaHotel(reservaHotel.getFechaI(),reservaHotel.getFechaF(),reservaHotel.getUsuario().getCedula());
+				if(reservaHotel == null)
+				{
+					throw new Exception("El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");				
+				}
+				else daoReservaHotel.updateReservaHotel(reservaHotel);
+			}
+			catch (SQLException sqlException) {
+				System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
+				sqlException.printStackTrace();
+				throw sqlException;
+			} 
+			catch (Exception exception) {
+				System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			} 
+			finally {
+				try {
+					daoReservaHotel.cerrarRecursos();
+					if(this.conn!=null){
+						this.conn.close();					
+					}
+				}
+				catch (SQLException exception) {
+					System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}	
+		}
+		/**
+		 * Metodo que modela la transaccion que elimina de la base de datos al reservaHostal que entra por parametro. <br/>
+		 * Solamente se actualiza si existe el reservaHostal en la Base de Datos <br/>
+		 * <b> post: </b> se ha eliminado el reservaHostal que entra por parametro <br/>
+		 * @param ReservaHostalVO - reservaHostal a eliminar. reservaHostal != null
+		 * @throws Exception - Cualquier error que se genere eliminando al reservaHostal.
+		 */
+		public void deleteReservaHotel(ReservaHotelVO reservaHotel) throws Exception 
+		{
+			DAOReservaHotel daoReservaHotel = new DAOReservaHotel( );
+			try
+			{
+				this.conn = darConexion();
+				daoReservaHotel.setConn( conn );
+				reservaHotel = daoReservaHotel.getReservaHotel(reservaHotel.getFechaI(),reservaHotel.getFechaF(),reservaHotel.getUsuario().getCedula());
+				if(reservaHotel == null)
+				{
+					throw new Exception("El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");				
+				}
+				else daoReservaHotel.deleteReservaHostal(reservaHotel);
+			}
+			catch (SQLException sqlException) {
+				System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
+				sqlException.printStackTrace();
+				throw sqlException;
+			} 
+			catch (Exception exception) {
+				System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			} 
+			finally {
+				try {
+					daoReservaHotel.cerrarRecursos();
+					if(this.conn!=null){
+						this.conn.close();					
+					}
+				}
+				catch (SQLException exception) {
+					System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}	
+		}
+		
+		/**
+		 * Metodo que modela la transaccion que retorna todos los reservasHostales de la base de datos. <br/>
+		 * @return List<ReservaHostalVO> - Lista de reservasHostales que contiene el resultado de la consulta.
+		 * @throws Exception -  Cualquier error que se genere durante la transaccion
+		 */
+		public List<ContratoViviendaVO> getContratosViviendas() throws Exception {
+			DAOContratoVivienda daoContratoVivienda = new DAOContratoVivienda();
+			List<ContratoViviendaVO> contratosViviendas;
+			try 
+			{
+				this.conn = darConexion();
+				daoContratoVivienda.setConn(conn);
+				
+				//Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
+				contratosViviendas = daoContratoVivienda.getContratosVivienda();
+			}
+			catch (SQLException sqlException) {
+				System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
+				sqlException.printStackTrace();
+				throw sqlException;
+			} 
+			catch (Exception exception) {
+				System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			} 
+			finally {
+				try {
+					daoContratoVivienda.cerrarRecursos();
+					if(this.conn!=null){
+						this.conn.close();					
+					}
+				}
+				catch (SQLException exception) {
+					System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}
+			return contratosViviendas;
+		}
+		
+		/**
+		 * Metodo que modela la transaccion que busca el reservaHostal en la base de datos que tiene el ID dado por parametro. <br/>
+		 * @param name -id del reservaHostal a buscar. id != null
+		 * @return ReservaHostalVO - ReservaHostalVO que se obtiene como resultado de la consulta.
+		 * @throws Exception -  cualquier error que se genere durante la transaccion
+		 */
+		public ContratoViviendaVO getContratoVivienda(String fechaI, String fechaF,String usuario) throws Exception {
+			DAOContratoVivienda daoContratoVivienda = new DAOContratoVivienda();
+			ContratoViviendaVO contratoVivienda = null;
+			try 
+			{
+				this.conn = darConexion();
+				daoContratoVivienda.setConn(conn);
+				contratoVivienda = daoContratoVivienda.getContratoVivienda(fechaI, fechaF, usuario);
+				if(contratoVivienda == null)
+				{
+					throw new Exception("El reservaHostal con la fecha inicial para el usuario = " + fechaI + ", " + usuario + " no se encuentra persistido en la base de datos.");				
+				}
+			} 
+			catch (SQLException sqlException) {
+				System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
+				sqlException.printStackTrace();
+				throw sqlException;
+			} 
+			catch (Exception exception) {
+				System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			} 
+			finally {
+				try {
+					daoContratoVivienda.cerrarRecursos();
+					if(this.conn!=null){
+						this.conn.close();					
+					}
+				}
+				catch (SQLException exception) {
+					System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}
+			return contratoVivienda;
+		}
+		
+
+		/**
+		 * Metodo que modela la transaccion que agrega un reservaHostal a la base de datos. <br/>
+		 * <b> post: </b> se ha agregado el reservaHostal que entra como parametro <br/>
+		 * @param reservaHostal - el reservaHostal a agregar. reservaHostal != null
+		 * @throws Exception - Cualquier error que se genere agregando el reservaHostal
+		 */
+		public void addContratoVivienda(ContratoViviendaVO contrato) throws Exception 
+		{
+			
+			DAOContratoVivienda daoContratoVivienda = new DAOContratoVivienda( );
+			try
+			{
+				this.conn = darConexion();
+				daoContratoVivienda.setConn(conn);
+				daoContratoVivienda.addContratoVivienda(contrato);
+			}
+			catch (SQLException sqlException) {
+				System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
+				sqlException.printStackTrace();
+				throw sqlException;
+			} 
+			catch (Exception exception) {
+				System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			} 
+			finally {
+				try {
+					daoContratoVivienda.cerrarRecursos();
+					if(this.conn!=null){
+						this.conn.close();					
+					}
+				}
+				catch (SQLException exception) {
+					System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}
+		}
+		
+		
+		/**
+		 * Metodo que modela la transaccion que actualiza en la base de datos al reservaHostal que entra por parametro.<br/>
+		 * Solamente se actualiza si existe el reservaHostal en la Base de Datos <br/>
+		 * <b> post: </b> se ha actualizado el reservaHostal que entra como parametro <br/>
+		 * @param reservaHostal - ReservaHostalVO a actualizar. reservaHostal != null
+		 * @throws Exception - Cualquier error que se genere actualizando al reservaHostal.
+		 */
+		public void updateContratoVivienda(ContratoViviendaVO contratoVivienda) throws Exception 
+		{
+			DAOContratoVivienda daoContratoVivienda = new DAOContratoVivienda( );
+			try
+			{
+				this.conn = darConexion();
+				daoContratoVivienda.setConn(conn);
+				contratoVivienda = daoContratoVivienda.getContratoVivienda(contratoVivienda.getFechaI(),contratoVivienda.getFechaF(),contratoVivienda.getUsuario().getCedula());
+				if(contratoVivienda == null)
+				{
+					throw new Exception("El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");				
+				}
+				else daoContratoVivienda.updateContratoVivienda(contratoVivienda);
+			}
+			catch (SQLException sqlException) {
+				System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
+				sqlException.printStackTrace();
+				throw sqlException;
+			} 
+			catch (Exception exception) {
+				System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			} 
+			finally {
+				try {
+					daoContratoVivienda.cerrarRecursos();
+					if(this.conn!=null){
+						this.conn.close();					
+					}
+				}
+				catch (SQLException exception) {
+					System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}	
+		}
+		/**
+		 * Metodo que modela la transaccion que elimina de la base de datos al reservaHostal que entra por parametro. <br/>
+		 * Solamente se actualiza si existe el reservaHostal en la Base de Datos <br/>
+		 * <b> post: </b> se ha eliminado el reservaHostal que entra por parametro <br/>
+		 * @param ReservaHostalVO - reservaHostal a eliminar. reservaHostal != null
+		 * @throws Exception - Cualquier error que se genere eliminando al reservaHostal.
+		 */
+		public void deleteContratoVivienda(ContratoViviendaVO contratoVivienda) throws Exception 
+		{
+			DAOContratoVivienda daoContratoVivienda = new DAOContratoVivienda( );
+			try
+			{
+				this.conn = darConexion();
+				daoContratoVivienda.setConn( conn );
+				contratoVivienda = daoContratoVivienda.getContratoVivienda(contratoVivienda.getFechaI(),contratoVivienda.getFechaF(),contratoVivienda.getUsuario().getCedula());
+				if(contratoVivienda == null)
+				{
+					throw new Exception("El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");				
+				}
+				else daoContratoVivienda.deleteContratoVivienda(contratoVivienda);
+			}
+			catch (SQLException sqlException) {
+				System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
+				sqlException.printStackTrace();
+				throw sqlException;
+			} 
+			catch (Exception exception) {
+				System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			} 
+			finally {
+				try {
+					daoContratoVivienda.cerrarRecursos();
+					if(this.conn!=null){
+						this.conn.close();					
+					}
+				}
+				catch (SQLException exception) {
+					System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
+					exception.printStackTrace();
+					throw exception;
+				}
+			}	
+		}
 
 }

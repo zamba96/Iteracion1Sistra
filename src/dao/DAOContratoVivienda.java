@@ -64,7 +64,7 @@ public class DAOContratoVivienda {
 		ArrayList<ContratoViviendaVO> contratos = new ArrayList<ContratoViviendaVO>();
 
 		//Aclaracion: Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
-		String sql = String.format("SELECT * FROM %1$s.CONTRATOSVIVIENDAS WHERE ROWNUM <= 50", RELACIONADO);
+		String sql = String.format("SELECT * FROM CONTRATOSVIVIENDAS WHERE ROWNUM <= 50", RELACIONADO);
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -89,7 +89,7 @@ public class DAOContratoVivienda {
 	{
 		ContratoViviendaVO contrato = null;
 
-		String sql = String.format("SELECT * FROM %1$s.CONTRATOSVIVIENDAS WHERE FECHAI = '%1$s' AND FECHAF = '%2$s' AND RELACIONADO = '%3$s'", RELACIONADO ); 
+		String sql = String.format("SELECT * FROM CONTRATOSVIVIENDAS WHERE FECHAI = '%1$s' AND FECHAF = '%2$s' AND RELACIONADO = '%3$s'", RELACIONADO ); 
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -111,7 +111,7 @@ public class DAOContratoVivienda {
 	 */
 	public void addContratoVivienda(ContratoViviendaVO contrato) throws SQLException, Exception {
 
-		String sql = String.format("INSERT INTO %1$s.CONTRATOSVIVIENDAS (FECHAI, FECHAF, CUARTO, RELACIONADO) VALUES (%2$s, '%3$s', '%4$s', '%5$s')", 
+		String sql = String.format("INSERT INTO CONTRATOSVIVIENDAS (FECHAI, FECHAF, CUARTO, RELACIONADO) VALUES (%1$s, '%2$s', '%3$s', '%4$s')", 
 									RELACIONADO, 
 									contrato.getFechaI(), 
 									contrato.getFechaF(),
@@ -135,7 +135,7 @@ public class DAOContratoVivienda {
 	public void updateContratoVivienda(ContratoViviendaVO contrato) throws SQLException, Exception {
 
 		StringBuilder sql = new StringBuilder();
-		sql.append(String.format("UPDATE %s.CONTRATOSVIVIENDAS SET ", RELACIONADO));
+		sql.append(String.format("UPDATE CONTRATOSVIVIENDAS SET ", RELACIONADO));
 		sql.append(String.format("FECHAI = '%1$s' AND FECHAF = '%2$s' AND CUARTO = '%3$s' AND RELACIONADO = '%4$s' ", contrato.getFechaI(), contrato.getFechaF(), contrato.getCuarto()));
 		
 		System.out.println(sql);
@@ -154,7 +154,7 @@ public class DAOContratoVivienda {
 	 */
 	public void deleteContratoVivienda(ContratoViviendaVO contrato) throws SQLException, Exception {
 
-		String sql = String.format("DELETE FROM %1$s.CONTRATOSVIVIENDAS WHERE FECHAI = %2$d AND FECHAI = %3$d AND FECHAI = %4$d", RELACIONADO, contrato.getFechaI(),contrato.getFechaF(),contrato.getUsuario());
+		String sql = String.format("DELETE FROM CONTRATOSVIVIENDAS WHERE FECHAI = %1$d AND FECHAI = %2$d AND FECHAI = %3$d", RELACIONADO, contrato.getFechaI(),contrato.getFechaF(),contrato.getUsuario());
 
 		System.out.println(sql);
 		

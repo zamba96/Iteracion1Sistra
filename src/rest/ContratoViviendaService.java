@@ -25,6 +25,7 @@ import vos.ContratoViviendaVO;
  * @author camilo
  *
  */
+@Path("contratosViviendas")
 public class ContratoViviendaService {
 	//----------------------------------------------------------------------------------------------------------------------------------
 			// ATRIBUTOS

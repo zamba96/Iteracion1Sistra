@@ -61,7 +61,7 @@ public class DAOInmueble {
 		ArrayList<InmuebleVO> inmuebles = new ArrayList<InmuebleVO>();
 
 		//Aclaracion: Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
-		String sql = String.format("SELECT * FROM %1$s.INMUEBLE WHERE ROWNUM <= 50", USUARIO);
+		String sql = String.format("SELECT * FROM INMUEBLE WHERE ROWNUM <= 50", USUARIO);
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -88,10 +88,11 @@ public class DAOInmueble {
 	{
 		InmuebleVO inmueble = null;
 
-		String sql = String.format("SELECT * FROM %1$s.INMUEBLE WHERE DUENO = %2$s AND DIRECCION = %3$s", USUARIO, dueno, direccion); 
+		String sql = String.format("SELECT * FROM INMUEBLE WHERE DUENO = '%2$s' AND DIRECCION = '%3$s'", USUARIO, dueno, direccion); 
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
+		System.out.println(sql);
 		ResultSet rs = prepStmt.executeQuery();
 
 		if(rs.next()) {
@@ -110,7 +111,7 @@ public class DAOInmueble {
 	 */
 	public void addInmueble(InmuebleVO inmueble) throws SQLException, Exception {
 
-		String sql = String.format("INSERT INTO %1$s.INMUEBLE (AMOBLADO, SERVICIOS, CABLE, ADMINISTRACION, PRECIO, DIRECCION, DUENO) VALUES (%2$s, '%3$s', '%4$s', '%5$s','%6$s','%7$s')", 
+		String sql = String.format("INSERT INTO INMUEBLE (AMOBLADO, SERVICIOS, CABLE, ADMINISTRACION, PRECIO, DIRECCION, DUENO) VALUES (%2$s, '%3$s', '%4$s', '%5$s','%6$s','%7$s')", 
 				USUARIO, 
 				inmueble.getAmoblado(),
 				inmueble.getServicios(),
@@ -138,7 +139,7 @@ public class DAOInmueble {
 	public void updateInmueble(InmuebleVO inmueble) throws SQLException, Exception {
 
 		StringBuilder sql = new StringBuilder();
-		sql.append(String.format("UPDATE %s.INMUEBLE SET ", USUARIO));
+		sql.append(String.format("UPDATE INMUEBLE SET ", USUARIO));
 		sql.append(String.format("AMOBLADO = '%1$s' AND SERVICIOS = '%2$s' AND CABLE = '%3$s' AND ADMINISTRACION = '%4$s' AND PRECIO = '%5$s' AND DIRECCION = '%6$s' AND DUENO = '%7$s'"
 				, inmueble.getAmoblado(), inmueble.getServicios(), inmueble.getCable(),inmueble.getAdministracion(),inmueble.getPrecio(),inmueble.getDireccion(), inmueble.getDueno().getCedula()));
 
@@ -158,7 +159,7 @@ public class DAOInmueble {
 	 */
 	public void deleteInmueble(InmuebleVO inmueble) throws SQLException, Exception {
 
-		String sql = String.format("DELETE FROM %1$s.INMUEBLE WHERE DIRECCION = %2$d AND USUARIO = %3$s", USUARIO, inmueble.getDireccion(), inmueble.getDueno().getCedula());
+		String sql = String.format("DELETE FROM INMUEBLE WHERE DIRECCION = %2$d AND USUARIO = %3$s", USUARIO, inmueble.getDireccion(), inmueble.getDueno().getCedula());
 
 		System.out.println(sql);
 
@@ -213,7 +214,7 @@ public class DAOInmueble {
 		Integer administracionI = resultSet.getInt("ADMINISTRACION");
 		Integer precio = resultSet.getInt("PRECIO");
 		String direccion = resultSet.getString("DIRECCION");
-		String cedula = resultSet.getString("CEDULA");
+		String cedula = resultSet.getString("DUENO");
 		
 
 		boolean amoblado = (amobladoI == 1)? true : false;
@@ -222,6 +223,7 @@ public class DAOInmueble {
 		boolean administracion = (administracionI == 1)? true : false;
 		UsuarioVO dueno;
 		try {
+			daoUSSR.setConn(conn);
 			dueno = daoUSSR.getUsuario(cedula);
 			InmuebleVO beb = new InmuebleVO(amoblado, servicios, cable, administracion, precio, direccion, dueno); 
 

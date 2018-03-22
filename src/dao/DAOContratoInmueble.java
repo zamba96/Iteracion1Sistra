@@ -59,7 +59,7 @@ public class DAOContratoInmueble {
 		ArrayList<ContratoInmuebleVO> contratos = new ArrayList<ContratoInmuebleVO>();
 
 		//Aclaracion: Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
-		String sql = String.format("SELECT * FROM %1$s.CONTRATOINMUEBLE WHERE ROWNUM <= 50", USUARIO);
+		String sql = String.format("SELECT * FROM CONTRATOINMUEBLE WHERE ROWNUM <= 50", USUARIO);
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -84,7 +84,7 @@ public class DAOContratoInmueble {
 	{
 		ContratoInmuebleVO contrato = null;
 
-		String sql = String.format("SELECT * FROM %1$s.CONTRATOINMUEBLE WHERE FECHAINICIO = '%2$s' AND FECHAFIN = '%3$s' AND USUARIO = '%4$s'", USUARIO, fechaI, fechaF, usuario ); 
+		String sql = String.format("SELECT * FROM CONTRATOINMUEBLE WHERE FECHAINICIO = '%2$s' AND FECHAFIN = '%3$s' AND USUARIO = '%4$s'", USUARIO, fechaI, fechaF, usuario ); 
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -106,7 +106,7 @@ public class DAOContratoInmueble {
 	 */
 	public void addContratoInmueble(ContratoInmuebleVO contrato) throws SQLException, Exception {
 
-		String sql = String.format("INSERT INTO %1$s.CONTRATOINMUEBLE (FECHAINICIO, FECHAFIN, USUARIO, DUENO, DIRECCION) VALUES (%2$s, '%3$s', '%4$s', '%5$s', '%6$s')", 
+		String sql = String.format("INSERT INTO CONTRATOINMUEBLE (FECHAINICIO, FECHAFIN, USUARIO, DUENO, DIRECCION) VALUES (%2$s, '%3$s', '%4$s', '%5$s', '%6$s')", 
 				USUARIO, 
 				contrato.getFechaInicio(),
 				contrato.getFechaFinal(),
@@ -151,7 +151,7 @@ public class DAOContratoInmueble {
 	 */
 	public void deleteContratoInmueble(ContratoInmuebleVO contrato) throws SQLException, Exception {
 
-		String sql = String.format("DELETE FROM %1$s.CONTRATOINMUEBLE WHERE FECHAINICIO = %2$d AND FECHAFIN = %3$d AND USUARIO = %4$d", USUARIO, contrato.getFechaInicio(),contrato.getFechaFinal(),contrato.getUsuario().getCedula());
+		String sql = String.format("DELETE FROM CONTRATOINMUEBLE WHERE FECHAINICIO = %2$d AND FECHAFIN = %3$d AND USUARIO = %4$d", USUARIO, contrato.getFechaInicio(),contrato.getFechaFinal(),contrato.getUsuario().getCedula());
 
 		System.out.println(sql);
 
@@ -207,7 +207,9 @@ public class DAOContratoInmueble {
 			String dueno = resultSet.getString("DUENO");
 			String direccion = resultSet.getString("DIRECCION");
 			String cedula = resultSet.getString("USUARIO");
+			dao.setConn(conn);
 			inmueble = dao.getInmueble(dueno, direccion);
+			ldao.setConn(conn);
 			UsuarioVO ussr = ldao.getUsuario(cedula);
 
 			ContratoInmuebleVO beb = new ContratoInmuebleVO(fechaI, fechaF, ussr, inmueble);

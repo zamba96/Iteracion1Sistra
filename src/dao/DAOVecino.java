@@ -6,9 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import vos.UsuarioVO;
+import vos.VecinoVO;
 
-public class DAOUsuario {
+public class DAOVecino {
 	//----------------------------------------------------------------------------------------------------------------------------------
 	// CONSTANTES
 	//----------------------------------------------------------------------------------------------------------------------------------
@@ -16,7 +16,7 @@ public class DAOUsuario {
 	/**
 	 * Constante para indicar el usuario Oracle del estudiante
 	 */
-	public final static String USUARIO = "ISIS2304A171810";
+	public final static String VECINO = "ISIS2304A171810";
 
 
 	//----------------------------------------------------------------------------------------------------------------------------------
@@ -40,7 +40,7 @@ public class DAOUsuario {
 	/**
 	 * Metodo constructor de la clase DAOBebedor <br/>
 	 */
-	public DAOUsuario() {
+	public DAOVecino() {
 		recursos = new ArrayList<Object>();
 	}
 
@@ -55,18 +55,18 @@ public class DAOUsuario {
 	 * @throws SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 	 * @throws Exception Si se genera un error dentro del metodo.
 	 */
-	public ArrayList<UsuarioVO> getUsuarios() throws SQLException, Exception {
-		ArrayList<UsuarioVO> hostales = new ArrayList<UsuarioVO>();
+	public ArrayList<VecinoVO> getVecinos() throws SQLException, Exception {
+		ArrayList<VecinoVO> hostales = new ArrayList<VecinoVO>();
 
 		//Aclaracion: Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
-		String sql = String.format("SELECT * FROM USUARIOS WHERE ROWNUM <= 50", USUARIO);
+		String sql = String.format("SELECT * FROM VECINO WHERE ROWNUM <= 50", VECINO);
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
 		while (rs.next()) {
-			hostales.add(convertResultSetToUsuario(rs));
+			hostales.add(convertResultSetToVecino(rs));
 		}
 		return hostales;
 	}
@@ -82,18 +82,18 @@ public class DAOUsuario {
 	 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 	 * @throws Exception Si se genera un error dentro del metodo.
 	 */
-	public UsuarioVO getUsuario(String cedula) throws SQLException, Exception 
+	public VecinoVO getVecino(String cedula) throws SQLException, Exception 
 	{
-		UsuarioVO hostal = null;
+		VecinoVO hostal = null;
 
-		String sql = String.format("SELECT * FROM USUARIO WHERE CEDULA = %2$s", USUARIO, cedula); 
+		String sql = String.format("SELECT * FROM VECINO WHERE CEDULA = %2$s", VECINO, cedula); 
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
 		if(rs.next()) {
-			hostal = convertResultSetToUsuario(rs);
+			hostal = convertResultSetToVecino(rs);
 		}
 
 		return hostal;
@@ -106,10 +106,10 @@ public class DAOUsuario {
 	 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 	 * @throws Exception Si se genera un error dentro del metodo.
 	 */
-	public void addUsuario(UsuarioVO hostal) throws SQLException, Exception {
+	public void addVecino(VecinoVO hostal) throws SQLException, Exception {
 
-		String sql = String.format("INSERT INTO USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) VALUES (%2$s, '%3$s', '%4$s')", 
-				USUARIO, 
+		String sql = String.format("INSERT INTO VECINO (CEDULA, NOMBRE, FECHANACIMIENTO) VALUES (%2$s, '%3$s', '%4$s')", 
+				VECINO, 
 				hostal.getCedula(), 
 				hostal.getNombre(),
 				hostal.getFechaNacimiento() 
@@ -129,10 +129,10 @@ public class DAOUsuario {
 	 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 	 * @throws Exception Si se genera un error dentro del metodo.
 	 */
-	public void updateUsuario(UsuarioVO usuario) throws SQLException, Exception {
+	public void updateVecino(VecinoVO usuario) throws SQLException, Exception {
 
 		StringBuilder sql = new StringBuilder();
-		sql.append(String.format("UPDATE USUARIO SET ", USUARIO));
+		sql.append(String.format("UPDATE VECINO SET ", VECINO));
 		sql.append(String.format("CEDULA = '%1$s' AND NOMBRE = '%2$s' AND FECHANACIMIENTO = '%3$s'"
 				,usuario.getCedula(), usuario.getNombre(), usuario.getFechaNacimiento()));
 
@@ -150,9 +150,9 @@ public class DAOUsuario {
 	 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 	 * @throws Exception Si se genera un error dentro del metodo.
 	 */
-	public void deleteUsuario(UsuarioVO hostal) throws SQLException, Exception {
+	public void deleteVecino(VecinoVO hostal) throws SQLException, Exception {
 
-		String sql = String.format("DELETE FROM USUARIO WHERE CEDULA = %2$d", USUARIO, hostal.getCedula());
+		String sql = String.format("DELETE FROM VECINO WHERE CEDULA = %2$d", VECINO, hostal.getCedula());
 
 		System.out.println(sql);
 
@@ -197,21 +197,17 @@ public class DAOUsuario {
 	 * @return Bebedor cuyos atributos corresponden a los valores asociados a un registro particular de la tabla BEBEDORES.
 	 * @throws SQLException Si existe algun problema al extraer la informacion del ResultSet.
 	 */
-	public UsuarioVO convertResultSetToUsuario(ResultSet resultSet) throws SQLException {
+	public VecinoVO convertResultSetToVecino(ResultSet resultSet) throws SQLException {
 
 		String cedula = resultSet.getString("CEDULA");
 		String nombre = resultSet.getString("NOMBRE");
 		String fechaNacimiento = resultSet.getString("FECHANACIMIENTO");
 
-		
-		
-		UsuarioVO beb = new UsuarioVO(cedula, nombre, fechaNacimiento);
+
+
+		VecinoVO beb = new VecinoVO(cedula, nombre, fechaNacimiento);
 
 		return beb;
 	}
 
-	public UsuarioVO getUsuarioSimple(String cedula) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 import tm.TransactionManager;
 import vos.ContratoInmuebleVO;
 
+@Path("contratosInmuebles")
 public class ContratoInmuebleService {
 	//----------------------------------------------------------------------------------------------------------------------------------
 	// ATRIBUTOS

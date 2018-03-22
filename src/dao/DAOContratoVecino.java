@@ -6,9 +6,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import vos.ContratoVecinoVO;
+import vos.VecinoVO;
 import vos.UsuarioVO;
+import vos.VecinoRoomVO;
 
-public class DAOUsuario {
+public class DAOContratoVecino {
 	//----------------------------------------------------------------------------------------------------------------------------------
 	// CONSTANTES
 	//----------------------------------------------------------------------------------------------------------------------------------
@@ -17,6 +20,7 @@ public class DAOUsuario {
 	 * Constante para indicar el usuario Oracle del estudiante
 	 */
 	public final static String USUARIO = "ISIS2304A171810";
+
 
 
 	//----------------------------------------------------------------------------------------------------------------------------------
@@ -40,13 +44,10 @@ public class DAOUsuario {
 	/**
 	 * Metodo constructor de la clase DAOBebedor <br/>
 	 */
-	public DAOUsuario() {
+	public DAOContratoVecino() {
 		recursos = new ArrayList<Object>();
 	}
 
-	//----------------------------------------------------------------------------------------------------------------------------------
-	// METODOS DE COMUNICACION CON LA BASE DE DATOS
-	//----------------------------------------------------------------------------------------------------------------------------------
 
 	/**
 	 * Metodo que obtiene la informacion de todos los bebedores en la Base de Datos <br/>
@@ -55,65 +56,64 @@ public class DAOUsuario {
 	 * @throws SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 	 * @throws Exception Si se genera un error dentro del metodo.
 	 */
-	public ArrayList<UsuarioVO> getUsuarios() throws SQLException, Exception {
-		ArrayList<UsuarioVO> hostales = new ArrayList<UsuarioVO>();
+	public ArrayList<ContratoVecinoVO> getContratosVecino() throws SQLException, Exception {
+		ArrayList<ContratoVecinoVO> contratos = new ArrayList<ContratoVecinoVO>();
 
 		//Aclaracion: Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
-		String sql = String.format("SELECT * FROM USUARIOS WHERE ROWNUM <= 50", USUARIO);
+		String sql = String.format("SELECT * FROM CONTRATOINMUEBLE WHERE ROWNUM <= 50", USUARIO);
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
 		while (rs.next()) {
-			hostales.add(convertResultSetToUsuario(rs));
+			contratos.add(convertResultSetToContratoVecino(rs));
 		}
-		return hostales;
+		return contratos;
 	}
 
-
-
 	/**
-	 * Metodo que obtiene la informacion del hostal en la Base de Datos que tiene el identificador dado por parametro<br/>
+	 * Metodo que obtiene la informacion del contrato en la Base de Datos que tiene el identificador dado por parametro<br/>
 	 * <b>Precondicion: </b> la conexion a sido inicializadoa <br/> 
-	 * @param id el identificador del hostal
-	 * @return la informacion del hostal que cumple con los criterios de la sentecia SQL
-	 * 			Null si no existe el hostal conlos criterios establecidos
+	 * @param id el identificador del contrato
+	 * @return la informacion del contrato que cumple con los criterios de la sentecia SQL
+	 * 			Null si no existe el contrato conlos criterios establecidos
 	 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 	 * @throws Exception Si se genera un error dentro del metodo.
 	 */
-	public UsuarioVO getUsuario(String cedula) throws SQLException, Exception 
+	public ContratoVecinoVO getContratoVecino(String fechaI,String fechaF, String usuario) throws SQLException, Exception 
 	{
-		UsuarioVO hostal = null;
+		ContratoVecinoVO contrato = null;
 
-		String sql = String.format("SELECT * FROM USUARIO WHERE CEDULA = %2$s", USUARIO, cedula); 
+		String sql = String.format("SELECT * FROM CONTRATOINMUEBLE WHERE FECHAINICIO = '%2$s' AND FECHAFIN = '%3$s' AND USUARIO = '%4$s'", USUARIO, fechaI, fechaF, usuario ); 
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
 		if(rs.next()) {
-			hostal = convertResultSetToUsuario(rs);
+			contrato = convertResultSetToContratoVecino(rs);
 		}
 
-		return hostal;
+		return contrato;
 	}
 
 	/**
-	 * Metodo que agregar la informacion de un nuevo hostal en la Base de Datos a partir del parametro ingresado<br/>
+	 * Metodo que agregar la informacion de un nuevo contrato en la Base de Datos a partir del parametro ingresado<br/>
 	 * <b>Precondicion: </b> la conexion a sido inicializadoa <br/>  
-	 * @param hostal Bebedor que desea agregar a la Base de Datos
+	 * @param contrato ContratoVecinoVO que desea agregar a la Base de Datos
 	 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 	 * @throws Exception Si se genera un error dentro del metodo.
 	 */
-	public void addUsuario(UsuarioVO hostal) throws SQLException, Exception {
+	public void addContratoVecino(ContratoVecinoVO contrato) throws SQLException, Exception {
 
-		String sql = String.format("INSERT INTO USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) VALUES (%2$s, '%3$s', '%4$s')", 
+		String sql = String.format("INSERT INTO CONTRATOINMUEBLE (FECHAINICIO, FECHAFIN, USUARIO, DUENO, DIRECCION) VALUES (%2$s, '%3$s', '%4$s', '%5$s', '%6$s')", 
 				USUARIO, 
-				hostal.getCedula(), 
-				hostal.getNombre(),
-				hostal.getFechaNacimiento() 
-				);
+				contrato.getFechaInicio(),
+				contrato.getFechaFin(),
+				contrato.getUsuario(), 
+				contrato.getRoom().getDueno().getCedula(),
+				contrato.getRoom().getDireccion());
 		System.out.println(sql);
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -123,36 +123,36 @@ public class DAOUsuario {
 	}
 
 	/**
-	 * Metodo que actualiza la informacion del usuario en la Base de Datos que tiene el identificador dado por parametro<br/>
+	 * Metodo que actualiza la informacion del contrato en la Base de Datos que tiene el identificador dado por parametro<br/>
 	 * <b>Precondicion: </b> la conexion a sido inicializadoa <br/>  
-	 * @param hostal Bebedor que desea actualizar a la Base de Datos
+	 * @param contrato ContratoVecinoVO que desea actualizar a la Base de Datos
 	 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 	 * @throws Exception Si se genera un error dentro del metodo.
+
+		public void updateContratoVecino(ContratoVecinoVO contrato) throws SQLException, Exception {
+
+			StringBuilder sql = new StringBuilder();
+			sql.append(String.format("UPDATE %s.CONTRATOSINMUEBLES SET ", RELACIONADO));
+			sql.append(String.format("FECHAI = '%1$s' AND FECHAF = '%2$s' AND CUARTO = '%3$s' AND RELACIONADO = '%4$s' ", contrato.getFechaI(), contrato.getFechaF(), contrato.getCuarto()));
+
+			System.out.println(sql);
+
+			PreparedStatement prepStmt = conn.prepareStatement(sql.toString());
+			recursos.add(prepStmt);
+			prepStmt.executeQuery();
+		}
 	 */
-	public void updateUsuario(UsuarioVO usuario) throws SQLException, Exception {
-
-		StringBuilder sql = new StringBuilder();
-		sql.append(String.format("UPDATE USUARIO SET ", USUARIO));
-		sql.append(String.format("CEDULA = '%1$s' AND NOMBRE = '%2$s' AND FECHANACIMIENTO = '%3$s'"
-				,usuario.getCedula(), usuario.getNombre(), usuario.getFechaNacimiento()));
-
-		System.out.println(sql);
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql.toString());
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-	}
 
 	/**
-	 * Metodo que actualiza la informacion del hostal en la Base de Datos que tiene el identificador dado por parametro<br/>
+	 * Metodo que actualiza la informacion del contrato en la Base de Datos que tiene el identificador dado por parametro<br/>
 	 * <b>Precondicion: </b> la conexion a sido inicializadoa <br/>  
-	 * @param hostal Bebedor que desea actualizar a la Base de Datos
+	 * @param contrato ContratoVecinoVO que desea actualizar a la Base de Datos
 	 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 	 * @throws Exception Si se genera un error dentro del metodo.
 	 */
-	public void deleteUsuario(UsuarioVO hostal) throws SQLException, Exception {
+	public void deleteContratoVecino(ContratoVecinoVO contrato) throws SQLException, Exception {
 
-		String sql = String.format("DELETE FROM USUARIO WHERE CEDULA = %2$d", USUARIO, hostal.getCedula());
+		String sql = String.format("DELETE FROM CONTRATOINMUEBLE WHERE FECHAINICIO = %2$d AND FECHAFIN = %3$d AND USUARIO = %4$d", USUARIO, contrato.getFechaInicio(),contrato.getFechaFin(),contrato.getUsuario().getCedula());
 
 		System.out.println(sql);
 
@@ -192,26 +192,33 @@ public class DAOUsuario {
 	}
 
 	/**
-	 * Metodo que transforma el resultado obtenido de una consulta SQL (sobre la tabla BEBEDORES) en una instancia de la clase Bebedor.
-	 * @param resultSet ResultSet con la informacion de un hostal que se obtuvo de la base de datos.
-	 * @return Bebedor cuyos atributos corresponden a los valores asociados a un registro particular de la tabla BEBEDORES.
+	 * Metodo que transforma el resultado obtenido de una consulta SQL (sobre la tabla CONTRATOSINMUEBLES) en una instancia de la clase ContratoVecinoVO.
+	 * @param resultSet ResultSet con la informacion de un contrato que se obtuvo de la base de datos.
+	 * @return ContratoVecinoVO cuyos atributos corresponden a los valores asociados a un registro particular de la tabla CONTRATOSINMUEBLES.
 	 * @throws SQLException Si existe algun problema al extraer la informacion del ResultSet.
 	 */
-	public UsuarioVO convertResultSetToUsuario(ResultSet resultSet) throws SQLException {
+	public ContratoVecinoVO convertResultSetToContratoVecino(ResultSet resultSet) throws SQLException {
 
-		String cedula = resultSet.getString("CEDULA");
-		String nombre = resultSet.getString("NOMBRE");
-		String fechaNacimiento = resultSet.getString("FECHANACIMIENTO");
+		DAOVecinoRoom dao = new DAOVecinoRoom();
+		DAOUsuario ldao = new DAOUsuario();
+		VecinoRoomVO inmueble;
+		try {
+			String fechaI = resultSet.getString("FECHAINICIO");
+			String fechaF = resultSet.getString("FECHAFIN");
+			String dueno = resultSet.getString("DUENO");
+			String direccion = resultSet.getString("DIRECCION");
+			String cedula = resultSet.getString("USUARIO");
+			dao.setConn(conn);
+			inmueble = dao.getVecinoRoom(dueno, direccion);
+			ldao.setConn(conn);
+			UsuarioVO ussr = ldao.getUsuario(cedula);
 
-		
-		
-		UsuarioVO beb = new UsuarioVO(cedula, nombre, fechaNacimiento);
+			ContratoVecinoVO beb = new ContratoVecinoVO(fechaI, fechaF, ussr, inmueble);
+			return beb;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 
-		return beb;
-	}
-
-	public UsuarioVO getUsuarioSimple(String cedula) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

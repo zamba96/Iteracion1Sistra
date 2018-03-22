@@ -13,13 +13,17 @@ import java.util.List;
 import java.util.Properties;
 
 import dao.DAOContratoInmueble;
+import dao.DAOContratoVecino;
 import dao.DAOContratoVivienda;
 import dao.DAOReservaHostal;
 import dao.DAOReservaHotel;
+import dao.DAOVecinoRoom;
 import vos.ContratoInmuebleVO;
+import vos.ContratoVecinoVO;
 import vos.ContratoViviendaVO;
 import vos.ReservaHostalVO;
 import vos.ReservaHotelVO;
+import vos.VecinoRoomVO;
 
 /**
  * @author camilo
@@ -909,7 +913,7 @@ public class TransactionManager {
 				throw exception;
 			}
 		}
-		
+
 	}
 
 	public void deleteContratoInmueble(ContratoInmuebleVO contratoInmueble) throws Exception {
@@ -949,5 +953,155 @@ public class TransactionManager {
 			}
 		}	
 	}
+
+	public List<ContratoVecinoVO> getContratosVecinos() throws Exception {
+		DAOContratoVecino daoContratoVecino = new DAOContratoVecino();
+		List<ContratoVecinoVO> contratosVecinos;
+		try 
+		{
+			this.conn = darConexion();
+			daoContratoVecino.setConn(conn);
+
+			//Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
+			contratosVecinos = daoContratoVecino.getContratosVecino();
+		}
+		catch (SQLException sqlException) {
+			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
+			sqlException.printStackTrace();
+			throw sqlException;
+		} 
+		catch (Exception exception) {
+			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
+			exception.printStackTrace();
+			throw exception;
+		} 
+		finally {
+			try {
+				daoContratoVecino.cerrarRecursos();
+				if(this.conn!=null){
+					this.conn.close();					
+				}
+			}
+			catch (SQLException exception) {
+				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return contratosVecinos;
+	}
+
+	public ContratoVecinoVO getContratoVecino(String fechaI, String fechaF, String usuario) throws Exception {
+		DAOContratoVecino daoContratoVecino = new DAOContratoVecino();
+		ContratoVecinoVO contratoVecino = null;
+		try 
+		{
+			this.conn = darConexion();
+			daoContratoVecino.setConn(conn);
+			contratoVecino = daoContratoVecino.getContratoVecino(fechaI, fechaF, usuario);
+			if(contratoVecino == null)
+			{
+				throw new Exception("El reservaHostal con la fecha inicial para el usuario = " + fechaI + ", " + usuario + " no se encuentra persistido en la base de datos.");				
+			}
+		} 
+		catch (SQLException sqlException) {
+			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
+			sqlException.printStackTrace();
+			throw sqlException;
+		} 
+		catch (Exception exception) {
+			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
+			exception.printStackTrace();
+			throw exception;
+		} 
+		finally {
+			try {
+				daoContratoVecino.cerrarRecursos();
+				if(this.conn!=null){
+					this.conn.close();					
+				}
+			}
+			catch (SQLException exception) {
+				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return contratoVecino;
+	}
+
+	public void addContratoVecino(ContratoVecinoVO contrato) throws Exception {
+
+		DAOContratoVecino daoContratoVecino = new DAOContratoVecino( );
+		try
+		{
+			this.conn = darConexion();
+			daoContratoVecino.setConn(conn);
+			daoContratoVecino.addContratoVecino(contrato);
+		}
+		catch (SQLException sqlException) {
+			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
+			sqlException.printStackTrace();
+			throw sqlException;
+		} 
+		catch (Exception exception) {
+			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
+			exception.printStackTrace();
+			throw exception;
+		} 
+		finally {
+			try {
+				daoContratoVecino.cerrarRecursos();
+				if(this.conn!=null){
+					this.conn.close();					
+				}
+			}
+			catch (SQLException exception) {
+				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+
+	}
+
+	public void deleteContratoVecino(ContratoVecinoVO contratoVecino) throws Exception{
+		DAOContratoVecino daoContratoVecino = new DAOContratoVecino( );
+		try
+		{
+			this.conn = darConexion();
+			daoContratoVecino.setConn( conn );
+			contratoVecino = daoContratoVecino.getContratoVecino(contratoVecino.getFechaInicio(),contratoVecino.getFechaFin(),contratoVecino.getUsuario().getCedula());
+			if(contratoVecino == null)
+			{
+				throw new Exception("El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");				
+			}
+			else daoContratoVecino.deleteContratoVecino(contratoVecino);
+		}
+		catch (SQLException sqlException) {
+			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
+			sqlException.printStackTrace();
+			throw sqlException;
+		} 
+		catch (Exception exception) {
+			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
+			exception.printStackTrace();
+			throw exception;
+		} 
+		finally {
+			try {
+				daoContratoVecino.cerrarRecursos();
+				if(this.conn!=null){
+					this.conn.close();					
+				}
+			}
+			catch (SQLException exception) {
+				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}	
+	}
+
 
 }

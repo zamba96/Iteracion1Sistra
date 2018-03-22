@@ -6,9 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import vos.UsuarioVO;
+import vos.VecinoRoomVO;
+import vos.VecinoVO;
 
-public class DAOUsuario {
+public class DAOVecinoRoom {
 	//----------------------------------------------------------------------------------------------------------------------------------
 	// CONSTANTES
 	//----------------------------------------------------------------------------------------------------------------------------------
@@ -40,7 +41,7 @@ public class DAOUsuario {
 	/**
 	 * Metodo constructor de la clase DAOBebedor <br/>
 	 */
-	public DAOUsuario() {
+	public DAOVecinoRoom() {
 		recursos = new ArrayList<Object>();
 	}
 
@@ -55,18 +56,18 @@ public class DAOUsuario {
 	 * @throws SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 	 * @throws Exception Si se genera un error dentro del metodo.
 	 */
-	public ArrayList<UsuarioVO> getUsuarios() throws SQLException, Exception {
-		ArrayList<UsuarioVO> hostales = new ArrayList<UsuarioVO>();
+	public ArrayList<VecinoRoomVO> getVecinos() throws SQLException, Exception {
+		ArrayList<VecinoRoomVO> hostales = new ArrayList<VecinoRoomVO>();
 
 		//Aclaracion: Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
-		String sql = String.format("SELECT * FROM USUARIOS WHERE ROWNUM <= 50", USUARIO);
+		String sql = String.format("SELECT * FROM VECINOROOM WHERE ROWNUM <= 50");
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
 		while (rs.next()) {
-			hostales.add(convertResultSetToUsuario(rs));
+			hostales.add(convertResultSetToVecino(rs));
 		}
 		return hostales;
 	}
@@ -82,18 +83,18 @@ public class DAOUsuario {
 	 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 	 * @throws Exception Si se genera un error dentro del metodo.
 	 */
-	public UsuarioVO getUsuario(String cedula) throws SQLException, Exception 
+	public VecinoRoomVO getVecinoRoom(String dueno, String direccion) throws SQLException, Exception 
 	{
-		UsuarioVO hostal = null;
+		VecinoRoomVO hostal = null;
 
-		String sql = String.format("SELECT * FROM USUARIO WHERE CEDULA = %2$s", USUARIO, cedula); 
+		String sql = String.format("SELECT * FROM VECINOROOM WHERE DUENO = '%2$s' AND DIRECCION = '%3$s'", USUARIO, dueno, direccion); 
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
 		if(rs.next()) {
-			hostal = convertResultSetToUsuario(rs);
+			hostal = convertResultSetToVecino(rs);
 		}
 
 		return hostal;
@@ -106,13 +107,16 @@ public class DAOUsuario {
 	 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 	 * @throws Exception Si se genera un error dentro del metodo.
 	 */
-	public void addUsuario(UsuarioVO hostal) throws SQLException, Exception {
+	public void addVecinoRoom(VecinoRoomVO hostal) throws SQLException, Exception {
 
-		String sql = String.format("INSERT INTO USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) VALUES (%2$s, '%3$s', '%4$s')", 
+		String sql = String.format("INSERT INTO VECINOROOM (HABITACIONES, BANOS, DIRECCION, MENAJE, PRECIO, DUENO) VALUES (%2$s, '%3$s', '%4$s', %5$s, '%6$s', '%7$s')", 
 				USUARIO, 
-				hostal.getCedula(), 
-				hostal.getNombre(),
-				hostal.getFechaNacimiento() 
+				hostal.getHabitaciones(), 
+				hostal.getBanos(),
+				hostal.getDireccion(),
+				hostal.getMenaje(),
+				hostal.getPrecio(),
+				hostal.getDueno()
 				);
 		System.out.println(sql);
 
@@ -129,10 +133,10 @@ public class DAOUsuario {
 	 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 	 * @throws Exception Si se genera un error dentro del metodo.
 	 */
-	public void updateUsuario(UsuarioVO usuario) throws SQLException, Exception {
+	public void updateVecino(VecinoVO usuario) throws SQLException, Exception {
 
 		StringBuilder sql = new StringBuilder();
-		sql.append(String.format("UPDATE USUARIO SET ", USUARIO));
+		sql.append(String.format("UPDATE VECINOROOM SET ", USUARIO));
 		sql.append(String.format("CEDULA = '%1$s' AND NOMBRE = '%2$s' AND FECHANACIMIENTO = '%3$s'"
 				,usuario.getCedula(), usuario.getNombre(), usuario.getFechaNacimiento()));
 
@@ -150,9 +154,9 @@ public class DAOUsuario {
 	 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 	 * @throws Exception Si se genera un error dentro del metodo.
 	 */
-	public void deleteUsuario(UsuarioVO hostal) throws SQLException, Exception {
+	public void deleteVecino(VecinoVO hostal) throws SQLException, Exception {
 
-		String sql = String.format("DELETE FROM USUARIO WHERE CEDULA = %2$d", USUARIO, hostal.getCedula());
+		String sql = String.format("DELETE FROM VECINOROOM WHERE CEDULA = %2$d", USUARIO, hostal.getCedula());
 
 		System.out.println(sql);
 
@@ -197,21 +201,27 @@ public class DAOUsuario {
 	 * @return Bebedor cuyos atributos corresponden a los valores asociados a un registro particular de la tabla BEBEDORES.
 	 * @throws SQLException Si existe algun problema al extraer la informacion del ResultSet.
 	 */
-	public UsuarioVO convertResultSetToUsuario(ResultSet resultSet) throws SQLException {
-
-		String cedula = resultSet.getString("CEDULA");
-		String nombre = resultSet.getString("NOMBRE");
-		String fechaNacimiento = resultSet.getString("FECHANACIMIENTO");
-
+	public VecinoRoomVO convertResultSetToVecino(ResultSet resultSet) throws SQLException {
+		VecinoRoomVO beb = null;
 		
 		
-		UsuarioVO beb = new UsuarioVO(cedula, nombre, fechaNacimiento);
+		Integer habitaciones = resultSet.getInt("HABITACIONES");
+		Integer banos = resultSet.getInt("BANOS");
+		Integer precio = resultSet.getInt("PRECIO");
+		String menaje = resultSet.getString("MENAJE");
+		String direccion = resultSet.getString("DIRECCION");
+		
+		DAOVecino ldao = new DAOVecino();
+		ldao.setConn(conn);
+		VecinoVO veci;
+		try {
+			veci = ldao.getVecino(resultSet.getString("DUENO"));
+			beb = new VecinoRoomVO(habitaciones, banos, precio, menaje, direccion, veci);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 
 		return beb;
-	}
-
-	public UsuarioVO getUsuarioSimple(String cedula) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }

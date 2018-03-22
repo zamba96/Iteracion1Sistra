@@ -223,14 +223,16 @@ public class DAOInmueble {
 		UsuarioVO dueno;
 		try {
 			dueno = daoUSSR.getUsuario(cedula);
+			InmuebleVO beb = new InmuebleVO(amoblado, servicios, cable, administracion, precio, direccion, dueno); 
+
+			return beb;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
 		
-		InmuebleVO beb = new InmuebleVO(amoblado, servicios, cable, administracion, precio, direccion, dueno); 
-
-		return beb;
+		
 	}
 
 }

@@ -67,7 +67,7 @@ public class DAOHotelRoom {
 				ArrayList<HotelRoomVO> cuartos = new ArrayList<HotelRoomVO>();
 
 				//Aclaracion: Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
-				String sql = String.format("SELECT * FROM %1$s.HOTELROOMS WHERE ROWNUM <= 50", USUARIO);
+				String sql = String.format("SELECT * FROM %1$s.HOTELROOM WHERE ROWNUM <= 50", USUARIO);
 
 				PreparedStatement prepStmt = conn.prepareStatement(sql);
 				recursos.add(prepStmt);
@@ -93,7 +93,7 @@ public class DAOHotelRoom {
 			{
 				HotelRoomVO hotelroom = null;
 
-				String sql = String.format("SELECT * FROM %1$s.HOTELROOMS WHERE HOTEL = %2$d", USUARIO, hotel); 
+				String sql = String.format("SELECT * FROM %1$s.HOTELROOM WHERE HOTEL = %2$d", USUARIO, hotel); 
 
 				PreparedStatement prepStmt = conn.prepareStatement(sql);
 				recursos.add(prepStmt);
@@ -119,7 +119,7 @@ public class DAOHotelRoom {
 			{
 				HotelRoomVO hotelroom = null;
 
-				String sql = String.format("SELECT * FROM %1$s.HOTELROOMS WHERE HOTEL = %2$d AND CUARTO = %3$d" , USUARIO, hotel,cuarto); 
+				String sql = String.format("SELECT * FROM %1$s.HOTELROOM WHERE HOTEL = %2$d AND CUARTO = %3$d" , USUARIO, hotel,cuarto); 
 
 				PreparedStatement prepStmt = conn.prepareStatement(sql);
 				recursos.add(prepStmt);
@@ -141,7 +141,7 @@ public class DAOHotelRoom {
 			 */
 			public void addHotelRoom(HotelRoomVO hotelroom) throws SQLException, Exception {
 
-				String sql = String.format("INSERT INTO %1$s.HOTELROOMS (BANERA, YAKUZI, SALA, COCINA, CABLE, PRECIO, HOTEL, TIPO, CAPACIDAD, CUARTO, RESERVAS) "
+				String sql = String.format("INSERT INTO %1$s.HOTELROOM (BANERA, YAKUZI, SALA, COCINA, CABLE, PRECIO, HOTEL, TIPO, CAPACIDAD, CUARTO, RESERVAS) "
 						+ "VALUES (%2$s, '%3$s', '%4$s', '%5$s','%6$s', %7$s, '%8$s', '%9$s', '%10$s','%11$s','%12$s')", 
 											USUARIO, 
 											hotelroom.getBanera(), 
@@ -150,7 +150,7 @@ public class DAOHotelRoom {
 											hotelroom.getCocina(),
 											hotelroom.getCable(),
 											hotelroom.getPrecio(), 
-											hotelroom.getHotel(),
+											hotelroom.getHotel().getNombre(),
 											hotelroom.getTipo(),
 											hotelroom.getCapacidad(), 
 											hotelroom.getCuarto(),
@@ -173,7 +173,7 @@ public class DAOHotelRoom {
 			public void updateHotelRoom(HotelRoomVO hotelroom) throws SQLException, Exception {
 
 				StringBuilder sql = new StringBuilder();
-				sql.append(String.format("UPDATE %s.HOTELROOMS SET ", USUARIO));
+				sql.append(String.format("UPDATE %s.HOTELROOM SET ", USUARIO));
 				sql.append(String.format("BANERA = '%1$s' AND YAKUZI = '%2$s' AND SALA = '%3$s' AND COCINA = '%4$s' AND CABLE = '%5$s' AND PRECIO = '%6$s' "
 						+ "AND HOTEL = '%7$s' AND TIPO = '%8$s' AND CAPACIDAD = '%9$s' AND CUARTO = '%10$s' AND RESERVAS = '%11$s' ",
 						hotelroom.getBanera(), 
@@ -204,7 +204,7 @@ public class DAOHotelRoom {
 			 */
 			public void deleteHotelRoom(HotelRoomVO hotelroom) throws SQLException, Exception {
 
-				String sql = String.format("DELETE FROM %1$s.HOTELROOMS WHERE HOSTAL = %2$d AND CUARTO = %3$d", USUARIO, hotelroom.getHotel(),hotelroom.getCuarto());
+				String sql = String.format("DELETE FROM %1$s.HOTELROOM WHERE HOSTAL = %2$d AND CUARTO = %3$d", USUARIO, hotelroom.getHotel(),hotelroom.getCuarto());
 
 				System.out.println(sql);
 				
@@ -242,9 +242,9 @@ public class DAOHotelRoom {
 			}
 			
 			/**
-			 * Metodo que transforma el resultado obtenido de una consulta SQL (sobre la tabla HOTELROOMS) en una instancia de la clase HotelRoomVO.
+			 * Metodo que transforma el resultado obtenido de una consulta SQL (sobre la tabla HOTELROOM) en una instancia de la clase HotelRoomVO.
 			 * @param resultSet ResultSet con la informacion de un hotelroom que se obtuvo de la base de datos.
-			 * @return HotelRoomVO cuyos atributos corresponden a los valores asociados a un registro particular de la tabla HOTELROOMS.
+			 * @return HotelRoomVO cuyos atributos corresponden a los valores asociados a un registro particular de la tabla HOTELROOM.
 			 * @throws SQLException Si existe algun problema al extraer la informacion del ResultSet.
 			 */
 			public HotelRoomVO convertResultSetToHotelRoom(ResultSet resultSet) throws SQLException {

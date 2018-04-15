@@ -13,6 +13,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
  */
 public class ViviendaUVO {
 
+	@JsonProperty(value = "id")
+	private Long id;
+	
 	@JsonProperty(value="direccion")
 	private String direccion;
 	
@@ -20,11 +23,11 @@ public class ViviendaUVO {
 	private String nombre;
 	
 	@JsonProperty(value="cuartos")
-	private List<ViviendaRoomVO> cuartos;
+	private List<Long> cuartos;
 	
 	public ViviendaUVO(@JsonProperty(value="direccion")String direccion,
 			@JsonProperty(value="nombre")String nombre,
-			@JsonProperty(value="cuartos")List<ViviendaRoomVO> cuartos){
+			@JsonProperty(value="cuartos")List<Long> cuartos){
 
 		this.direccion = direccion;
 		this.nombre = nombre;
@@ -36,6 +39,20 @@ public class ViviendaUVO {
 		
 		this.direccion = direccion;
 		this.nombre = nombre;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	/**
@@ -69,14 +86,14 @@ public class ViviendaUVO {
 	/**
 	 * @return the cuartos
 	 */
-	public List<ViviendaRoomVO> getCuartos() {
+	public List<Long> getCuartos() {
 		return cuartos;
 	}
 
 	/**
 	 * @param cuartos the cuartos to set
 	 */
-	public void setCuartos(List<ViviendaRoomVO> cuartos) {
+	public void setCuartos(List<Long> cuartos) {
 		this.cuartos = cuartos;
 	}
 	

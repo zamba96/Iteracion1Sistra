@@ -4,6 +4,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 public class ContratoInmuebleVO {
 
+	
 	@JsonProperty(value = "fechaInicio")
 	private String fechaInicio;
 

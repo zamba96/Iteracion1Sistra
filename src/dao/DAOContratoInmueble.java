@@ -127,7 +127,7 @@ public class DAOContratoInmueble {
 	 * @param contrato ContratoInmuebleVO que desea actualizar a la Base de Datos
 	 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 	 * @throws Exception Si se genera un error dentro del metodo.
-	 
+	 *
 	public void updateContratoInmueble(ContratoInmuebleVO contrato) throws SQLException, Exception {
 
 		StringBuilder sql = new StringBuilder();
@@ -140,7 +140,7 @@ public class DAOContratoInmueble {
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
 	}
-	*/
+	
 
 	/**
 	 * Metodo que actualiza la informacion del contrato en la Base de Datos que tiene el identificador dado por parametro<br/>

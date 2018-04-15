@@ -6,6 +6,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 public class HotelRoomVO {
 
+	@JsonProperty(value = "id")
+	private Long id;
+	
 	@JsonProperty(value="banera")
 	private Boolean banera;
 	
@@ -37,9 +40,10 @@ public class HotelRoomVO {
 	private Integer cuarto;
 	
 	@JsonProperty(value="reservas")
-	private List<ReservaHotelVO> reservas;
+	private List<Long> reservas;
 	
-	public HotelRoomVO(@JsonProperty(value="banera")Boolean banera,
+	public HotelRoomVO(
+			@JsonProperty(value="banera")Boolean banera,
 			@JsonProperty(value="yakuzi")Boolean yakuzi,
 			@JsonProperty(value="sala")Boolean sala,
 			@JsonProperty(value="cocina")Boolean cocina,
@@ -49,8 +53,7 @@ public class HotelRoomVO {
 	        @JsonProperty(value="tipo")String tipo,
 	        @JsonProperty(value="capacidad")Integer capacidad,
 	        @JsonProperty(value="cuarto")Integer cuarto,
-	        @JsonProperty(value="reservas")List<ReservaHotelVO> reservas){
-
+	        @JsonProperty(value="reservas")List<Long> reservas){
 		this.banera = banera;
 		this.yakuzi = yakuzi;
 		this.sala = sala;
@@ -64,7 +67,8 @@ public class HotelRoomVO {
 		this.reservas = reservas;
 	}
 
-	public HotelRoomVO(@JsonProperty(value="banera")Boolean banera,
+	public HotelRoomVO(
+			@JsonProperty(value="banera")Boolean banera,
 			@JsonProperty(value="yakuzi")Boolean yakuzi,
 			@JsonProperty(value="sala")Boolean sala,
 			@JsonProperty(value="cocina")Boolean cocina,
@@ -74,7 +78,6 @@ public class HotelRoomVO {
 	        @JsonProperty(value="tipo")String tipo,
 	        @JsonProperty(value="capacidad")Integer capacidad,
 	        @JsonProperty(value="cuarto")Integer cuarto) {
-		
 		this.banera = banera;
 		this.yakuzi = yakuzi;
 		this.sala = sala;
@@ -85,6 +88,20 @@ public class HotelRoomVO {
 		this.tipo = tipo;
 		this.capacidad = capacidad;
 		this.cuarto = cuarto;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	/**
@@ -230,14 +247,14 @@ public class HotelRoomVO {
 	/**
 	 * @return the reservas
 	 */
-	public List<ReservaHotelVO> getReservas() {
+	public List<Long> getReservas() {
 		return reservas;
 	}
 
 	/**
 	 * @param reservas the reservas to set
 	 */
-	public void setReservas(List<ReservaHotelVO> reservas) {
+	public void setReservas(List<Long> reservas) {
 		this.reservas = reservas;
 	}
 	

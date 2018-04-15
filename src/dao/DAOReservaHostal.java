@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-
 import vos.HostalRoomVO;
 import vos.ReservaHostalVO;
 
@@ -67,7 +66,7 @@ public class DAOReservaHostal {
 			ArrayList<ReservaHostalVO> reservas = new ArrayList<ReservaHostalVO>();
 
 			//Aclaracion: Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
-			String sql = String.format("SELECT * FROM %1$s.RESERVASHOSTALES WHERE ROWNUM <= 50", USUARIO);
+			String sql = String.format("SELECT * FROM RESERVAHOSTAL WHERE ROWNUM <= 50", USUARIO);
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
@@ -92,7 +91,7 @@ public class DAOReservaHostal {
 		{
 			ReservaHostalVO reserva = null;
 
-			String sql = String.format("SELECT * FROM %1$s.RESERVASHOSTALES WHERE FECHAI = '%1$s' AND FECHAF = '%2$s' AND USUARIO = '%3$s'", USUARIO ); 
+			String sql = String.format("SELECT * FROM RESERVAHOSTAL WHERE FECHAINICIO = '%1$s' AND FECHAFIN = '%2$s' AND USUARIO = '%3$s'", USUARIO ); 
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
@@ -114,7 +113,7 @@ public class DAOReservaHostal {
 		 */
 		public void addReservaHostal(ReservaHostalVO reserva) throws SQLException, Exception {
 
-			String sql = String.format("INSERT INTO %1$s.RESERVASHOSTALES (FECHAI, FECHAF, CUARTO, USUARIO) VALUES (%2$s, '%3$s', '%4$s', '%5$s')", 
+			String sql = String.format("INSERT INTO RESERVAHOSTAL (FECHAINICIO, FECHAFIN, CUARTO, USUARIO) VALUES (%1$s, '%2$s', '%3$s', '%4$s')", 
 										USUARIO, 
 										reserva.getFechaI(), 
 										reserva.getFechaF(),
@@ -138,8 +137,8 @@ public class DAOReservaHostal {
 		public void updateReservaHostal(ReservaHostalVO reserva) throws SQLException, Exception {
 
 			StringBuilder sql = new StringBuilder();
-			sql.append(String.format("UPDATE %s.RESERVASHOSTALES SET ", USUARIO));
-			sql.append(String.format("FECHAI = '%1$s' AND FECHAF = '%2$s' AND CUARTO = '%3$s' AND USUARIO = '%4$s' ", reserva.getFechaI(), reserva.getFechaF(), reserva.getCuarto()));
+			sql.append(String.format("UPDATE RESERVAHOSTAL SET ", USUARIO));
+			sql.append(String.format("FECHAINICIO = '%1$s' AND FECHAFIN = '%2$s' AND CUARTO = '%3$s' AND USUARIO = '%4$s' ", reserva.getFechaI(), reserva.getFechaF(), reserva.getCuarto()));
 			
 			System.out.println(sql);
 			
@@ -157,7 +156,10 @@ public class DAOReservaHostal {
 		 */
 		public void deleteReservaHostal(ReservaHostalVO reserva) throws SQLException, Exception {
 
-			String sql = String.format("DELETE FROM %1$s.RESERVASHOSTALES WHERE FECHAI = %2$d AND FECHAI = %3$d AND FECHAI = %4$d", USUARIO, reserva.getFechaI(),reserva.getFechaF(),reserva.getUsuario());
+			String sql = String.format("DELETE FROM RESERVAHOSTAL WHERE FECHAINICIO = %1$d AND FECHAFIN = %2$d AND USUARIO = %3$d", USUARIO,
+					reserva.getFechaI(),
+					reserva.getFechaF(),
+					reserva.getUsuario());
 
 			System.out.println(sql);
 			
@@ -197,9 +199,9 @@ public class DAOReservaHostal {
 		}
 		
 		/**
-		 * Metodo que transforma el resultado obtenido de una consulta SQL (sobre la tabla RESERVASHOSTALES) en una instancia de la clase ReservaHostalVO.
+		 * Metodo que transforma el resultado obtenido de una consulta SQL (sobre la tabla RESERVAHOSTAL) en una instancia de la clase ReservaHostalVO.
 		 * @param resultSet ResultSet con la informacion de un reserva que se obtuvo de la base de datos.
-		 * @return ReservaHostalVO cuyos atributos corresponden a los valores asociados a un registro particular de la tabla RESERVASHOSTALES.
+		 * @return ReservaHostalVO cuyos atributos corresponden a los valores asociados a un registro particular de la tabla RESERVAHOSTAL.
 		 * @throws SQLException Si existe algun problema al extraer la informacion del ResultSet.
 		 */
 		public ReservaHostalVO convertResultSetToReservaHostal(ResultSet resultSet) throws SQLException {
@@ -207,13 +209,13 @@ public class DAOReservaHostal {
 			DAOHostalRoom dao = new DAOHostalRoom();
 			HostalRoomVO cuarto;
 			try {
-				String fechaI = resultSet.getString("FECHAI");
-				String fechaF = resultSet.getString("FECHAF");
+				String fechaI = resultSet.getString("FECHAINICIO");
+				String fechaF = resultSet.getString("FECHAFIN");
 				Integer cuartoS = resultSet.getInt("CUARTO");
 				String hotelS = resultSet.getString("HOTEL");
 				cuarto = dao.getHostalRoom(hotelS, cuartoS);
 				
-				ReservaHostalVO beb = new ReservaHostalVO(fechaI, fechaF, cuarto);
+				ReservaHostalVO beb = new ReservaHostalVO(fechaI, fechaF, cuarto.getId());
 				return beb;
 			} catch (Exception e) {
 				e.printStackTrace();

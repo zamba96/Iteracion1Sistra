@@ -15,6 +15,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
  */
 public class ViviendaRoomVO {
 
+	@JsonProperty(value = "id")
+	private Long id;
+	
 	@JsonProperty(value="compartida")
 	private Integer compartida;
 	
@@ -34,24 +37,24 @@ public class ViviendaRoomVO {
 	private Double precio;
 	
 	@JsonProperty(value="vivienda")
-	private ViviendaUVO vivienda;
+	private Long vivienda;
 	
 	@JsonProperty(value="cuarto")
-	private Integer cuarto;
+	private Long cuarto;
 	
 	@JsonProperty(value="reservas")
-	private List<ContratoViviendaVO> reservas;
+	private List<Long> reservas;
 	
-	public ViviendaRoomVO(@JsonProperty(value="compartida")Integer compartida,
+	public ViviendaRoomVO(
+			@JsonProperty(value="compartida")Integer compartida,
 			@JsonProperty(value="restaurante")Double restaurante,
 			@JsonProperty(value="SalaDeEstudio")Double SalaDeEstudio,
 			@JsonProperty(value="SalaDeEsparcimiento")Double SalaDeEsparcimiento,
 			@JsonProperty(value="gym")Double gym,
 			@JsonProperty(value="precio")Double precio,
-			@JsonProperty(value="vivienda")ViviendaUVO vivienda,
-			@JsonProperty(value="cuarto")Integer cuarto,
-			@JsonProperty(value="reservas")List<ContratoViviendaVO> reservas) {
-
+			@JsonProperty(value="vivienda")Long vivienda,
+			@JsonProperty(value="cuarto")Long cuarto,
+			@JsonProperty(value="reservas")List<Long> reservas) {
 		this.compartida = compartida;
 		this.restaurante = restaurante;
 		this.SalaDeEstudio = SalaDeEstudio;
@@ -63,15 +66,15 @@ public class ViviendaRoomVO {
 		this.reservas = reservas;
 	}
 
-	public ViviendaRoomVO(@JsonProperty(value="compartida")Integer compartida,
+	public ViviendaRoomVO(
+			@JsonProperty(value="compartida")Integer compartida,
 			@JsonProperty(value="restaurante")Double restaurante,
 			@JsonProperty(value="SalaDeEstudio")Double SalaDeEstudio,
 			@JsonProperty(value="SalaDeEsparcimiento")Double SalaDeEsparcimiento,
 			@JsonProperty(value="gym")Double gym,
 			@JsonProperty(value="precio")Double precio,
-			@JsonProperty(value="vivienda")ViviendaUVO vivienda,
-			@JsonProperty(value="cuarto")Integer cuarto) {
-		
+			@JsonProperty(value="vivienda")Long vivienda,
+			@JsonProperty(value="cuarto")Long cuarto) {
 		this.compartida = compartida;
 		this.restaurante = restaurante;
 		this.SalaDeEstudio = SalaDeEstudio;
@@ -80,6 +83,20 @@ public class ViviendaRoomVO {
 		this.precio = precio;
 		this.vivienda = vivienda;
 		this.cuarto = cuarto;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	/**
@@ -169,42 +186,42 @@ public class ViviendaRoomVO {
 	/**
 	 * @return the vivienda
 	 */
-	public ViviendaUVO getVivienda() {
+	public Long getVivienda() {
 		return vivienda;
 	}
 
 	/**
 	 * @param vivienda the vivienda to set
 	 */
-	public void setVivienda(ViviendaUVO vivienda) {
+	public void setVivienda(Long vivienda) {
 		this.vivienda = vivienda;
 	}
 
 	/**
 	 * @return the reservas
 	 */
-	public List<ContratoViviendaVO> getReservas() {
+	public List<Long> getReservas() {
 		return reservas;
 	}
 
 	/**
 	 * @param reservas the reservas to set
 	 */
-	public void setReservas(List<ContratoViviendaVO> reservas) {
+	public void setReservas(List<Long> reservas) {
 		this.reservas = reservas;
 	}
 
 	/**
 	 * @return the cuarto
 	 */
-	public Integer getCuarto() {
+	public Long getCuarto() {
 		return cuarto;
 	}
 
 	/**
 	 * @param cuarto the cuarto to set
 	 */
-	public void setCuarto(Integer cuarto) {
+	public void setCuarto(Long cuarto) {
 		this.cuarto = cuarto;
 	}
 	

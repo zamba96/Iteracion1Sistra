@@ -13,6 +13,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
  */
 public class HostalVO {
 
+	@JsonProperty(value = "id")
+	private Long id;
+	
 	@JsonProperty(value="apertura")
 	private Integer apertura;
 	
@@ -28,14 +31,14 @@ public class HostalVO {
 	@JsonProperty(value="nombre")
 	private String nombre;
 	
-	private List<HostalRoomVO> cuartos;
+	private List<Long> cuartos;
 	
-	public HostalVO(@JsonProperty(value="apertura")Integer apertura,
+	public HostalVO(
+			@JsonProperty(value="apertura")Integer apertura,
 			@JsonProperty(value="cierre")Integer cierre,
 			@JsonProperty(value="desayuno")Boolean desayuno,
 			@JsonProperty(value="direccion")String direccion,
 			@JsonProperty(value="nombre")String nombre) {
-
 		this.apertura = apertura;
 		this.cierre = cierre;
 		this.desayuno = desayuno;
@@ -43,19 +46,33 @@ public class HostalVO {
 		this.nombre = nombre;
 	}
 	
-	public HostalVO(@JsonProperty(value="apertura")Integer apertura,
+	public HostalVO(
+			@JsonProperty(value="apertura")Integer apertura,
 			@JsonProperty(value="cierre")Integer cierre,
 			@JsonProperty(value="desayuno")Boolean desayuno,
 			@JsonProperty(value="direccion")String direccion,
 			@JsonProperty(value="nombre")String nombre,
-			@JsonProperty(value="cuartos")List<HostalRoomVO> cuartos) {
-
+			@JsonProperty(value="cuartos")List<Long> cuartos) {
 		this.apertura = apertura;
 		this.cierre = cierre;
 		this.desayuno = desayuno;
 		this.direccion = direccion;
 		this.nombre = nombre;
 		this.cuartos = cuartos;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	/**
@@ -131,14 +148,14 @@ public class HostalVO {
 	/**
 	 * @return the cuartos
 	 */
-	public List<HostalRoomVO> getCuartos() {
+	public List<Long> getCuartos() {
 		return cuartos;
 	}
 
 	/**
 	 * @param cuartos the cuartos to set
 	 */
-	public void setCuartos(List<HostalRoomVO> cuartos) {
+	public void setCuartos(List<Long> cuartos) {
 		this.cuartos = cuartos;
 	}
 	

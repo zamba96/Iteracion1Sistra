@@ -66,7 +66,7 @@ public class DAOHotel {
 				ArrayList<HotelVO> hoteles = new ArrayList<HotelVO>();
 
 				//Aclaracion: Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
-				String sql = String.format("SELECT * FROM %1$s.HOTELES WHERE ROWNUM <= 50", USUARIO);
+				String sql = String.format("SELECT * FROM %1$s.HOTEL WHERE ROWNUM <= 50", USUARIO);
 
 				PreparedStatement prepStmt = conn.prepareStatement(sql);
 				recursos.add(prepStmt);
@@ -93,7 +93,7 @@ public class DAOHotel {
 			{
 				HotelVO hotel = null;
 
-				String sql = String.format("SELECT * FROM %1$s.HOTELES WHERE NOMBRE = %2$d", USUARIO, nombre); 
+				String sql = String.format("SELECT * FROM %1$s.HOTEL WHERE NOMBRE = %2$d", USUARIO, nombre); 
 
 				PreparedStatement prepStmt = conn.prepareStatement(sql);
 				recursos.add(prepStmt);
@@ -115,7 +115,7 @@ public class DAOHotel {
 			 */
 			public void addHotel(HotelVO hotel) throws SQLException, Exception {
 
-				String sql = String.format("INSERT INTO %1$s.HOTELES (DIRECCION, DESAYUNO, RESTAURANTE, PISCINA,PARQUEADERO,HORARIO,NOMBRE,CUARTOS) VALUES (%2$s, '%3$s', '%4$s', '%5$s','%6$s','%7$s')", 
+				String sql = String.format("INSERT INTO %1$s.HOTEL (DIRECCION, DESAYUNO, RESTAURANTE, PISCINA,PARQUEADERO,HORARIO,NOMBRE,CUARTOS) VALUES (%2$s, '%3$s', '%4$s', '%5$s','%6$s','%7$s')", 
 											USUARIO, 
 											hotel.getDireccion(), 
 											hotel.getDesayuno(),
@@ -144,7 +144,7 @@ public class DAOHotel {
 			public void updateHotel(HotelVO hotel) throws SQLException, Exception {
 
 				StringBuilder sql = new StringBuilder();
-				sql.append(String.format("UPDATE %s.HOTELES SET ", USUARIO));
+				sql.append(String.format("UPDATE %s.HOTEL SET ", USUARIO));
 				sql.append(String.format("DIRECCION = '%1$s' AND DESAYUNO = '%2$s' AND RESTAURANTE = '%3$s' AND PISCINA = '%4$s' AND PARQUEADERO = '%5$s' AND HORARIO = '%6$s' AND NOMBRE = '%7$s' AND CUARTOS = '%8$s' ",
 						hotel.getDireccion(),
 						hotel.getDesayuno(), 
@@ -171,7 +171,7 @@ public class DAOHotel {
 			 */
 			public void deleteHotel(HotelVO hotel) throws SQLException, Exception {
 
-				String sql = String.format("DELETE FROM %1$s.HOTELES WHERE NOMBRE = %2$d", USUARIO, hotel.getNombre());
+				String sql = String.format("DELETE FROM %1$s.HOTEL WHERE NOMBRE = %2$d", USUARIO, hotel.getNombre());
 
 				System.out.println(sql);
 				

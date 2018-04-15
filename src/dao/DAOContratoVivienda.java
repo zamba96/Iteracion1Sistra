@@ -9,8 +9,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import vos.ViviendaRoomVO;
 import vos.ContratoViviendaVO;
+import vos.ViviendaRoomVO;
 
 /**
  * @author camilo
@@ -64,7 +64,7 @@ public class DAOContratoVivienda {
 		ArrayList<ContratoViviendaVO> contratos = new ArrayList<ContratoViviendaVO>();
 
 		//Aclaracion: Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
-		String sql = String.format("SELECT * FROM CONTRATOSVIVIENDAS WHERE ROWNUM <= 50", RELACIONADO);
+		String sql = String.format("SELECT * FROM CONTRATORECIDENCIA WHERE ROWNUM <= 50", RELACIONADO);
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -89,7 +89,7 @@ public class DAOContratoVivienda {
 	{
 		ContratoViviendaVO contrato = null;
 
-		String sql = String.format("SELECT * FROM CONTRATOSVIVIENDAS WHERE FECHAI = '%1$s' AND FECHAF = '%2$s' AND RELACIONADO = '%3$s'", RELACIONADO ); 
+		String sql = String.format("SELECT * FROM CONTRATORECIDENCIA WHERE FECHAINICIO = '%1$s' AND FECHAFIN = '%2$s' AND RELACIONADO = '%3$s'", RELACIONADO ); 
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -111,7 +111,7 @@ public class DAOContratoVivienda {
 	 */
 	public void addContratoVivienda(ContratoViviendaVO contrato) throws SQLException, Exception {
 
-		String sql = String.format("INSERT INTO CONTRATOSVIVIENDAS (FECHAI, FECHAF, CUARTO, RELACIONADO) VALUES (%1$s, '%2$s', '%3$s', '%4$s')", 
+		String sql = String.format("INSERT INTO CONTRATORECIDENCIA (FECHAINICIO, FECHAFIN, CUARTO, RELACIONADO) VALUES (%1$s, '%2$s', '%3$s', '%4$s')", 
 									RELACIONADO, 
 									contrato.getFechaI(), 
 									contrato.getFechaF(),
@@ -135,8 +135,8 @@ public class DAOContratoVivienda {
 	public void updateContratoVivienda(ContratoViviendaVO contrato) throws SQLException, Exception {
 
 		StringBuilder sql = new StringBuilder();
-		sql.append(String.format("UPDATE CONTRATOSVIVIENDAS SET ", RELACIONADO));
-		sql.append(String.format("FECHAI = '%1$s' AND FECHAF = '%2$s' AND CUARTO = '%3$s' AND RELACIONADO = '%4$s' ", contrato.getFechaI(), contrato.getFechaF(), contrato.getCuarto()));
+		sql.append(String.format("UPDATE CONTRATORECIDENCIA SET ", RELACIONADO));
+		sql.append(String.format("FECHAINICIO = '%1$s' AND FECHAFIN = '%2$s' AND CUARTO = '%3$s' AND RELACIONADO = '%4$s' ", contrato.getFechaI(), contrato.getFechaF(), contrato.getCuarto()));
 		
 		System.out.println(sql);
 		
@@ -154,7 +154,10 @@ public class DAOContratoVivienda {
 	 */
 	public void deleteContratoVivienda(ContratoViviendaVO contrato) throws SQLException, Exception {
 
-		String sql = String.format("DELETE FROM CONTRATOSVIVIENDAS WHERE FECHAI = %1$d AND FECHAI = %2$d AND FECHAI = %3$d", RELACIONADO, contrato.getFechaI(),contrato.getFechaF(),contrato.getUsuario());
+		String sql = String.format("DELETE FROM CONTRATORECIDENCIA WHERE FECHAINICIO = %1$d AND FECHAFIN = %2$d AND USUARIO = %3$d", RELACIONADO,
+				contrato.getFechaI(),
+				contrato.getFechaF(),
+				contrato.getUsuario());
 
 		System.out.println(sql);
 		
@@ -194,9 +197,9 @@ public class DAOContratoVivienda {
 	}
 	
 	/**
-	 * Metodo que transforma el resultado obtenido de una consulta SQL (sobre la tabla CONTRATOSVIVIENDAS) en una instancia de la clase ContratoViviendaVO.
+	 * Metodo que transforma el resultado obtenido de una consulta SQL (sobre la tabla CONTRATORECIDENCIA) en una instancia de la clase ContratoViviendaVO.
 	 * @param resultSet ResultSet con la informacion de un contrato que se obtuvo de la base de datos.
-	 * @return ContratoViviendaVO cuyos atributos corresponden a los valores asociados a un registro particular de la tabla CONTRATOSVIVIENDAS.
+	 * @return ContratoViviendaVO cuyos atributos corresponden a los valores asociados a un registro particular de la tabla CONTRATORECIDENCIA.
 	 * @throws SQLException Si existe algun problema al extraer la informacion del ResultSet.
 	 */
 	public ContratoViviendaVO convertResultSetToContratoVivienda(ResultSet resultSet) throws SQLException {
@@ -204,13 +207,13 @@ public class DAOContratoVivienda {
 		DAOViviendaRoom dao = new DAOViviendaRoom();
 		ViviendaRoomVO cuarto;
 		try {
-			String fechaI = resultSet.getString("FECHAI");
-			String fechaF = resultSet.getString("FECHAF");
+			String fechaI = resultSet.getString("FECHAINICIO");
+			String fechaF = resultSet.getString("FECHAFIN");
 			Integer cuartoS = resultSet.getInt("CUARTO");
 			String hotelS = resultSet.getString("HOTEL");
 			cuarto = dao.getViviendaRoom(hotelS, cuartoS);
 			
-			ContratoViviendaVO beb = new ContratoViviendaVO(fechaI, fechaF, cuarto);
+			ContratoViviendaVO beb = new ContratoViviendaVO(fechaI, fechaF, cuarto.getId());
 			return beb;
 		} catch (Exception e) {
 			e.printStackTrace();

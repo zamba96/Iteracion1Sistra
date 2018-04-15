@@ -68,7 +68,7 @@ public class DAOHostalRoom {
 			ArrayList<HostalRoomVO> cuartos = new ArrayList<HostalRoomVO>();
 
 			//Aclaracion: Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
-			String sql = String.format("SELECT * FROM %1$s.HOSTALROOMS WHERE ROWNUM <= 50", USUARIO);
+			String sql = String.format("SELECT * FROM %1$s.HOSTALROOM WHERE ROWNUM <= 50", USUARIO);
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
@@ -94,7 +94,7 @@ public class DAOHostalRoom {
 		{
 			HostalRoomVO hostalroom = null;
 
-			String sql = String.format("SELECT * FROM %1$s.HOSTALROOMS WHERE HOSTAL = %2$d", USUARIO, hotel); 
+			String sql = String.format("SELECT * FROM %1$s.HOSTALROOM WHERE HOSTAL = %2$d", USUARIO, hotel); 
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
@@ -120,7 +120,7 @@ public class DAOHostalRoom {
 		{
 			HostalRoomVO hostalroom = null;
 
-			String sql = String.format("SELECT * FROM %1$s.HOSTALROOMS WHERE HOSTAL = %2$d AND CUARTO = %3$d" , USUARIO, hotel,cuarto); 
+			String sql = String.format("SELECT * FROM %1$s.HOSTALROOM WHERE HOSTAL = %2$d AND CUARTO = %3$d" , USUARIO, hotel,cuarto); 
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
@@ -142,12 +142,12 @@ public class DAOHostalRoom {
 		 */
 		public void addHostalRoom(HostalRoomVO hostalroom) throws SQLException, Exception {
 
-			String sql = String.format("INSERT INTO %1$s.HOSTALROOMS (CUARTO, CAPACIDAD, PRECIO, HOSTAL,RESERVAS) VALUES (%2$s, '%3$s', '%4$s', '%5$s','%6$s')", 
+			String sql = String.format("INSERT INTO %1$s.HOSTALROOM (CUARTO, CAPACIDAD, PRECIO, HOSTAL,RESERVAS) VALUES (%2$s, '%3$s', '%4$s', '%5$s','%6$s')", 
 										USUARIO, 
 										hostalroom.getCuarto(), 
 										hostalroom.getCapacidad(),
 										hostalroom.getPrecio(), 
-										hostalroom.getHostal(),
+										hostalroom.getHostal().getNombre(),
 										hostalroom.getReservas());
 			System.out.println(sql);
 
@@ -167,7 +167,7 @@ public class DAOHostalRoom {
 		public void updateHostalRoom(HostalRoomVO hostalroom) throws SQLException, Exception {
 
 			StringBuilder sql = new StringBuilder();
-			sql.append(String.format("UPDATE %s.HOSTALROOMS SET ", USUARIO));
+			sql.append(String.format("UPDATE %s.HOSTALROOM SET ", USUARIO));
 			sql.append(String.format("CUARTO = '%1$s' AND CAPACIDAD = '%2$s' AND PRECIO = '%3$s' AND HOSTAL = '%4$s' AND RESERVAS = '%5$s' ",
 					hostalroom.getCuarto(),hostalroom.getCapacidad(),hostalroom.getPrecio(),hostalroom.getHostal(),
 					hostalroom.getReservas()));
@@ -188,7 +188,7 @@ public class DAOHostalRoom {
 		 */
 		public void deleteHostalRoom(HostalRoomVO hostalroom) throws SQLException, Exception {
 
-			String sql = String.format("DELETE FROM %1$s.HOSTALROOMS WHERE HOSTAL = %2$d AND CUARTO = %3$d", USUARIO, hostalroom.getHostal(),hostalroom.getCuarto());
+			String sql = String.format("DELETE FROM %1$s.HOSTALROOM WHERE HOSTAL = %2$d AND CUARTO = %3$d", USUARIO, hostalroom.getHostal(),hostalroom.getCuarto());
 
 			System.out.println(sql);
 			
@@ -226,9 +226,9 @@ public class DAOHostalRoom {
 		}
 		
 		/**
-		 * Metodo que transforma el resultado obtenido de una consulta SQL (sobre la tabla HOSTALROOMS) en una instancia de la clase HostalRoomVO.
+		 * Metodo que transforma el resultado obtenido de una consulta SQL (sobre la tabla HOSTALROOM) en una instancia de la clase HostalRoomVO.
 		 * @param resultSet ResultSet con la informacion de un hostalroom que se obtuvo de la base de datos.
-		 * @return HostalRoomVO cuyos atributos corresponden a los valores asociados a un registro particular de la tabla HOSTALROOMS.
+		 * @return HostalRoomVO cuyos atributos corresponden a los valores asociados a un registro particular de la tabla HOSTALROOM.
 		 * @throws SQLException Si existe algun problema al extraer la informacion del ResultSet.
 		 */
 		public HostalRoomVO convertResultSetToHostalRoom(ResultSet resultSet) throws SQLException {

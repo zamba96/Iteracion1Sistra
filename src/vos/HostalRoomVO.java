@@ -13,6 +13,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
  */
 public class HostalRoomVO {
 
+	@JsonProperty(value = "id")
+	private Long id;
+	
 	@JsonProperty(value="cuarto")
 	private Integer cuarto;
 	
@@ -26,15 +29,15 @@ public class HostalRoomVO {
 	private HostalVO hostal;
 	
 	@JsonProperty(value="reservas")
-	private List<ReservaHostalVO> reservas;
+	private List<Long> reservas;
 	
-	public HostalRoomVO(@JsonProperty(value="cuarto")Integer cuarto,
+	public HostalRoomVO(
+			@JsonProperty(value="cuarto")Integer cuarto,
 			@JsonProperty(value="capacidad")Integer capacidad,
 			@JsonProperty(value="precio")Double precio,
 			@JsonProperty(value="hostal")HostalVO hostal,
 			@JsonProperty(value="nombre")String nombre,
-			@JsonProperty(value="reservas")List<ReservaHostalVO> reservas){
-
+			@JsonProperty(value="reservas")List<Long> reservas){
 		this.cuarto = cuarto;
 		this.capacidad = capacidad;
 		this.hostal = hostal;
@@ -42,16 +45,30 @@ public class HostalRoomVO {
 		this.reservas = reservas;
 	}
 	
-	public HostalRoomVO(@JsonProperty(value="cuarto")Integer cuarto,
+	public HostalRoomVO(
+			@JsonProperty(value="cuarto")Integer cuarto,
 			@JsonProperty(value="capacidad")Integer capacidad,
 			@JsonProperty(value="precio")Double precio,
 			@JsonProperty(value="hostal")HostalVO hostal,
 			@JsonProperty(value="nombre")String nombre){
-
 		this.cuarto = cuarto;
 		this.capacidad = capacidad;
 		this.hostal = hostal;
 		this.precio = precio;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	/**
@@ -113,14 +130,14 @@ public class HostalRoomVO {
 	/**
 	 * @return the reservas
 	 */
-	public List<ReservaHostalVO> getReservas() {
+	public List<Long> getReservas() {
 		return reservas;
 	}
 
 	/**
 	 * @param reservas the reservas to set
 	 */
-	public void setReservas(List<ReservaHostalVO> reservas) {
+	public void setReservas(List<Long> reservas) {
 		this.reservas = reservas;
 	}
 	

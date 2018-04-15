@@ -64,7 +64,7 @@ public class DAOViviendaU {
 				ArrayList<ViviendaUVO> viviendas = new ArrayList<ViviendaUVO>();
 
 				//Aclaracion: Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
-				String sql = String.format("SELECT * FROM %1$s.VIVIENDAS WHERE ROWNUM <= 50", USUARIO);
+				String sql = String.format("SELECT * FROM VIVIENDAU WHERE ROWNUM <= 50", USUARIO);
 
 				PreparedStatement prepStmt = conn.prepareStatement(sql);
 				recursos.add(prepStmt);
@@ -91,7 +91,7 @@ public class DAOViviendaU {
 			{
 				ViviendaUVO vivienda = null;
 
-				String sql = String.format("SELECT * FROM %1$s.VIVIENDAS WHERE NOMBRE = %2$d", USUARIO, nombre); 
+				String sql = String.format("SELECT * FROM VIVIENDAU WHERE NOMBRE = %1$s", USUARIO, nombre); 
 
 				PreparedStatement prepStmt = conn.prepareStatement(sql);
 				recursos.add(prepStmt);
@@ -113,7 +113,7 @@ public class DAOViviendaU {
 			 */
 			public void addVivienda(ViviendaUVO vivienda) throws SQLException, Exception {
 
-				String sql = String.format("INSERT INTO %1$s.VIVIENDAS (DIRECCION, NOMBRE, CUARTOS) VALUES (%2$s, '%3$s', '%4$s')", 
+				String sql = String.format("INSERT INTO %1$s.VIVIENDAU (DIRECCION, NOMBRE, CUARTOS) VALUES (%2$s, '%3$s', '%4$s')", 
 											USUARIO, 
 											vivienda.getDireccion(),
 											vivienda.getNombre(),
@@ -137,7 +137,7 @@ public class DAOViviendaU {
 			public void updateHostal(ViviendaUVO vivienda) throws SQLException, Exception {
 
 				StringBuilder sql = new StringBuilder();
-				sql.append(String.format("UPDATE %s.VIVIENDAS SET ", USUARIO));
+				sql.append(String.format("UPDATE %s.VIVIENDAU SET ", USUARIO));
 				sql.append(String.format("DIRECCION = '%1$s' AND NOMBRE = '%2$s' AND CUARTOS = '%3$s' ",
 						vivienda.getDireccion(),
 						vivienda.getNombre(),
@@ -159,7 +159,7 @@ public class DAOViviendaU {
 			 */
 			public void deleteHostal(ViviendaUVO vivienda) throws SQLException, Exception {
 
-				String sql = String.format("DELETE FROM %1$s.VIVIENDAS WHERE NOMBRE = %2$d", USUARIO, vivienda.getNombre());
+				String sql = String.format("DELETE FROM %1$s.VIVIENDAU WHERE NOMBRE = %2$d", USUARIO, vivienda.getNombre());
 
 				System.out.println(sql);
 				

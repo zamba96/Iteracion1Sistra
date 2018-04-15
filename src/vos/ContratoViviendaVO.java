@@ -9,6 +9,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
  */
 public class ContratoViviendaVO {
 
+	@JsonProperty(value = "id")
+	private Long id;
+	
 	@JsonProperty(value="fechaI")
 	private String fechaI;
 	
@@ -16,31 +19,45 @@ public class ContratoViviendaVO {
 	private String fechaF;
 	
 	@JsonProperty(value="cuarto")
-	private ViviendaRoomVO cuarto;
+	private Long cuarto;
 	
 	@JsonProperty(value="relacionado")
-	private RelacionadoVO relacionado;
+	private Long relacionado;
 	
 	
 	public ContratoViviendaVO(@JsonProperty(value="fechaI")String fechaI,
 			@JsonProperty(value="fechaF")String fechaF,
-			@JsonProperty(value="cuarto")ViviendaRoomVO cuarto,
-			@JsonProperty(value="usuario")RelacionadoVO relacionado
+			@JsonProperty(value="cuarto")Long cuarto,
+			@JsonProperty(value="usuario")Long relacionado
 			) {
-
 		this.fechaI = fechaI;
 		this.fechaF = fechaF;
 		this.cuarto = cuarto;
 		this.relacionado = relacionado;
 	}
 
-	public ContratoViviendaVO(@JsonProperty(value="fechaI")String fechaI,
+	public ContratoViviendaVO(
+			@JsonProperty(value="fechaI")String fechaI,
 			@JsonProperty(value="fechaF")String fechaF,
-			@JsonProperty(value="cuarto")ViviendaRoomVO cuarto) {
+			@JsonProperty(value="cuarto")Long cuarto) {
 		
-				this.fechaI = fechaI;
-				this.fechaF = fechaF;
-				this.cuarto = cuarto;
+		this.fechaI = fechaI;
+		this.fechaF = fechaF;
+		this.cuarto = cuarto;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	/**
@@ -74,28 +91,28 @@ public class ContratoViviendaVO {
 	/**
 	 * @return the cuarto
 	 */
-	public ViviendaRoomVO getCuarto() {
+	public Long getCuarto() {
 		return cuarto;
 	}
 
 	/**
 	 * @param cuarto the cuarto to set
 	 */
-	public void setCuarto(ViviendaRoomVO cuarto) {
+	public void setCuarto(Long cuarto) {
 		this.cuarto = cuarto;
 	}
 
 	/**
 	 * @return the usuario
 	 */
-	public UsuarioVO getUsuario() {
+	public Long getUsuario() {
 		return relacionado;
 	}
 
 	/**
 	 * @param usuario the usuario to set
 	 */
-	public void setUsuario(RelacionadoVO relacionado) {
+	public void setUsuario(Long relacionado) {
 		this.relacionado = relacionado;
 	}
 	

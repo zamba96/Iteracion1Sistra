@@ -6,6 +6,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 public class HotelVO {
 
+	@JsonProperty(value = "id")
+	private Long id;
+	
 	@JsonProperty(value="direccion")
 	private String direccion;
 	
@@ -28,18 +31,18 @@ public class HotelVO {
 	private String nombre;
 	
 	@JsonProperty(value="cuartos")
-	private List<HotelRoomVO> cuartos;
+	private List<Long> cuartos;
 	
-	public HotelVO(@JsonProperty(value="desayuno")Boolean desayuno,
+	public HotelVO(
+			@JsonProperty(value="desayuno")Boolean desayuno,
 			@JsonProperty(value="restaurante")Boolean restaurante,
 			@JsonProperty(value="piscina")Boolean piscina,
 			@JsonProperty(value="direccion")String direccion,
 			@JsonProperty(value="nombre")String nombre,
 			@JsonProperty(value="parqueadero")Boolean parqueadero,
 			@JsonProperty(value="horario")Boolean horario,
-			@JsonProperty(value="cuartos")List<HotelRoomVO> cuartos) 
+			@JsonProperty(value="cuartos")List<Long> cuartos) 
 	{
-
 		this.restaurante = restaurante;
 		this.desayuno = desayuno;
 		this.piscina = piscina;
@@ -50,7 +53,8 @@ public class HotelVO {
 		this.cuartos = cuartos;
 	}
 
-	public HotelVO(@JsonProperty(value="desayuno")Boolean desayuno,
+	public HotelVO(
+			@JsonProperty(value="desayuno")Boolean desayuno,
 			@JsonProperty(value="restaurante")Boolean restaurante,
 			@JsonProperty(value="piscina")Boolean piscina,
 			@JsonProperty(value="direccion")String direccion,
@@ -58,7 +62,6 @@ public class HotelVO {
 			@JsonProperty(value="parqueadero")Boolean parqueadero,
 			@JsonProperty(value="horario")Boolean horario) 
 	{
-		
 		this.restaurante = restaurante;
 		this.desayuno = desayuno;
 		this.piscina = piscina;
@@ -66,7 +69,21 @@ public class HotelVO {
 		this.nombre = nombre;
 		this.parqueadero = parqueadero;
 		this.horario = horario;
-		this.cuartos = cuartos;
+	}
+
+	
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	/**
@@ -170,14 +187,14 @@ public class HotelVO {
 	/**
 	 * @return the cuartos
 	 */
-	public List<HotelRoomVO> getCuartos() {
+	public List<Long> getCuartos() {
 		return cuartos;
 	}
 
 	/**
 	 * @param cuartos the cuartos to set
 	 */
-	public void setCuartos(List<HotelRoomVO> cuartos) {
+	public void setCuartos(List<Long> cuartos) {
 		this.cuartos = cuartos;
 	}
 	

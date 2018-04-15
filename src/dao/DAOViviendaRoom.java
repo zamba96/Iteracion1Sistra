@@ -67,7 +67,7 @@ public class DAOViviendaRoom {
 		ArrayList<ViviendaRoomVO> cuartos = new ArrayList<ViviendaRoomVO>();
 
 		//Aclaracion: Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
-		String sql = String.format("SELECT * FROM %1$s.VIVIENDAROOMS WHERE ROWNUM <= 50", USUARIO);
+		String sql = String.format("SELECT * FROM %1$s.VIVIENDAROOM WHERE ROWNUM <= 50", USUARIO);
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -93,7 +93,7 @@ public class DAOViviendaRoom {
 	{
 		ViviendaRoomVO viviendaroom = null;
 
-		String sql = String.format("SELECT * FROM %1$s.VIVIENDAROOMS WHERE VIVIENDA = %2$d", USUARIO, vivienda); 
+		String sql = String.format("SELECT * FROM %1$s.VIVIENDAROOM WHERE VIVIENDA = %2$d", USUARIO, vivienda); 
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -119,7 +119,7 @@ public class DAOViviendaRoom {
 	{
 		ViviendaRoomVO viviendaroom = null;
 
-		String sql = String.format("SELECT * FROM %1$s.VIVIENDAROOMS WHERE VIVIENDA = %2$d AND CUARTO = %3$d" , USUARIO, vivienda,cuarto); 
+		String sql = String.format("SELECT * FROM %1$s.VIVIENDAROOM WHERE VIVIENDA = %2$d AND CUARTO = %3$d" , USUARIO, vivienda,cuarto); 
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -141,7 +141,7 @@ public class DAOViviendaRoom {
 	 */
 	public void addViviendaRoom(ViviendaRoomVO viviendaroom) throws SQLException, Exception {
 
-		String sql = String.format("INSERT INTO %1$s.VIVIENDAROOMS (COMPARTIDA, RESTAURANTE, SALADEESTUDIO, "
+		String sql = String.format("INSERT INTO %1$s.VIVIENDAROOM (COMPARTIDA, RESTAURANTE, SALADEESTUDIO, "
 				+ "SALADEESPARCIMIENTO, GYM, PRECIO, VIVIENDA, CUARTO, RESERVAS) "
 				+ "VALUES (%2$s, '%3$s', '%4$s', '%5$s','%6$s', %7$s, '%8$s', '%9$s', '%10$s')", 
 									USUARIO, 
@@ -172,7 +172,7 @@ public class DAOViviendaRoom {
 	public void updateViviendaRoom(ViviendaRoomVO viviendaroom) throws SQLException, Exception {
 
 		StringBuilder sql = new StringBuilder();
-		sql.append(String.format("UPDATE %s.VIVIENDAROOMS SET ", USUARIO));
+		sql.append(String.format("UPDATE %s.VIVIENDAROOM SET ", USUARIO));
 		sql.append(String.format("COMPARTIDA = '%1$s' AND RESTAURANTE = '%2$s' AND SALADEESTUDIO = '%3$s' AND SALADEESPARCIMIENTO = '%4$s' AND GYM = '%5$s' AND PRECIO = '%6$s' "
 				+ "AND VIVIENDA = '%7$s' AND CUARTO = '%8$s' AND RESERVAS = '%9$s' ",
 				viviendaroom.getCompartida(), 
@@ -201,7 +201,7 @@ public class DAOViviendaRoom {
 	 */
 	public void deleteViviendaRoom(ViviendaRoomVO viviendaroom) throws SQLException, Exception {
 
-		String sql = String.format("DELETE FROM %1$s.VIVIENDAROOMS WHERE VIVIENDA = %2$d AND CUARTO = %3$d", USUARIO, viviendaroom.getVivienda(),viviendaroom.getCuarto());
+		String sql = String.format("DELETE FROM %1$s.VIVIENDAROOM WHERE VIVIENDA = %2$d AND CUARTO = %3$d", USUARIO, viviendaroom.getVivienda(),viviendaroom.getCuarto());
 
 		System.out.println(sql);
 		
@@ -239,9 +239,9 @@ public class DAOViviendaRoom {
 	}
 	
 	/**
-	 * Metodo que transforma el resultado obtenido de una consulta SQL (sobre la tabla VIVIENDAROOMS) en una instancia de la clase ViviendaRoomVO.
+	 * Metodo que transforma el resultado obtenido de una consulta SQL (sobre la tabla VIVIENDAROOM) en una instancia de la clase ViviendaRoomVO.
 	 * @param resultSet ResultSet con la informacion de un viviendaroom que se obtuvo de la base de datos.
-	 * @return ViviendaRoomVO cuyos atributos corresponden a los valores asociados a un registro particular de la tabla VIVIENDAROOMS.
+	 * @return ViviendaRoomVO cuyos atributos corresponden a los valores asociados a un registro particular de la tabla VIVIENDAROOM.
 	 * @throws SQLException Si existe algun problema al extraer la informacion del ResultSet.
 	 */
 	public ViviendaRoomVO convertResultSetToViviendaRoom(ResultSet resultSet) throws SQLException {
@@ -256,12 +256,12 @@ public class DAOViviendaRoom {
 			Double gym = resultSet.getDouble("GYM");
 			Double precio = resultSet.getDouble("PRECIO");
 			String viviendaS = resultSet.getString("VIVIENDA");
-			Integer cuarto = resultSet.getInt("CUARTO");
+			Long cuarto = resultSet.getLong("CUARTO");
 
 
 			
 			vivienda = dao.getVivienda(viviendaS);
-			ViviendaRoomVO hostR = new ViviendaRoomVO(compartida, restaurante, salaDeEstudio, salaDeEsparcimiento, gym, precio, vivienda, cuarto);
+			ViviendaRoomVO hostR = new ViviendaRoomVO(compartida, restaurante, salaDeEstudio, salaDeEsparcimiento, gym, precio, vivienda.getId(), cuarto);
 			return hostR;
 
 		} catch (Exception e) {

@@ -11,6 +11,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
  */
 public class ReservaHostalVO {
 
+	@JsonProperty(value = "id")
+	private Long id;
+	
 	@JsonProperty(value="fechaI")
 	private String fechaI;
 	
@@ -18,31 +21,44 @@ public class ReservaHostalVO {
 	private String fechaF;
 	
 	@JsonProperty(value="cuarto")
-	private HostalRoomVO cuarto;
+	private Long cuarto;
 	
 	@JsonProperty(value="usuario")
-	private UsuarioVO usuario;
+	private Long usuario;
 	 
 	
-	public ReservaHostalVO(@JsonProperty(value="fechaI")String fechaI,
+	public ReservaHostalVO(
+			@JsonProperty(value="fechaI")String fechaI,
 			@JsonProperty(value="fechaF")String fechaF,
-			@JsonProperty(value="cuarto")HostalRoomVO cuarto,
-			@JsonProperty(value="usuario")UsuarioVO usuario
-			) {
-
+			@JsonProperty(value="cuarto")Long cuarto,
+			@JsonProperty(value="usuario")Long usuario){
 		this.fechaI = fechaI;
 		this.fechaF = fechaF;
 		this.cuarto = cuarto;
 		this.usuario = usuario;
 	}
 
-	public ReservaHostalVO(@JsonProperty(value="fechaI")String fechaI,
+	public ReservaHostalVO(
+			@JsonProperty(value="fechaI")String fechaI,
 			@JsonProperty(value="fechaF")String fechaF,
-			@JsonProperty(value="cuarto")HostalRoomVO cuarto) {
-		
+			@JsonProperty(value="cuarto")Long cuarto) {
 		this.fechaI = fechaI;
 		this.fechaF = fechaF;
 		this.cuarto = cuarto;
+	}
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	/**
@@ -76,28 +92,28 @@ public class ReservaHostalVO {
 	/**
 	 * @return the cuarto
 	 */
-	public HostalRoomVO getCuarto() {
+	public Long getCuarto() {
 		return cuarto;
 	}
 
 	/**
 	 * @param cuarto the cuarto to set
 	 */
-	public void setCuarto(HostalRoomVO cuarto) {
+	public void setCuarto(Long cuarto) {
 		this.cuarto = cuarto;
 	}
 
 	/**
 	 * @return the usuario
 	 */
-	public UsuarioVO getUsuario() {
+	public Long getUsuario() {
 		return usuario;
 	}
 
 	/**
 	 * @param usuario the usuario to set
 	 */
-	public void setUsuario(UsuarioVO usuario) {
+	public void setUsuario(Long usuario) {
 		this.usuario = usuario;
 	}
 

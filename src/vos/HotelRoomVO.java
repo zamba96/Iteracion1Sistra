@@ -28,7 +28,7 @@ public class HotelRoomVO {
 	private Double precio;
 	
 	@JsonProperty(value="hotel")
-	private HotelVO hotel;
+	private Long hotel;
 	
 	@JsonProperty(value="tipo")
 	private String tipo;
@@ -49,7 +49,7 @@ public class HotelRoomVO {
 			@JsonProperty(value="cocina")Boolean cocina,
 			@JsonProperty(value="cable")Boolean cable,
 			@JsonProperty(value="precio")Double precio,
-			@JsonProperty(value="hotel")HotelVO hotel,
+			@JsonProperty(value="hotel")Long hotel,
 	        @JsonProperty(value="tipo")String tipo,
 	        @JsonProperty(value="capacidad")Integer capacidad,
 	        @JsonProperty(value="cuarto")Integer cuarto,
@@ -74,7 +74,7 @@ public class HotelRoomVO {
 			@JsonProperty(value="cocina")Boolean cocina,
 			@JsonProperty(value="cable")Boolean cable,
 			@JsonProperty(value="precio")Double precio,
-			@JsonProperty(value="hotel")HotelVO hotel,
+			@JsonProperty(value="hotel")Long hotel,
 	        @JsonProperty(value="tipo")String tipo,
 	        @JsonProperty(value="capacidad")Integer capacidad,
 	        @JsonProperty(value="cuarto")Integer cuarto) {
@@ -191,14 +191,14 @@ public class HotelRoomVO {
 	/**
 	 * @return the hotel
 	 */
-	public HotelVO getHotel() {
+	public Long getHotel() {
 		return hotel;
 	}
 
 	/**
 	 * @param hotel the hotel to set
 	 */
-	public void setHotel(HotelVO hotel) {
+	public void setHotel(Long hotel) {
 		this.hotel = hotel;
 	}
 

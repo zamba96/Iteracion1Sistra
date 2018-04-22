@@ -67,7 +67,7 @@ public class DAOHotelRoom {
 				ArrayList<HotelRoomVO> cuartos = new ArrayList<HotelRoomVO>();
 
 				//Aclaracion: Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
-				String sql = String.format("SELECT * FROM %1$s.HOTELROOM WHERE ROWNUM <= 50", USUARIO);
+				String sql = String.format("SELECT * FROM HOTELROOM WHERE ROWNUM <= 50", USUARIO);
 
 				PreparedStatement prepStmt = conn.prepareStatement(sql);
 				recursos.add(prepStmt);
@@ -89,11 +89,11 @@ public class DAOHotelRoom {
 			 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 			 * @throws Exception Si se genera un error dentro del metodo.
 			 */
-			public HotelRoomVO findRoomByHotel(String hotel) throws SQLException, Exception 
+			public HotelRoomVO findRoomByHotel(Long id) throws SQLException, Exception 
 			{
 				HotelRoomVO hotelroom = null;
 
-				String sql = String.format("SELECT * FROM %1$s.HOTELROOM WHERE HOTEL = %2$d", USUARIO, hotel); 
+				String sql = String.format("SELECT * FROM HOTELROOM WHERE HOTEL = %1$d", USUARIO, id); 
 
 				PreparedStatement prepStmt = conn.prepareStatement(sql);
 				recursos.add(prepStmt);
@@ -115,11 +115,11 @@ public class DAOHotelRoom {
 			 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 			 * @throws Exception Si se genera un error dentro del metodo.
 			 */
-			public HotelRoomVO getHotelRoom(String hotel,Integer cuarto) throws SQLException, Exception 
+			public HotelRoomVO getHotelRoom(Long id) throws SQLException, Exception 
 			{
 				HotelRoomVO hotelroom = null;
 
-				String sql = String.format("SELECT * FROM %1$s.HOTELROOM WHERE HOTEL = %2$d AND CUARTO = %3$d" , USUARIO, hotel,cuarto); 
+				String sql = String.format("SELECT * FROM HOTELROOM WHERE ID = %1$d" , USUARIO, id); 
 
 				PreparedStatement prepStmt = conn.prepareStatement(sql);
 				recursos.add(prepStmt);
@@ -141,16 +141,17 @@ public class DAOHotelRoom {
 			 */
 			public void addHotelRoom(HotelRoomVO hotelroom) throws SQLException, Exception {
 
-				String sql = String.format("INSERT INTO %1$s.HOTELROOM (BANERA, YAKUZI, SALA, COCINA, CABLE, PRECIO, HOTEL, TIPO, CAPACIDAD, CUARTO, RESERVAS) "
-						+ "VALUES (%2$s, '%3$s', '%4$s', '%5$s','%6$s', %7$s, '%8$s', '%9$s', '%10$s','%11$s','%12$s')", 
+				String sql = String.format("INSERT INTO HOTELROOM (ID,BANERA, YAKUZI, SALA, COCINA, CABLE, PRECIO, HOTEL, TIPO, CAPACIDAD, CUARTO, RESERVAS) "
+						+ "VALUES (%1$s,%2$s, '%3$s', '%4$s', '%5$s','%6$s', %7$s, '%8$s', '%9$s', '%10$s','%11$s','%12$s')", 
 											USUARIO, 
+											hotelroom.getId(),
 											hotelroom.getBanera(), 
 											hotelroom.getYakuzi(),
 											hotelroom.getSala(), 
 											hotelroom.getCocina(),
 											hotelroom.getCable(),
 											hotelroom.getPrecio(), 
-											hotelroom.getHotel().getNombre(),
+											hotelroom.getHotel(),
 											hotelroom.getTipo(),
 											hotelroom.getCapacidad(), 
 											hotelroom.getCuarto(),
@@ -204,7 +205,7 @@ public class DAOHotelRoom {
 			 */
 			public void deleteHotelRoom(HotelRoomVO hotelroom) throws SQLException, Exception {
 
-				String sql = String.format("DELETE FROM %1$s.HOTELROOM WHERE HOSTAL = %2$d AND CUARTO = %3$d", USUARIO, hotelroom.getHotel(),hotelroom.getCuarto());
+				String sql = String.format("DELETE FROM HOTELROOM WHERE Id = %1$d ", USUARIO, hotelroom.getId());
 
 				System.out.println(sql);
 				
@@ -249,8 +250,7 @@ public class DAOHotelRoom {
 			 */
 			public HotelRoomVO convertResultSetToHotelRoom(ResultSet resultSet) throws SQLException {
 			
-				DAOHotel dao = new DAOHotel();
-				HotelVO hotel;
+				
 				try {
 					Integer baneraI = resultSet.getInt("BANERA");
 					Integer yakuziI = resultSet.getInt("YAKUZI");
@@ -262,15 +262,17 @@ public class DAOHotelRoom {
 					String tipo = resultSet.getString("TIPO");
 					Integer capacidad = resultSet.getInt("CAPACIDAD");
 					Integer cuarto = resultSet.getInt("CUARTO");
+					String ids = resultSet.getString("ID");
 
 					boolean banera = baneraI ==1;
 					boolean yakuzi = yakuziI ==1;
 					boolean sala = salaI ==1;
 					boolean cocina = cocinaI ==1;
 					boolean cable = cableI ==1;
-
 					
-					hotel = dao.getHotel(hotelS);
+					Long id = Long.parseLong(ids);
+					Long hotel = Long.parseLong(hotelS);
+					
 					HotelRoomVO hostR = new HotelRoomVO(banera, yakuzi, sala, cocina, cable, precio, hotel, tipo, capacidad, cuarto);
 					return hostR;
 

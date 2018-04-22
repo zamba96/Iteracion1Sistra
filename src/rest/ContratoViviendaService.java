@@ -89,15 +89,14 @@ public class ContratoViviendaService {
 			 * 			<b>Response Status 500</b> - Excepcion durante el transcurso de la transaccion
 			 */
 			@GET
-			@Path( "{fechaI}/{fechaF}/{usuario}" )
+			@Path( "{id}" )
 			@Produces( { MediaType.APPLICATION_JSON } )
-			public Response getBebedorById( @PathParam( "fechaI" ) String fechaI, 
-					@PathParam( "fechaF" ) String fechaF,@PathParam( "usuario" ) String usuario)
+			public Response getContratoViviendaById( @PathParam( "id" ) Long id)
 			{
 				try{
 					TransactionManager tm = new TransactionManager( getPath( ) );
 					
-					ContratoViviendaVO contrato = tm.getContratoVivienda(fechaI, fechaF, usuario);
+					ContratoViviendaVO contrato = tm.getContratoVivienda(id);
 					return Response.status( 200 ).entity( contrato ).build( );			
 				}
 				catch( Exception e )

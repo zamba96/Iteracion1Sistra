@@ -85,11 +85,11 @@ public class DAOContratoVivienda {
 	 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 	 * @throws Exception Si se genera un error dentro del metodo.
 	 */
-	public ContratoViviendaVO getContratoVivienda(String fechaI,String fechaF, String usuario) throws SQLException, Exception 
+	public ContratoViviendaVO getContratoVivienda(Long id) throws SQLException, Exception 
 	{
 		ContratoViviendaVO contrato = null;
 
-		String sql = String.format("SELECT * FROM CONTRATORECIDENCIA WHERE FECHAINICIO = '%1$s' AND FECHAFIN = '%2$s' AND RELACIONADO = '%3$s'", RELACIONADO ); 
+		String sql = String.format("SELECT * FROM CONTRATORECIDENCIA WHERE ID = '%1$s' ", RELACIONADO, id ); 
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -111,8 +111,9 @@ public class DAOContratoVivienda {
 	 */
 	public void addContratoVivienda(ContratoViviendaVO contrato) throws SQLException, Exception {
 
-		String sql = String.format("INSERT INTO CONTRATORECIDENCIA (FECHAINICIO, FECHAFIN, CUARTO, RELACIONADO) VALUES (%1$s, '%2$s', '%3$s', '%4$s')", 
+		String sql = String.format("INSERT INTO CONTRATORECIDENCIA (ID,FECHAINICIO, FECHAFIN, CUARTO, RELACIONADO) VALUES (%1$s, '%2$s', '%3$s', '%4$s',%5$s)", 
 									RELACIONADO, 
+									contrato.getId(),
 									contrato.getFechaI(), 
 									contrato.getFechaF(),
 									contrato.getCuarto(), 
@@ -154,10 +155,7 @@ public class DAOContratoVivienda {
 	 */
 	public void deleteContratoVivienda(ContratoViviendaVO contrato) throws SQLException, Exception {
 
-		String sql = String.format("DELETE FROM CONTRATORECIDENCIA WHERE FECHAINICIO = %1$d AND FECHAFIN = %2$d AND USUARIO = %3$d", RELACIONADO,
-				contrato.getFechaI(),
-				contrato.getFechaF(),
-				contrato.getUsuario());
+		String sql = String.format("DELETE FROM CONTRATORECIDENCIA WHERE ID = %1$d", RELACIONADO, contrato.getId());
 
 		System.out.println(sql);
 		
@@ -204,16 +202,17 @@ public class DAOContratoVivienda {
 	 */
 	public ContratoViviendaVO convertResultSetToContratoVivienda(ResultSet resultSet) throws SQLException {
 	
-		DAOViviendaRoom dao = new DAOViviendaRoom();
-		ViviendaRoomVO cuarto;
+		
 		try {
 			String fechaI = resultSet.getString("FECHAINICIO");
 			String fechaF = resultSet.getString("FECHAFIN");
-			Integer cuartoS = resultSet.getInt("CUARTO");
-			String hotelS = resultSet.getString("HOTEL");
-			cuarto = dao.getViviendaRoom(hotelS, cuartoS);
+			String cuartoS = resultSet.getString("CUARTO");
+			String relacionadoS = resultSet.getString("RELACIONADO");
+
+			Long cuarto = Long.parseLong(cuartoS);
+			Long relacionado = Long.parseLong(relacionadoS);
 			
-			ContratoViviendaVO beb = new ContratoViviendaVO(fechaI, fechaF, cuarto.getId());
+			ContratoViviendaVO beb = new ContratoViviendaVO(fechaI, fechaF, cuarto,relacionado);
 			return beb;
 		} catch (Exception e) {
 			e.printStackTrace();

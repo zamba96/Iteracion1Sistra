@@ -191,17 +191,17 @@ public class TransactionManager {
 	 * @return ReservaHostalVO - ReservaHostalVO que se obtiene como resultado de la consulta.
 	 * @throws Exception -  cualquier error que se genere durante la transaccion
 	 */
-	public ReservaHostalVO getReservaHostal(String fechaI, String fechaF,String usuario) throws Exception {
+	public ReservaHostalVO getReservaHostal(Long id) throws Exception {
 		DAOReservaHostal daoReservaHostal = new DAOReservaHostal();
 		ReservaHostalVO reservaHostal = null;
 		try 
 		{
 			this.conn = darConexion();
 			daoReservaHostal.setConn(conn);
-			reservaHostal = daoReservaHostal.getReservaHostal(fechaI, fechaF, usuario);
+			reservaHostal = daoReservaHostal.getReservaHostal(id);
 			if(reservaHostal == null)
 			{
-				throw new Exception("El reservaHostal con la fecha inicial para el usuario = " + fechaI + ", " + usuario + " no se encuentra persistido en la base de datos.");				
+				throw new Exception("El reservaHostal con id = " + id + " no se encuentra persistido en la base de datos.");				
 			}
 		} 
 		catch (SQLException sqlException) {
@@ -287,7 +287,7 @@ public class TransactionManager {
 		{
 			this.conn = darConexion();
 			daoReservaHostal.setConn(conn);
-			reservaHostal = daoReservaHostal.getReservaHostal(reservaHostal.getFechaI(),reservaHostal.getFechaF(),reservaHostal.getUsuario().getCedula());
+			reservaHostal = daoReservaHostal.getReservaHostal(reservaHostal.getId());
 			if(reservaHostal == null)
 			{
 				throw new Exception("El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");				
@@ -332,7 +332,7 @@ public class TransactionManager {
 		{
 			this.conn = darConexion();
 			daoReservaHostal.setConn( conn );
-			reservaHostal = daoReservaHostal.getReservaHostal(reservaHostal.getFechaI(),reservaHostal.getFechaF(),reservaHostal.getUsuario().getCedula());
+			reservaHostal = daoReservaHostal.getReservaHostal(reservaHostal.getId());
 			if(reservaHostal == null)
 			{
 				throw new Exception("El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");				
@@ -412,17 +412,17 @@ public class TransactionManager {
 	 * @return ReservaHostalVO - ReservaHostalVO que se obtiene como resultado de la consulta.
 	 * @throws Exception -  cualquier error que se genere durante la transaccion
 	 */
-	public ReservaHotelVO getReservaHotel(String fechaI, String fechaF,String usuario) throws Exception {
+	public ReservaHotelVO getReservaHotel(Long id) throws Exception {
 		DAOReservaHotel daoReservaHotel = new DAOReservaHotel();
 		ReservaHotelVO reservaHotel = null;
 		try 
 		{
 			this.conn = darConexion();
 			daoReservaHotel.setConn(conn);
-			reservaHotel = daoReservaHotel.getReservaHotel(fechaI, fechaF, usuario);
+			reservaHotel = daoReservaHotel.getReservaHotel(id);
 			if(reservaHotel == null)
 			{
-				throw new Exception("El reservaHostal con la fecha inicial para el usuario = " + fechaI + ", " + usuario + " no se encuentra persistido en la base de datos.");				
+				throw new Exception("El reservaHostal con la fecha inicial para el usuario = " + id + " no se encuentra persistido en la base de datos.");				
 			}
 		} 
 		catch (SQLException sqlException) {
@@ -508,7 +508,7 @@ public class TransactionManager {
 		{
 			this.conn = darConexion();
 			daoReservaHotel.setConn(conn);
-			reservaHotel = daoReservaHotel.getReservaHotel(reservaHotel.getFechaI(),reservaHotel.getFechaF(),reservaHotel.getUsuario().getCedula());
+			reservaHotel = daoReservaHotel.getReservaHotel(reservaHotel.getId());
 			if(reservaHotel == null)
 			{
 				throw new Exception("El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");				
@@ -553,7 +553,7 @@ public class TransactionManager {
 		{
 			this.conn = darConexion();
 			daoReservaHotel.setConn( conn );
-			reservaHotel = daoReservaHotel.getReservaHotel(reservaHotel.getFechaI(),reservaHotel.getFechaF(),reservaHotel.getUsuario().getCedula());
+			reservaHotel = daoReservaHotel.getReservaHotel(reservaHotel.getId());
 			if(reservaHotel == null)
 			{
 				throw new Exception("El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");				
@@ -633,17 +633,17 @@ public class TransactionManager {
 	 * @return ReservaHostalVO - ReservaHostalVO que se obtiene como resultado de la consulta.
 	 * @throws Exception -  cualquier error que se genere durante la transaccion
 	 */
-	public ContratoViviendaVO getContratoVivienda(String fechaI, String fechaF,String usuario) throws Exception {
+	public ContratoViviendaVO getContratoVivienda(Long id) throws Exception {
 		DAOContratoVivienda daoContratoVivienda = new DAOContratoVivienda();
 		ContratoViviendaVO contratoVivienda = null;
 		try 
 		{
 			this.conn = darConexion();
 			daoContratoVivienda.setConn(conn);
-			contratoVivienda = daoContratoVivienda.getContratoVivienda(fechaI, fechaF, usuario);
+			contratoVivienda = daoContratoVivienda.getContratoVivienda(id);
 			if(contratoVivienda == null)
 			{
-				throw new Exception("El reservaHostal con la fecha inicial para el usuario = " + fechaI + ", " + usuario + " no se encuentra persistido en la base de datos.");				
+				throw new Exception("El reservaHostal con la fecha inicial para el usuario = " + id + " no se encuentra persistido en la base de datos.");				
 			}
 		} 
 		catch (SQLException sqlException) {
@@ -729,7 +729,7 @@ public class TransactionManager {
 		{
 			this.conn = darConexion();
 			daoContratoVivienda.setConn(conn);
-			contratoVivienda = daoContratoVivienda.getContratoVivienda(contratoVivienda.getFechaI(),contratoVivienda.getFechaF(),contratoVivienda.getUsuario().getCedula());
+			contratoVivienda = daoContratoVivienda.getContratoVivienda(contratoVivienda.getId());
 			if(contratoVivienda == null)
 			{
 				throw new Exception("El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");				
@@ -774,7 +774,7 @@ public class TransactionManager {
 		{
 			this.conn = darConexion();
 			daoContratoVivienda.setConn( conn );
-			contratoVivienda = daoContratoVivienda.getContratoVivienda(contratoVivienda.getFechaI(),contratoVivienda.getFechaF(),contratoVivienda.getUsuario().getCedula());
+			contratoVivienda = daoContratoVivienda.getContratoVivienda(contratoVivienda.getId());
 			if(contratoVivienda == null)
 			{
 				throw new Exception("El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");				

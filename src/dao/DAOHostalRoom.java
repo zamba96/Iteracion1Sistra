@@ -68,7 +68,7 @@ public class DAOHostalRoom {
 			ArrayList<HostalRoomVO> cuartos = new ArrayList<HostalRoomVO>();
 
 			//Aclaracion: Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
-			String sql = String.format("SELECT * FROM %1$s.HOSTALROOM WHERE ROWNUM <= 50", USUARIO);
+			String sql = String.format("SELECT * FROM HOSTALROOM WHERE ROWNUM <= 50", USUARIO);
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
@@ -94,7 +94,7 @@ public class DAOHostalRoom {
 		{
 			HostalRoomVO hostalroom = null;
 
-			String sql = String.format("SELECT * FROM %1$s.HOSTALROOM WHERE HOSTAL = %2$d", USUARIO, hotel); 
+			String sql = String.format("SELECT * FROM HOSTALROOM WHERE HOSTAL = %1$s", USUARIO, hotel); 
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
@@ -116,11 +116,11 @@ public class DAOHostalRoom {
 		 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 		 * @throws Exception Si se genera un error dentro del metodo.
 		 */
-		public HostalRoomVO getHostalRoom(String hotel,Integer cuarto) throws SQLException, Exception 
+		public HostalRoomVO getHostalRoom(Long id) throws SQLException, Exception 
 		{
 			HostalRoomVO hostalroom = null;
 
-			String sql = String.format("SELECT * FROM %1$s.HOSTALROOM WHERE HOSTAL = %2$d AND CUARTO = %3$d" , USUARIO, hotel,cuarto); 
+			String sql = String.format("SELECT * FROM HOSTALROOM WHERE ID = %1$s" , USUARIO, id); 
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
@@ -142,12 +142,13 @@ public class DAOHostalRoom {
 		 */
 		public void addHostalRoom(HostalRoomVO hostalroom) throws SQLException, Exception {
 
-			String sql = String.format("INSERT INTO %1$s.HOSTALROOM (CUARTO, CAPACIDAD, PRECIO, HOSTAL,RESERVAS) VALUES (%2$s, '%3$s', '%4$s', '%5$s','%6$s')", 
+			String sql = String.format("INSERT INTO HOSTALROOM (ID,CUARTO, CAPACIDAD, PRECIO, HOSTAL,RESERVAS) VALUES (%2$s, '%3$s', '%4$s', '%5$s','%6$s','%7$s')", 
 										USUARIO, 
+										hostalroom.getId(),
 										hostalroom.getCuarto(), 
 										hostalroom.getCapacidad(),
 										hostalroom.getPrecio(), 
-										hostalroom.getHostal().getNombre(),
+										hostalroom.getHostal(),
 										hostalroom.getReservas());
 			System.out.println(sql);
 
@@ -167,7 +168,7 @@ public class DAOHostalRoom {
 		public void updateHostalRoom(HostalRoomVO hostalroom) throws SQLException, Exception {
 
 			StringBuilder sql = new StringBuilder();
-			sql.append(String.format("UPDATE %s.HOSTALROOM SET ", USUARIO));
+			sql.append(String.format("UPDATE HOSTALROOM SET ", USUARIO));
 			sql.append(String.format("CUARTO = '%1$s' AND CAPACIDAD = '%2$s' AND PRECIO = '%3$s' AND HOSTAL = '%4$s' AND RESERVAS = '%5$s' ",
 					hostalroom.getCuarto(),hostalroom.getCapacidad(),hostalroom.getPrecio(),hostalroom.getHostal(),
 					hostalroom.getReservas()));
@@ -188,7 +189,7 @@ public class DAOHostalRoom {
 		 */
 		public void deleteHostalRoom(HostalRoomVO hostalroom) throws SQLException, Exception {
 
-			String sql = String.format("DELETE FROM %1$s.HOSTALROOM WHERE HOSTAL = %2$d AND CUARTO = %3$d", USUARIO, hostalroom.getHostal(),hostalroom.getCuarto());
+			String sql = String.format("DELETE FROM HOSTALROOM WHERE ID = %1$s", USUARIO, hostalroom.getId());
 
 			System.out.println(sql);
 			
@@ -233,15 +234,18 @@ public class DAOHostalRoom {
 		 */
 		public HostalRoomVO convertResultSetToHostalRoom(ResultSet resultSet) throws SQLException {
 		
-			DAOHostal dao = new DAOHostal();
-			HostalVO hostal;
+			
 			try {
 				Integer cuarto = resultSet.getInt("CUARTO");
 				Integer capacidad = resultSet.getInt("CAPACIDAD");
 				Double precio = resultSet.getDouble("PRECIO");
 				String hostalS = resultSet.getString("HOSTAL");
 				String nombre = resultSet.getString("NOMBRE");
-				hostal = dao.getHostal(hostalS);
+				String ids = resultSet.getString("ID");
+				
+				Long id = Long.parseLong(ids);
+				Long hostal = Long.parseLong(hostalS);
+				
 				HostalRoomVO hostR = new HostalRoomVO(cuarto, capacidad, precio, hostal,nombre);
 				return hostR;
 

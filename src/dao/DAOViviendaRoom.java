@@ -67,7 +67,7 @@ public class DAOViviendaRoom {
 		ArrayList<ViviendaRoomVO> cuartos = new ArrayList<ViviendaRoomVO>();
 
 		//Aclaracion: Por simplicidad, solamente se obtienen los primeros 50 resultados de la consulta
-		String sql = String.format("SELECT * FROM %1$s.VIVIENDAROOM WHERE ROWNUM <= 50", USUARIO);
+		String sql = String.format("SELECT * FROM VIVIENDAROOM WHERE ROWNUM <= 50", USUARIO);
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -89,11 +89,11 @@ public class DAOViviendaRoom {
 	 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 	 * @throws Exception Si se genera un error dentro del metodo.
 	 */
-	public ViviendaRoomVO findRoomByVivienda(String vivienda) throws SQLException, Exception 
+	public ViviendaRoomVO findRoomByVivienda(Long vivienda) throws SQLException, Exception 
 	{
 		ViviendaRoomVO viviendaroom = null;
 
-		String sql = String.format("SELECT * FROM %1$s.VIVIENDAROOM WHERE VIVIENDA = %2$d", USUARIO, vivienda); 
+		String sql = String.format("SELECT * FROM VIVIENDAROOM WHERE VIVIENDA = %2$d", USUARIO, vivienda); 
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -115,11 +115,11 @@ public class DAOViviendaRoom {
 	 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 	 * @throws Exception Si se genera un error dentro del metodo.
 	 */
-	public ViviendaRoomVO getViviendaRoom(String vivienda,Integer cuarto) throws SQLException, Exception 
+	public ViviendaRoomVO getViviendaRoom(Long id) throws SQLException, Exception 
 	{
 		ViviendaRoomVO viviendaroom = null;
 
-		String sql = String.format("SELECT * FROM %1$s.VIVIENDAROOM WHERE VIVIENDA = %2$d AND CUARTO = %3$d" , USUARIO, vivienda,cuarto); 
+		String sql = String.format("SELECT * FROM VIVIENDAROOM WHERE ID = %1$d" , USUARIO, id); 
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -141,10 +141,11 @@ public class DAOViviendaRoom {
 	 */
 	public void addViviendaRoom(ViviendaRoomVO viviendaroom) throws SQLException, Exception {
 
-		String sql = String.format("INSERT INTO %1$s.VIVIENDAROOM (COMPARTIDA, RESTAURANTE, SALADEESTUDIO, "
+		String sql = String.format("INSERT INTO VIVIENDAROOM (ID,COMPARTIDA, RESTAURANTE, SALADEESTUDIO, "
 				+ "SALADEESPARCIMIENTO, GYM, PRECIO, VIVIENDA, CUARTO, RESERVAS) "
-				+ "VALUES (%2$s, '%3$s', '%4$s', '%5$s','%6$s', %7$s, '%8$s', '%9$s', '%10$s')", 
+				+ "VALUES (%1$s, %2$s, '%3$s', '%4$s', '%5$s','%6$s', %7$s, '%8$s', '%9$s', '%10$s')", 
 									USUARIO, 
+									viviendaroom.getId(),
 									viviendaroom.getCompartida(), 
 									viviendaroom.getRestaurante(),
 									viviendaroom.getSalaDeEstudio(), 
@@ -201,7 +202,8 @@ public class DAOViviendaRoom {
 	 */
 	public void deleteViviendaRoom(ViviendaRoomVO viviendaroom) throws SQLException, Exception {
 
-		String sql = String.format("DELETE FROM %1$s.VIVIENDAROOM WHERE VIVIENDA = %2$d AND CUARTO = %3$d", USUARIO, viviendaroom.getVivienda(),viviendaroom.getCuarto());
+		String sql = String.format("DELETE FROM VIVIENDAROOM WHERE Id = %1$d ", USUARIO, 
+				viviendaroom.getId());
 
 		System.out.println(sql);
 		
@@ -246,8 +248,7 @@ public class DAOViviendaRoom {
 	 */
 	public ViviendaRoomVO convertResultSetToViviendaRoom(ResultSet resultSet) throws SQLException {
 	
-		DAOViviendaU dao = new DAOViviendaU();
-		ViviendaUVO vivienda;
+		
 		try {
 			Integer compartida = resultSet.getInt("COMPARTIDA");
 			Double restaurante = resultSet.getDouble("RESTAURANTE");
@@ -255,13 +256,11 @@ public class DAOViviendaRoom {
 			Double salaDeEsparcimiento = resultSet.getDouble("SALADEESPARCIMIENTO");
 			Double gym = resultSet.getDouble("GYM");
 			Double precio = resultSet.getDouble("PRECIO");
-			String viviendaS = resultSet.getString("VIVIENDA");
+			Long vivienda = resultSet.getLong("VIVIENDA");
 			Long cuarto = resultSet.getLong("CUARTO");
 
-
 			
-			vivienda = dao.getVivienda(viviendaS);
-			ViviendaRoomVO hostR = new ViviendaRoomVO(compartida, restaurante, salaDeEstudio, salaDeEsparcimiento, gym, precio, vivienda.getId(), cuarto);
+			ViviendaRoomVO hostR = new ViviendaRoomVO(compartida, restaurante, salaDeEstudio, salaDeEsparcimiento, gym, precio, vivienda, cuarto);
 			return hostR;
 
 		} catch (Exception e) {

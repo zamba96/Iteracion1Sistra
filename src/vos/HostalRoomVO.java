@@ -26,7 +26,7 @@ public class HostalRoomVO {
 	private Double precio;
 	
 	@JsonProperty(value="hostal")
-	private HostalVO hostal;
+	private Long hostal;
 	
 	@JsonProperty(value="reservas")
 	private List<Long> reservas;
@@ -35,7 +35,7 @@ public class HostalRoomVO {
 			@JsonProperty(value="cuarto")Integer cuarto,
 			@JsonProperty(value="capacidad")Integer capacidad,
 			@JsonProperty(value="precio")Double precio,
-			@JsonProperty(value="hostal")HostalVO hostal,
+			@JsonProperty(value="hostal")Long hostal,
 			@JsonProperty(value="nombre")String nombre,
 			@JsonProperty(value="reservas")List<Long> reservas){
 		this.cuarto = cuarto;
@@ -49,7 +49,7 @@ public class HostalRoomVO {
 			@JsonProperty(value="cuarto")Integer cuarto,
 			@JsonProperty(value="capacidad")Integer capacidad,
 			@JsonProperty(value="precio")Double precio,
-			@JsonProperty(value="hostal")HostalVO hostal,
+			@JsonProperty(value="hostal")Long hostal,
 			@JsonProperty(value="nombre")String nombre){
 		this.cuarto = cuarto;
 		this.capacidad = capacidad;
@@ -116,14 +116,14 @@ public class HostalRoomVO {
 	/**
 	 * @return the hostal
 	 */
-	public HostalVO getHostal() {
+	public Long getHostal() {
 		return hostal;
 	}
 
 	/**
 	 * @param hostal the hostal to set
 	 */
-	public void setHostal(HostalVO hostal) {
+	public void setHostal(Long hostal) {
 		this.hostal = hostal;
 	}
 

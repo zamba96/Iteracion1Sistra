@@ -91,11 +91,11 @@ public class DAOHostal {
 		 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 		 * @throws Exception Si se genera un error dentro del metodo.
 		 */
-		public HostalVO getHostal(String nombre) throws SQLException, Exception 
+		public HostalVO getHostal(Long id) throws SQLException, Exception 
 		{
 			HostalVO hostal = null;
 
-			String sql = String.format("SELECT * FROM HOSTAL WHERE NOMBRE = %1$d", USUARIO, nombre); 
+			String sql = String.format("SELECT * FROM HOSTAL WHERE ID = %1$d", USUARIO, id); 
 
 			PreparedStatement prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);
@@ -117,8 +117,9 @@ public class DAOHostal {
 		 */
 		public void addHostal(HostalVO hostal) throws SQLException, Exception {
 
-			String sql = String.format("INSERT INTO HOSTAL (APERTURA, CIERRE, DESAYUNO, DIRECCION,NOMBRE,CUARTOS) VALUES (%1$s, '%2$s', '%3$s', '%4$s','%5$s','%6$s')", 
+			String sql = String.format("INSERT INTO HOSTAL (ID,APERTURA, CIERRE, DESAYUNO, DIRECCION,NOMBRE,CUARTOS) VALUES (%1$s, '%2$s', '%3$s', '%4$s','%5$s','%6$s','%7$s')", 
 										USUARIO, 
+										hostal.getId(),
 										hostal.getApertura(), 
 										hostal.getCierre(), 
 										hostal.getDesayuno(), 
@@ -169,7 +170,7 @@ public class DAOHostal {
 		 */
 		public void deleteHostal(HostalVO hostal) throws SQLException, Exception {
 
-			String sql = String.format("DELETE FROM HOSTAL WHERE NOMBRE = %1$d", USUARIO, hostal.getNombre());
+			String sql = String.format("DELETE FROM HOSTAL WHERE ID = %1$d", USUARIO, hostal.getId());
 
 			System.out.println(sql);
 			

@@ -91,15 +91,14 @@ public class ReservaHostalService {
 		 * 			<b>Response Status 500</b> - Excepcion durante el transcurso de la transaccion
 		 */
 		@GET
-		@Path( "{fechaI}/{fechaF}/{usuario}" )
+		@Path( "{id}" )
 		@Produces( { MediaType.APPLICATION_JSON } )
-		public Response getBebedorById( @PathParam( "fechaI" ) String fechaI, 
-				@PathParam( "fechaF" ) String fechaF,@PathParam( "usuario" ) String usuario)
+		public Response getBebedorById( @PathParam( "id" ) Long id)
 		{
 			try{
 				TransactionManager tm = new TransactionManager( getPath( ) );
 				
-				ReservaHostalVO reserva = tm.getReservaHostal(fechaI, fechaF, usuario);
+				ReservaHostalVO reserva = tm.getReservaHostal(id);
 				return Response.status( 200 ).entity( reserva ).build( );			
 			}
 			catch( Exception e )

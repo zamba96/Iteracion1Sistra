@@ -9,7 +9,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import vos.HotelRoomVO;
 import vos.ReservaHotelVO;
 
 /**
@@ -85,11 +84,11 @@ public class DAOReservaHotel {
 			 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 			 * @throws Exception Si se genera un error dentro del metodo.
 			 */
-			public ReservaHotelVO getReservaHotel(String fechaI,String fechaF, String usuario) throws SQLException, Exception 
+			public ReservaHotelVO getReservaHotel(Long id) throws SQLException, Exception 
 			{
 				ReservaHotelVO reserva = null;
 
-				String sql = String.format("SELECT * FROM RESERVAHOTEL WHERE FECHAINICIO = '%1$s' AND FECHAFIN = '%2$s' AND USUARIO = '%3$s'", USUARIO ); 
+				String sql = String.format("SELECT * FROM RESERVAHOTEL WHERE ID = '%1$s'", USUARIO,id ); 
 
 				PreparedStatement prepStmt = conn.prepareStatement(sql);
 				recursos.add(prepStmt);
@@ -111,8 +110,9 @@ public class DAOReservaHotel {
 			 */
 			public void addReservaHotel(ReservaHotelVO reserva) throws SQLException, Exception {
 
-				String sql = String.format("INSERT INTO RESERVAHOTEL (FECHAINICIO, FECHAFIN, CUARTO, USUARIO) VALUES (%1$s, '%2$s', '%3$s', '%4$s')", 
+				String sql = String.format("INSERT INTO RESERVAHOTEL (ID,FECHAINICIO, FECHAFIN, CUARTO, USUARIO) VALUES (%1$s, '%2$s', '%3$s', '%4$s', '%5$s')", 
 											USUARIO, 
+											reserva.getId(),
 											reserva.getFechaI(), 
 											reserva.getFechaF(),
 											reserva.getCuarto(), 
@@ -154,10 +154,8 @@ public class DAOReservaHotel {
 			 */
 			public void deleteReservaHostal(ReservaHotelVO reserva) throws SQLException, Exception {
 
-				String sql = String.format("DELETE FROM RESERVAHOTEL WHERE FECHAI = %1$d AND FECHAFIN = %2$d AND USUARIO = %3$d", USUARIO,
-						reserva.getFechaI(),
-						reserva.getFechaF(),
-						reserva.getUsuario());
+				String sql = String.format("DELETE FROM RESERVAHOTEL WHERE ID = %1$d", USUARIO,
+						reserva.getId());
 
 				System.out.println(sql);
 				
@@ -204,16 +202,15 @@ public class DAOReservaHotel {
 			 */
 			public ReservaHotelVO convertResultSetToReservaHotel(ResultSet resultSet) throws SQLException {
 			
-				DAOHotelRoom dao = new DAOHotelRoom();
-				HotelRoomVO cuarto;
+				
 				try {
 					String fechaI = resultSet.getString("FECHAINICIO");
 					String fechaF = resultSet.getString("FECHAFIN");
-					Integer cuartoS = resultSet.getInt("CUARTO");
-					String hotelS = resultSet.getString("HOTEL");
-					cuarto = dao.getHotelRoom(hotelS, cuartoS);
+					String cuartoS = resultSet.getString("CUARTO");
 					
-					ReservaHotelVO beb = new ReservaHotelVO(fechaI, fechaF, cuarto.getId());
+					Long cuarto = Long.parseLong(cuartoS);
+					
+					ReservaHotelVO beb = new ReservaHotelVO(fechaI, fechaF, cuarto);
 					return beb;
 				} catch (Exception e) {
 					e.printStackTrace();

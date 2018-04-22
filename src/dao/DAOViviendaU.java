@@ -87,11 +87,11 @@ public class DAOViviendaU {
 			 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 			 * @throws Exception Si se genera un error dentro del metodo.
 			 */
-			public ViviendaUVO getVivienda(String nombre) throws SQLException, Exception 
+			public ViviendaUVO getVivienda(Long id) throws SQLException, Exception 
 			{
 				ViviendaUVO vivienda = null;
 
-				String sql = String.format("SELECT * FROM VIVIENDAU WHERE NOMBRE = %1$s", USUARIO, nombre); 
+				String sql = String.format("SELECT * FROM VIVIENDAU WHERE ID = %1$s", USUARIO, id); 
 
 				PreparedStatement prepStmt = conn.prepareStatement(sql);
 				recursos.add(prepStmt);
@@ -113,8 +113,9 @@ public class DAOViviendaU {
 			 */
 			public void addVivienda(ViviendaUVO vivienda) throws SQLException, Exception {
 
-				String sql = String.format("INSERT INTO %1$s.VIVIENDAU (DIRECCION, NOMBRE, CUARTOS) VALUES (%2$s, '%3$s', '%4$s')", 
+				String sql = String.format("INSERT INTO VIVIENDAU (ID,DIRECCION, NOMBRE, CUARTOS) VALUES (%1$s, %2$s, '%3$s', '%4$s')", 
 											USUARIO, 
+											vivienda.getId(),
 											vivienda.getDireccion(),
 											vivienda.getNombre(),
 											vivienda.getCuartos()
@@ -159,7 +160,7 @@ public class DAOViviendaU {
 			 */
 			public void deleteHostal(ViviendaUVO vivienda) throws SQLException, Exception {
 
-				String sql = String.format("DELETE FROM %1$s.VIVIENDAU WHERE NOMBRE = %2$d", USUARIO, vivienda.getNombre());
+				String sql = String.format("DELETE FROM VIVIENDAU WHERE ID = %1$d", USUARIO, vivienda.getId());
 
 				System.out.println(sql);
 				

@@ -68,7 +68,7 @@ CREATE TABLE Inmueble (
 	Administracion number,  
 	Precio float,
 	Direccion varchar(50),
-	Dueno VARCHAR(30) --FK USUARIO.CEDULA
+	Dueno VARCHAR(30)
 	);
 	
 --VecinoRoom
@@ -83,38 +83,46 @@ CREATE TABLE VecinoRoom (
 	
 --ReservaHostal
 CREATE TABLE ReservaHostal (
-	FechaInicio varchar(30),
+	Id float,
+    FechaInicio varchar(30),
 	FechaFin varchar(30),
 	Usuario VARCHAR(30), --USUARIO.CEDULA
 	Cuarto float, --FK HostalRoom.Id
-    Nombre varchar(30)
+    Nombre varchar(30),
+    PrecioTotal float
 	);
 	
 --ReservaHotel
 CREATE TABLE ReservaHotel (
-	FechaInicio varchar(30),
+	Id float,
+    FechaInicio varchar(30),
 	FechaFin varchar(30),
 	Usuario VARCHAR(30),
 	Cuarto number, --FK HotelRoom.Id
-    Nombre varchar(30)
+    Nombre varchar(30),
+    PrecioTotal float
 	);
 	
 --ContratoResidencia
 CREATE TABLE ContratoResidencia (
-	FechaInicio varchar(30),
+	Id float,
+    FechaInicio varchar(30),
 	FechaFin varchar(30),
 	Usuario VARCHAR(30),
 	Cuarto number, --FK Residencia.Id
-    Nombre VARCHAR(30)
+    Nombre VARCHAR(30),
+    PrecioTotal float
 	);
 	
 --ContratoInmueble
 CREATE TABLE ContratoInmueble (
-	FechaInicio varchar(30),
+	Id float,
+    FechaInicio varchar(30),
 	FechaFin varchar(30),
 	Usuario VARCHAR(30),
 	Dueno varchar(30),
-    Direccion varchar(30)
+    Direccion varchar(30),
+    PrecioTotal float
 	);
 	
 --Usuario
@@ -170,6 +178,7 @@ CREATE TABLE PADRESEHIJOS (
     
 --CONTRATOVECINO
 CREATE TABLE CONTRATOVECINO (
+    id float,
     FechaInicio varchar(30),
 	FechaFin varchar(30),
 	Usuario VARCHAR(30),

@@ -83,7 +83,7 @@ CREATE TABLE VecinoRoom (
 	
 --ReservaHostal
 CREATE TABLE ReservaHostal (
-	Id float,
+	Id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
     FechaInicio varchar(30),
 	FechaFin varchar(30),
 	Usuario VARCHAR(30), --USUARIO.CEDULA
@@ -94,7 +94,7 @@ CREATE TABLE ReservaHostal (
 	
 --ReservaHotel
 CREATE TABLE ReservaHotel (
-	Id float,
+	Id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
     FechaInicio varchar(30),
 	FechaFin varchar(30),
 	Usuario VARCHAR(30),
@@ -105,7 +105,7 @@ CREATE TABLE ReservaHotel (
 	
 --ContratoResidencia
 CREATE TABLE ContratoResidencia (
-	Id float,
+	Id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
     FechaInicio varchar(30),
 	FechaFin varchar(30),
 	Usuario VARCHAR(30),
@@ -116,7 +116,7 @@ CREATE TABLE ContratoResidencia (
 	
 --ContratoInmueble
 CREATE TABLE ContratoInmueble (
-	Id float,
+	Id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
     FechaInicio varchar(30),
 	FechaFin varchar(30),
 	Usuario VARCHAR(30),
@@ -178,7 +178,7 @@ CREATE TABLE PADRESEHIJOS (
     
 --CONTRATOVECINO
 CREATE TABLE CONTRATOVECINO (
-    id float,
+    id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
     PrecioTotal float,
     FechaInicio varchar(30),
 	FechaFin varchar(30),

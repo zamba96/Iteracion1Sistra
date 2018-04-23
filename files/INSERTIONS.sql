@@ -38,28 +38,27 @@ insert into VIVIENDAU (DIRECCION, NOMBRE) values ('5644 Derek Avenue', 'V9');
 insert into VIVIENDAU (DIRECCION, NOMBRE) values ('1937 Gina Pass', 'V10');
 
 --VECINO
-insert into VECINO (CEDULA, NOMBRE, FECHANACIMIENTO) values ('154.41.194.101', 'Veronike Jowitt', '11/12/2017');
-insert into VECINO (CEDULA, NOMBRE, FECHANACIMIENTO) values ('168.106.18.153', 'Jamison Trodler', '15/03/2018');
-insert into VECINO (CEDULA, NOMBRE, FECHANACIMIENTO) values ('28.122.32.72', 'Nettle Hickford', '07/02/2018');
-insert into VECINO (CEDULA, NOMBRE, FECHANACIMIENTO) values ('232.50.111.156', 'Halimeda Calendar', '21/02/2018');
-insert into VECINO (CEDULA, NOMBRE, FECHANACIMIENTO) values ('74.133.252.154', 'Ferne Kenealy', '08/09/2017');
-insert into VECINO (CEDULA, NOMBRE, FECHANACIMIENTO) values ('252.94.60.87', 'Charlie Cleave', '17/12/2017');
-insert into VECINO (CEDULA, NOMBRE, FECHANACIMIENTO) values ('86.232.78.7', 'Ora Selvester', '13/02/2018');
-insert into VECINO (CEDULA, NOMBRE, FECHANACIMIENTO) values ('51.34.122.5', 'Omar Melwall', '26/09/2017'); 
-insert into VECINO (CEDULA, NOMBRE, FECHANACIMIENTO) values ('182.245.167.74', 'Kimberlyn Dodsworth', '03/05/2017');
-insert into VECINO (CEDULA, NOMBRE, FECHANACIMIENTO) values ('73.113.211.26', 'Lara Stratiff', '19/10/2017');
+insert into VECINO (CEDULA, NOMBRE, FECHANACIMIENTO) values ('154.41.194.101', 'Veronike Jowitt', '11-12-2017');
+insert into VECINO (CEDULA, NOMBRE, FECHANACIMIENTO) values ('168.106.18.153', 'Jamison Trodler', '15-03-2018');
+insert into VECINO (CEDULA, NOMBRE, FECHANACIMIENTO) values ('28.122.32.72', 'Nettle Hickford', '07-02-2018');
+insert into VECINO (CEDULA, NOMBRE, FECHANACIMIENTO) values ('232.50.111.156', 'Halimeda Calendar', '21-02-2018');
+insert into VECINO (CEDULA, NOMBRE, FECHANACIMIENTO) values ('74.133.252.154', 'Ferne Kenealy', '08-09-2017');
+insert into VECINO (CEDULA, NOMBRE, FECHANACIMIENTO) values ('252.94.60.87', 'Charlie Cleave', '17-12-2017');
+insert into VECINO (CEDULA, NOMBRE, FECHANACIMIENTO) values ('86.232.78.7', 'Ora Selvester', '13-02-2018');
+insert into VECINO (CEDULA, NOMBRE, FECHANACIMIENTO) values ('51.34.122.5', 'Omar Melwall', '26-09-2017'); 
+insert into VECINO (CEDULA, NOMBRE, FECHANACIMIENTO) values ('182.245.167.74', 'Kimberlyn Dodsworth', '03-05-2017');
+insert into VECINO (CEDULA, NOMBRE, FECHANACIMIENTO) values ('73.113.211.26', 'Lara Stratiff', '19-10-2017');
 
 --HOTELROOM
-insert into HOTELROOM (TIPO, CUARTO, BANERA, JACUZZI, SALA, COCINA, CABLE, PRECIO, CAPACIDAD, DIRECCION, NOMBREHOTEL) values ('normal', 1, 1, 0, 1, 1, 1, 1, 5, '9176 Reinke Park', 'Agivu');
-insert into HOTELROOM (TIPO, CUARTO, BANERA, JACUZZI, SALA, COCINA, CABLE, PRECIO, CAPACIDAD, DIRECCION, NOMBREHOTEL) values ('normal', 2, 0, 1, 0, 0, 1, 1, 11, '4855 Banding Court', 'Agivu');
-insert into HOTELROOM (TIPO, CUARTO, BANERA, JACUZZI, SALA, COCINA, CABLE, PRECIO, CAPACIDAD, DIRECCION, NOMBREHOTEL) values ('suite', 3, 1, 0, 0, 0, 0, 1, 11, '11773 Stephen Avenue', 'Voolia');
-insert into HOTELROOM (TIPO, CUARTO, BANERA, JACUZZI, SALA, COCINA, CABLE, PRECIO, CAPACIDAD, DIRECCION, NOMBREHOTEL) values ('suite', 4, 0, 1, 0, 0, 1, 1, 8, '23 Sommers Point', 'Edgeblab');
-insert into HOTELROOM (TIPO, CUARTO, BANERA, JACUZZI, SALA, COCINA, CABLE, PRECIO, CAPACIDAD, DIRECCION, NOMBREHOTEL) values ('suite', 5, 1, 1, 0, 1, 0, 0, 10, '669 Dahle Drive', 'Chatterbridge');
-insert into HOTELROOM (TIPO, CUARTO, BANERA, JACUZZI, SALA, COCINA, CABLE, PRECIO, CAPACIDAD, DIRECCION, NOMBREHOTEL) values ('suite', 6, 1, 0, 1, 0, 1, 1, 4, '15145 Killdeer Crossing', 'Topiczoom');
-insert into HOTELROOM (TIPO, CUARTO, BANERA, JACUZZI, SALA, COCINA, CABLE, PRECIO, CAPACIDAD, DIRECCION, NOMBREHOTEL) values ('normal', 7, 0, 0, 1, 0, 1, 1, 2, '4 Elka Pass', 'Voolia');
-insert into HOTELROOM (TIPO, CUARTO, BANERA, JACUZZI, SALA, COCINA, CABLE, PRECIO, CAPACIDAD, DIRECCION, NOMBREHOTEL) values ('suite', 8, 0, 0, 1, 0, 0, 1, 2, '1386 Brickson Park Park', 'Jabbersphere');
-insert into HOTELROOM (TIPO, CUARTO, BANERA, JACUZZI, SALA, COCINA, CABLE, PRECIO, CAPACIDAD, DIRECCION, NOMBREHOTEL) values ('normal', 9, 0, 1, 0, 1, 0, 1, 12, '9 Merrick Pass', 'Skyba'); 
-insert into HOTELROOM (TIPO, CUARTO, BANERA, JACUZZI, SALA, COCINA, CABLE, PRECIO, CAPACIDAD, DIRECCION, NOMBREHOTEL) values ('normal', 10, 0, 0, 1, 0, 0, 0, 15, '80644 Sycamore Lane', 'Chatterbridge');
+insert into HOTELROOM (TIPO, CUARTO, BANERA, JACUZZI, SALA, COCINA, CABLE, PRECIO, CAPACIDAD, NOMBREHOTEL) values ('normal', 1, 1, 0, 1, 1, 1, 1, 5, 'Agivu');
+insert into HOTELROOM (TIPO, CUARTO, BANERA, JACUZZI, SALA, COCINA, CABLE, PRECIO, CAPACIDAD, NOMBREHOTEL) values ('suite', 3, 1, 0, 0, 0, 0, 1, 11, 'Voolia');
+insert into HOTELROOM (TIPO, CUARTO, BANERA, JACUZZI, SALA, COCINA, CABLE, PRECIO, CAPACIDAD, NOMBREHOTEL) values ('suite', 4, 0, 1, 0, 0, 1, 1, 8, 'Edgeblab');
+insert into HOTELROOM (TIPO, CUARTO, BANERA, JACUZZI, SALA, COCINA, CABLE, PRECIO, CAPACIDAD, NOMBREHOTEL) values ('suite', 5, 1, 1, 0, 1, 0, 0, 10, 'Chatterbridge');
+insert into HOTELROOM (TIPO, CUARTO, BANERA, JACUZZI, SALA, COCINA, CABLE, PRECIO, CAPACIDAD, NOMBREHOTEL) values ('suite', 6, 1, 0, 1, 0, 1, 1, 4, 'Topiczoom');
+insert into HOTELROOM (TIPO, CUARTO, BANERA, JACUZZI, SALA, COCINA, CABLE, PRECIO, CAPACIDAD, NOMBREHOTEL) values ('normal', 7, 0, 0, 1, 0, 1, 1, 2, 'Voolia');
+insert into HOTELROOM (TIPO, CUARTO, BANERA, JACUZZI, SALA, COCINA, CABLE, PRECIO, CAPACIDAD, NOMBREHOTEL) values ('suite', 8, 0, 0, 1, 0, 0, 1, 2, 'Jabbersphere');
+insert into HOTELROOM (TIPO, CUARTO, BANERA, JACUZZI, SALA, COCINA, CABLE, PRECIO, CAPACIDAD, NOMBREHOTEL) values ('normal', 9, 0, 1, 0, 1, 0, 1, 12, 'Skyba'); 
+insert into HOTELROOM (TIPO, CUARTO, BANERA, JACUZZI, SALA, COCINA, CABLE, PRECIO, CAPACIDAD, NOMBREHOTEL) values ('normal', 10, 0, 0, 1, 0, 0, 0, 15, 'Chatterbridge');
 
 --HOSTALROOM
 insert into HOSTALROOM (CUARTO, CAPACIDAD, PRECIO, NOMBREHOSTAL) values (1, 14, 736936, 'Hostal 4');
@@ -74,16 +73,16 @@ insert into HOSTALROOM (CUARTO, CAPACIDAD, PRECIO, NOMBREHOSTAL) values (9, 2, 8
 insert into HOSTALROOM (CUARTO, CAPACIDAD, PRECIO, NOMBREHOSTAL) values (10, 13, 176845, 'Hostal 9');
 
 --USUARIO
-insert into USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) values (1, 'Peterus Seaman', '16/08/2017');
-insert into USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) values (2, 'Dillon Loftus', '14/02/2018'); 
-insert into USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) values (3, 'Vitia Greenfield', '22/10/2017'); 
-insert into USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) values (4, 'Malissia North', '03/09/2017'); 
-insert into USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) values (5, 'Gabriel Mulcock', '17/12/2017'); 
-insert into USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) values (6, 'Jane Fishlee', '14/11/2017'); 
-insert into USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) values (7, 'Domingo Eyton', '19/01/2018'); 
-insert into USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) values (8, 'Shadow Spira', '02/03/2018');
-insert into USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) values (9, 'Tabbitha De Haven', '06/05/2017');
-insert into USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) values (10, 'Zita Redman', '14/05/2017');
+insert into USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) values (1, 'Peterus Seaman', '16-08-2017');
+insert into USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) values (2, 'Dillon Loftus', '14-02-2018'); 
+insert into USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) values (3, 'Vitia Greenfield', '22-10-2017'); 
+insert into USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) values (4, 'Malissia North', '03-09-2017'); 
+insert into USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) values (5, 'Gabriel Mulcock', '17-12-2017'); 
+insert into USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) values (6, 'Jane Fishlee', '14-11-2017'); 
+insert into USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) values (7, 'Domingo Eyton', '19-01-2018'); 
+insert into USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) values (8, 'Shadow Spira', '02-03-2018');
+insert into USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) values (9, 'Tabbitha De Haven', '06-05-2017');
+insert into USUARIO (CEDULA, NOMBRE, FECHANACIMIENTO) values (10, 'Zita Redman', '14-05-2017');
 
 --INMUEBLE
 insert into INMUEBLE (AMOBLADO, SERVICIOS, CABLE, ADMINISTRACION, PRECIO, DIRECCION, DUENO) values (0, 0, 1, 0, 70484, '10 Clemons Avenue', 8); 
@@ -98,4 +97,4 @@ insert into INMUEBLE (AMOBLADO, SERVICIOS, CABLE, ADMINISTRACION, PRECIO, DIRECC
 insert into INMUEBLE (AMOBLADO, SERVICIOS, CABLE, ADMINISTRACION, PRECIO, DIRECCION, DUENO) values (1, 0, 0, 0, 66855, '65740 Scoville Plaza', 9);
 
 --CONTRATOINMUEBLE
-insert into CONTRATOINMUEBLE(FECHAINICIO, FECHAFIN, USUARIO, DUENO, DIRECCION) values ('01/01/1990','01/03/1990', 1, 8, '10 Clemons Avenue');
+insert into CONTRATOINMUEBLE(FECHAINICIO, FECHAFIN, USUARIO, DUENO, DIRECCION) values ('01-01-1990','01-03-1990', 1, 8, '10 Clemons Avenue');

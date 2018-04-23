@@ -179,6 +179,7 @@ CREATE TABLE PADRESEHIJOS (
 --CONTRATOVECINO
 CREATE TABLE CONTRATOVECINO (
     id float,
+    PrecioTotal float,
     FechaInicio varchar(30),
 	FechaFin varchar(30),
 	Usuario VARCHAR(30),

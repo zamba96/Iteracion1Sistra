@@ -125,6 +125,19 @@ public class DAOReservaMasiva {
 	 */
 	public void addReservaMasiva(ReservaMasivaVO contrato) throws SQLException, Exception {
 
+		String sqlChevere = String.format("SET AUTOCOMMIT 0;\r\n" + 
+				"COMMIT;\r\n" + 
+				"SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;\r\n" + 
+				"select * from(\r\n" + 
+				"select INMUEBLE.ID from INMUEBLE\r\n" + 
+				"    LEFT JOIN CONTRATOINMUEBLE\r\n" + 
+				"    ON INMUEBLE.ID = CONTRATOINMUEBLE.IDINMUEBLE\r\n" + 
+				"    WHERE FECHAINICIO IS NULL OR FECHAFIN < TO_TIMESTAMP('%1$s', 'DD-MM-RRRR') OR FECHAINICIO > TO_TIMESTAMP('%2$s', 'DD-MM-RRRR')\r\n" + 
+				"    )where ROWNUM <= %3$s;\r\n" + 
+				"    \r\n" + 
+				"commit;\r\n" + 
+				"SET AUTOCOMMIT 1;", "01-01-1991", "05-05-1991", "100");
+		
 		String sql = String.format(
 				"INSERT INTO RESERVASMASIVAS (CANTIDAD, DESCRIPCION, TIPO) VALUES ('%2$s', '%3$s', '%4$s')", USUARIO,
 				contrato.getCantidad(), contrato.getDescrpcion(), contrato.getTipo());

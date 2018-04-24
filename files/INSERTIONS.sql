@@ -2,28 +2,28 @@
 
 
 --HOTEL
-insert into HOTEL (NOMBRE, DESAYUNO, RESTAURANTE, DIRECCION, PISCINA, HORARIO, PARQUEADERO) values ('Browseblab', 0, 1, 'background', 1, 1, 1); 
-insert into HOTEL (NOMBRE, DESAYUNO, RESTAURANTE, DIRECCION, PISCINA, HORARIO, PARQUEADERO) values ('Agivu', 0, 0, 'Team-oriented', 1, 0, 0);
-insert into HOTEL (NOMBRE, DESAYUNO, RESTAURANTE, DIRECCION, PISCINA, HORARIO, PARQUEADERO) values ('Edgeblab', 0, 1, 'De-engineered', 1, 1, 1);
-insert into HOTEL (NOMBRE, DESAYUNO, RESTAURANTE, DIRECCION, PISCINA, HORARIO, PARQUEADERO) values ('Chatterpoint', 1, 1, 'object-oriented', 1, 1, 1);
-insert into HOTEL (NOMBRE, DESAYUNO, RESTAURANTE, DIRECCION, PISCINA, HORARIO, PARQUEADERO) values ('Flashpoint', 1, 1, 'maximized', 0, 0, 1);
-insert into HOTEL (NOMBRE, DESAYUNO, RESTAURANTE, DIRECCION, PISCINA, HORARIO, PARQUEADERO) values ('Jabbersphere', 0, 0, 'fresh-thinking', 0, 0, 0);
-insert into HOTEL (NOMBRE, DESAYUNO, RESTAURANTE, DIRECCION, PISCINA, HORARIO, PARQUEADERO) values ('Skyba', 0, 0, 'Virtual', 1, 0, 0);
-insert into HOTEL (NOMBRE, DESAYUNO, RESTAURANTE, DIRECCION, PISCINA, HORARIO, PARQUEADERO) values ('Topiczoom', 1, 1, 'definition', 0, 0, 0);
-insert into HOTEL (NOMBRE, DESAYUNO, RESTAURANTE, DIRECCION, PISCINA, HORARIO, PARQUEADERO) values ('Voolia', 0, 1, 'collaboration', 1, 1, 1);
-insert into HOTEL (NOMBRE, DESAYUNO, RESTAURANTE, DIRECCION, PISCINA, HORARIO, PARQUEADERO) values ('Chatterbridge', 0, 0, 'Graphic Interface', 0, 1, 1);
+insert into HOTEL (NOMBRE, DESAYUNO, RESTAURANTE, DIRECCION, PISCINA, HORARIO, PARQUEADERO, ID) values ('Browseblab', 0, 1, 'background', 1, 1, 1, 1); 
+insert into HOTEL (NOMBRE, DESAYUNO, RESTAURANTE, DIRECCION, PISCINA, HORARIO, PARQUEADERO, ID) values ('Agivu', 0, 0, 'Team-oriented', 1, 0, 0, 2);
+insert into HOTEL (NOMBRE, DESAYUNO, RESTAURANTE, DIRECCION, PISCINA, HORARIO, PARQUEADERO, ID) values ('Edgeblab', 0, 1, 'De-engineered', 1, 1, 1, 3);
+insert into HOTEL (NOMBRE, DESAYUNO, RESTAURANTE, DIRECCION, PISCINA, HORARIO, PARQUEADERO, ID) values ('Chatterpoint', 1, 1, 'object-oriented', 1, 1, 1, 4);
+insert into HOTEL (NOMBRE, DESAYUNO, RESTAURANTE, DIRECCION, PISCINA, HORARIO, PARQUEADERO, ID) values ('Flashpoint', 1, 1, 'maximized', 0, 0, 1, 5);
+insert into HOTEL (NOMBRE, DESAYUNO, RESTAURANTE, DIRECCION, PISCINA, HORARIO, PARQUEADERO, ID) values ('Jabbersphere', 0, 0, 'fresh-thinking', 0, 0, 0, 6);
+insert into HOTEL (NOMBRE, DESAYUNO, RESTAURANTE, DIRECCION, PISCINA, HORARIO, PARQUEADERO, ID) values ('Skyba', 0, 0, 'Virtual', 1, 0, 0, 7);
+insert into HOTEL (NOMBRE, DESAYUNO, RESTAURANTE, DIRECCION, PISCINA, HORARIO, PARQUEADERO, ID) values ('Topiczoom', 1, 1, 'definition', 0, 0, 0, 8);
+insert into HOTEL (NOMBRE, DESAYUNO, RESTAURANTE, DIRECCION, PISCINA, HORARIO, PARQUEADERO, ID) values ('Voolia', 0, 1, 'collaboration', 1, 1, 1, 9);
+insert into HOTEL (NOMBRE, DESAYUNO, RESTAURANTE, DIRECCION, PISCINA, HORARIO, PARQUEADERO, ID) values ('Chatterbridge', 0, 0, 'Graphic Interface', 0, 1, 1, 10);
 
 --HOSTALES
-insert into HOSTAL (APERTURA, CIERRE, DIRECCION, NOMBRE, DESAYUNO) values (6, 17, 'Landaulet', 'Hostal 1', 1);
-insert into HOSTAL (APERTURA, CIERRE, DIRECCION, NOMBRE, DESAYUNO) values (16, 22, 'F250', 'Hostal 2', 1);
-insert into HOSTAL (APERTURA, CIERRE, DIRECCION, NOMBRE, DESAYUNO) values (0, 2, 'Civic', 'Hostal 3', 0);
-insert into HOSTAL (APERTURA, CIERRE, DIRECCION, NOMBRE, DESAYUNO) values (22, 13, 'Fiero', 'Hostal 4', 1);
-insert into HOSTAL (APERTURA, CIERRE, DIRECCION, NOMBRE, DESAYUNO) values (10, 11, 'Charger', 'Hostal 5', 0);
-insert into HOSTAL (APERTURA, CIERRE, DIRECCION, NOMBRE, DESAYUNO) values (24, 12, 'Tracer', 'Hostal 6', 1);
-insert into HOSTAL (APERTURA, CIERRE, DIRECCION, NOMBRE, DESAYUNO) values (4, 24, 'Seville', 'Hostal 7', 0);
-insert into HOSTAL (APERTURA, CIERRE, DIRECCION, NOMBRE, DESAYUNO) values (18, 13, '9-2X', 'Hostal 8', 0);
-insert into HOSTAL (APERTURA, CIERRE, DIRECCION, NOMBRE, DESAYUNO) values (23, 10, 'Ram 1500 Club', 'Hostal 9', 1);
-insert into HOSTAL (APERTURA, CIERRE, DIRECCION, NOMBRE, DESAYUNO) values (5, 5, 'Countach', 'Hostal 10', 0);
+insert into HOSTAL (APERTURA, CIERRE, DIRECCION, NOMBRE, DESAYUNO, ID) values (6, 17, 'Landaulet', 'Hostal 1', 1, 1);
+insert into HOSTAL (APERTURA, CIERRE, DIRECCION, NOMBRE, DESAYUNO, ID) values (16, 22, 'F250', 'Hostal 2', 1, 2);
+insert into HOSTAL (APERTURA, CIERRE, DIRECCION, NOMBRE, DESAYUNO, ID) values (0, 2, 'Civic', 'Hostal 3', 0, 3);
+insert into HOSTAL (APERTURA, CIERRE, DIRECCION, NOMBRE, DESAYUNO, ID) values (22, 13, 'Fiero', 'Hostal 4', 1, 4);
+insert into HOSTAL (APERTURA, CIERRE, DIRECCION, NOMBRE, DESAYUNO, ID) values (10, 11, 'Charger', 'Hostal 5', 0, 5);
+insert into HOSTAL (APERTURA, CIERRE, DIRECCION, NOMBRE, DESAYUNO, ID) values (24, 12, 'Tracer', 'Hostal 6', 1, 6);
+insert into HOSTAL (APERTURA, CIERRE, DIRECCION, NOMBRE, DESAYUNO, ID) values (4, 24, 'Seville', 'Hostal 7', 0, 7);
+insert into HOSTAL (APERTURA, CIERRE, DIRECCION, NOMBRE, DESAYUNO, ID) values (18, 13, '9-2X', 'Hostal 8', 0, 8);
+insert into HOSTAL (APERTURA, CIERRE, DIRECCION, NOMBRE, DESAYUNO, ID) values (23, 10, 'Ram 1500 Club', 'Hostal 9', 1, 9);
+insert into HOSTAL (APERTURA, CIERRE, DIRECCION, NOMBRE, DESAYUNO, ID) values (5, 5, 'Countach', 'Hostal 10', 0, 10);
 
 --VIVIENDAU
 insert into VIVIENDAU (DIRECCION, NOMBRE) values ('665 Kropf Point', 'V1');

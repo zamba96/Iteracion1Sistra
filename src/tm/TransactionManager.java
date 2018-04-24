@@ -931,7 +931,7 @@ public class TransactionManager {
 			this.conn = darConexion();
 			daoInmueble.setConn(conn);
 			daoUssr.setConn(conn);
-			contrato.setInmueble(daoInmueble.getInmueble(contrato.getOwnerCedula(), contrato.getDireccion()));
+			contrato.setInmueble(daoInmueble.getInmueble(contrato.getIdInmueble()));
 			contrato.setUsuario(daoUssr.getUsuario(contrato.getUsrCedula()));
 			daoContratoInmueble.setConn(conn);
 			daoContratoInmueble.addContratoInmueble(contrato);

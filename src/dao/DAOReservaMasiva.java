@@ -1,6 +1,3 @@
-/**
- * 
- */
 package dao;
 
 import java.sql.Connection;
@@ -9,14 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import vos.ReservaHostalVO;
+import vos.ReservaMasivaVO;
+import vos.InmuebleVO;
+import vos.UsuarioVO;
 
-/**
- * @author camilo
- *
- */
-public class DAOReservaHostal {
-
+public class DAOReservaMasiva {
 	// ----------------------------------------------------------------------------------------------------------------------------------
 	// CONSTANTES
 	// ----------------------------------------------------------------------------------------------------------------------------------
@@ -47,7 +41,7 @@ public class DAOReservaHostal {
 	/**
 	 * Metodo constructor de la clase DAOBebedor <br/>
 	 */
-	public DAOReservaHostal() {
+	public DAOReservaMasiva() {
 		recursos = new ArrayList<Object>();
 	}
 
@@ -64,32 +58,32 @@ public class DAOReservaHostal {
 	 * @throws Exception
 	 *             Si se genera un error dentro del metodo.
 	 */
-	public ArrayList<ReservaHostalVO> getReservasHostales() throws SQLException, Exception {
-		ArrayList<ReservaHostalVO> reservas = new ArrayList<ReservaHostalVO>();
+	public ArrayList<ReservaMasivaVO> getReservasMasivas() throws SQLException, Exception {
+		ArrayList<ReservaMasivaVO> contratos = new ArrayList<ReservaMasivaVO>();
 
 		// Aclaracion: Por simplicidad, solamente se obtienen los primeros 50
 		// resultados de la consulta
-		String sql = String.format("SELECT * FROM RESERVAHOSTAL WHERE ROWNUM <= 50", USUARIO);
+		String sql = String.format("SELECT * FROM RESERVASMASIVAS WHERE ROWNUM <= 50", USUARIO);
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
 		while (rs.next()) {
-			reservas.add(convertResultSetToReservaHostal(rs));
+			contratos.add(convertResultSetToReservaMasiva(rs));
 		}
-		return reservas;
+		return contratos;
 	}
 
 	/**
-	 * Metodo que obtiene la informacion del reserva en la Base de Datos que
+	 * Metodo que obtiene la informacion del contrato en la Base de Datos que
 	 * tiene el identificador dado por parametro<br/>
 	 * <b>Precondicion: </b> la conexion a sido inicializadoa <br/>
 	 * 
 	 * @param id
-	 *            el identificador del reserva
-	 * @return la informacion del reserva que cumple con los criterios de la
-	 *         sentecia SQL Null si no existe el reserva conlos criterios
+	 *            el identificador del contrato
+	 * @return la informacion del contrato que cumple con los criterios de la
+	 *         sentecia SQL Null si no existe el contrato conlos criterios
 	 *         establecidos
 	 * @throws SQLException
 	 *             SQLException Genera excepcion si hay error en la conexion o
@@ -97,90 +91,53 @@ public class DAOReservaHostal {
 	 * @throws Exception
 	 *             Si se genera un error dentro del metodo.
 	 */
-	public ReservaHostalVO getReservaHostal(Long id) throws SQLException, Exception {
-		ReservaHostalVO reserva = null;
+	public ReservaMasivaVO getReservaMasiva(Long id)
+			throws SQLException, Exception {
+		ReservaMasivaVO contrato = null;
 
-		String sql = String.format("SELECT * FROM RESERVAHOSTAL WHERE Id = '%2$s'", USUARIO, id);
+		String sql = String.format(
+				"SELECT * FROM RESERVASMASIVAS WHERE ID = '%2$s'",
+				USUARIO, id);
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
 		if (rs.next()) {
-			reserva = convertResultSetToReservaHostal(rs);
+			contrato = convertResultSetToReservaMasiva(rs);
 		}
 
-		return reserva;
+		return contrato;
 	}
 
 	/**
-	 * Metodo que agregar la informacion de un nuevo reserva en la Base de Datos
-	 * a partir del parametro ingresado<br/>
+	 * Metodo que agregar la informacion de un nuevo contrato en la Base de
+	 * Datos a partir del parametro ingresado<br/>
 	 * <b>Precondicion: </b> la conexion a sido inicializadoa <br/>
 	 * 
-	 * @param reserva
-	 *            ReservaHostalVO que desea agregar a la Base de Datos
+	 * @param contrato
+	 *            ReservaMasivaVO que desea agregar a la Base de Datos
 	 * @throws SQLException
 	 *             SQLException Genera excepcion si hay error en la conexion o
 	 *             en la consulta SQL
 	 * @throws Exception
 	 *             Si se genera un error dentro del metodo.
 	 */
-	public void addReservaHostal(ReservaHostalVO reserva) throws SQLException, Exception {
+	public void addReservaMasiva(ReservaMasivaVO contrato) throws SQLException, Exception {
 
 		String sql = String.format(
-				"INSERT INTO RESERVAHOSTAL (FECHAINICIO, FECHAFIN, IDHOSTALROOM, USUARIO) VALUES (%2$s, '%3$s', '%4$s', '%5$s')",
-				USUARIO, reserva.getFechaI(), reserva.getFechaF(), reserva.getCuarto(), reserva.getUsuario());
+				"INSERT INTO RESERVASMASIVAS (CANTIDAD, DESCRIPCION, TIPO) VALUES ('%2$s', '%3$s', '%4$s')", USUARIO,
+				contrato.getCantidad(), contrato.getDescrpcion(), contrato.getTipo());
 		System.out.println(sql);
-
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
+
 	}
 
-	/**
-	 * Metodo que actualiza la informacion del reserva en la Base de Datos que
-	 * tiene el identificador dado por parametro<br/>
-	 * <b>Precondicion: </b> la conexion a sido inicializadoa <br/>
-	 * 
-	 * @param reserva
-	 *            ReservaHostalVO que desea actualizar a la Base de Datos
-	 * @throws SQLException
-	 *             SQLException Genera excepcion si hay error en la conexion o
-	 *             en la consulta SQL
-	 * @throws Exception
-	 *             Si se genera un error dentro del metodo.
-	 */
-	public void updateReservaHostal(ReservaHostalVO reserva) throws SQLException, Exception {
+	public void deleteReservaMasiva(ReservaMasivaVO contrato) throws SQLException, Exception {
 
-		StringBuilder sql = new StringBuilder();
-		sql.append(String.format("UPDATE RESERVAHOSTAL SET ", USUARIO));
-		sql.append(String.format("FECHAINICIO = '%2$s' AND FECHAFIN = '%3$s' AND CUARTO = '%4$s' AND USUARIO = '%5$s' ",
-				reserva.getFechaI(), reserva.getFechaF(), reserva.getCuarto()));
-
-		System.out.println(sql);
-
-		PreparedStatement prepStmt = conn.prepareStatement(sql.toString());
-		recursos.add(prepStmt);
-		prepStmt.executeQuery();
-	}
-
-	/**
-	 * Metodo que actualiza la informacion del reserva en la Base de Datos que
-	 * tiene el identificador dado por parametro<br/>
-	 * <b>Precondicion: </b> la conexion a sido inicializadoa <br/>
-	 * 
-	 * @param reserva
-	 *            ReservaHostalVO que desea actualizar a la Base de Datos
-	 * @throws SQLException
-	 *             SQLException Genera excepcion si hay error en la conexion o
-	 *             en la consulta SQL
-	 * @throws Exception
-	 *             Si se genera un error dentro del metodo.
-	 */
-	public void deleteReservaHostal(ReservaHostalVO reserva) throws SQLException, Exception {
-
-		String sql = String.format("DELETE FROM RESERVAHOSTAL WHERE ID = %2$d", USUARIO, reserva.getId());
+		String sql = String.format("DELETE FROM RESERVASMASIVAS WHERE ID = %2$d", USUARIO, contrato.getId());
 
 		System.out.println(sql);
 
@@ -225,35 +182,36 @@ public class DAOReservaHostal {
 
 	/**
 	 * Metodo que transforma el resultado obtenido de una consulta SQL (sobre la
-	 * tabla RESERVAHOSTAL) en una instancia de la clase ReservaHostalVO.
+	 * tabla CONTRATOSINMUEBLES) en una instancia de la clase ReservaMasivaVO.
 	 * 
 	 * @param resultSet
-	 *            ResultSet con la informacion de un reserva que se obtuvo de la
-	 *            base de datos.
-	 * @return ReservaHostalVO cuyos atributos corresponden a los valores
-	 *         asociados a un registro particular de la tabla RESERVAHOSTAL.
+	 *            ResultSet con la informacion de un contrato que se obtuvo de
+	 *            la base de datos.
+	 * @return ReservaMasivaVO cuyos atributos corresponden a los valores
+	 *         asociados a un registro particular de la tabla
+	 *         CONTRATOSINMUEBLES.
 	 * @throws SQLException
 	 *             Si existe algun problema al extraer la informacion del
 	 *             ResultSet.
 	 */
-	public ReservaHostalVO convertResultSetToReservaHostal(ResultSet resultSet) throws SQLException {
+	public ReservaMasivaVO convertResultSetToReservaMasiva(ResultSet resultSet) throws SQLException {
 
 		try {
-			String fechaI = resultSet.getString("FECHAINICIO");
-			String fechaF = resultSet.getString("FECHAFIN");
-			String cuartoS = resultSet.getString("CUARTO");
-			String ids = resultSet.getString("ID");
-			Long usuario = resultSet.getLong("USUARIO");
 
-			Long id = Long.parseLong(ids);
-			Long cuarto = Long.parseLong(cuartoS);
+			String tipo = resultSet.getString("TIPO");
+			String descripcion = resultSet.getString("DESCRIPCION");
+			String cantidadS = resultSet.getString("CANTIDAD");
+			String IdS = resultSet.getString("ID");
 
-			ReservaHostalVO beb = new ReservaHostalVO();
-			beb.setCuarto(cuarto);
-			beb.setFechaF(fechaF);
-			beb.setFechaI(fechaI);
-			beb.setId(id);
-			beb.setUsuario(usuario);
+			Long Id = Long.parseLong(IdS);
+			Integer cantidad = Integer.parseInt(cantidadS);
+
+			ReservaMasivaVO beb = new ReservaMasivaVO();
+			beb.setTipo(tipo);
+			beb.setId(Id);
+			beb.setCantidad(cantidad);
+			beb.setDescrpcion(descripcion);
+			beb.setTipo(tipo);
 
 			return beb;
 		} catch (Exception e) {

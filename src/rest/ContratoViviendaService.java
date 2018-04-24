@@ -119,7 +119,7 @@ public class ContratoViviendaService {
 			@POST
 			@Consumes({ MediaType.APPLICATION_JSON })
 			@Produces({MediaType.APPLICATION_JSON})
-			public Response addReservaHostal(ContratoViviendaVO contrato) {
+			public Response addReservaVivienda(ContratoViviendaVO contrato) {
 				try {
 					TransactionManager tm = new TransactionManager(getPath());
 					tm.addContratoVivienda(contrato);
@@ -142,7 +142,7 @@ public class ContratoViviendaService {
 			@PUT
 			@Consumes({ MediaType.APPLICATION_JSON })
 			@Produces({MediaType.APPLICATION_JSON})
-			public Response updateBebedor(ContratoViviendaVO contrato) {
+			public Response updateReservaVivienda(ContratoViviendaVO contrato) {
 				try {
 					TransactionManager tm = new TransactionManager(getPath());
 					tm.updateContratoVivienda(contrato);
@@ -164,7 +164,7 @@ public class ContratoViviendaService {
 			@DELETE
 			@Consumes({ MediaType.APPLICATION_JSON })
 			@Produces({MediaType.APPLICATION_JSON})
-			public Response deleteBebedor(ContratoViviendaVO contrato) {
+			public Response deleteReservaVivienda(ContratoViviendaVO contrato) {
 				try {
 					TransactionManager tm = new TransactionManager(getPath());
 					tm.deleteContratoVivienda(contrato);

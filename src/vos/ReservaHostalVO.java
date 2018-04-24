@@ -13,42 +13,42 @@ public class ReservaHostalVO {
 
 	@JsonProperty(value = "id")
 	private Long id;
-	
-	@JsonProperty(value="fechaI")
-	private String fechaI;
-	
-	@JsonProperty(value="fechaF")
-	private String fechaF;
-	
-	@JsonProperty(value="cuarto")
-	private Long cuarto;
-	
-	@JsonProperty(value="usuario")
-	private Long usuario;
-	 
-	/*
-	public ReservaHostalVO(
-			@JsonProperty(value="fechaI")String fechaI,
-			@JsonProperty(value="fechaF")String fechaF,
-			@JsonProperty(value="cuarto")Long cuarto,
-			@JsonProperty(value="usuario")Long usuario){
-		this.fechaI = fechaI;
-		this.fechaF = fechaF;
-		this.cuarto = cuarto;
-		this.usuario = usuario;
-	}
 
-	public ReservaHostalVO(
-			@JsonProperty(value="fechaI")String fechaI,
-			@JsonProperty(value="fechaF")String fechaF,
-			@JsonProperty(value="cuarto")Long cuarto) {
-		this.fechaI = fechaI;
-		this.fechaF = fechaF;
-		this.cuarto = cuarto;
-	}
-	*/
-	public ReservaHostalVO(){
-		
+	@JsonProperty(value = "fechaInicio")
+	private String fechaInicio;
+
+	@JsonProperty(value = "fechaFinal")
+	private String fechaFinal;
+
+	@JsonProperty(value = "cuarto")
+	private Long cuarto;
+
+	@JsonProperty(value = "usuario")
+	private Long usuario;
+
+	/*
+	 * public ReservaHostalVO(
+	 * 
+	 * @JsonProperty(value="fechaI")String fechaI,
+	 * 
+	 * @JsonProperty(value="fechaF")String fechaF,
+	 * 
+	 * @JsonProperty(value="cuarto")Long cuarto,
+	 * 
+	 * @JsonProperty(value="usuario")Long usuario){ this.fechaI = fechaI;
+	 * this.fechaF = fechaF; this.cuarto = cuarto; this.usuario = usuario; }
+	 * 
+	 * public ReservaHostalVO(
+	 * 
+	 * @JsonProperty(value="fechaI")String fechaI,
+	 * 
+	 * @JsonProperty(value="fechaF")String fechaF,
+	 * 
+	 * @JsonProperty(value="cuarto")Long cuarto) { this.fechaI = fechaI;
+	 * this.fechaF = fechaF; this.cuarto = cuarto; }
+	 */
+	public ReservaHostalVO() {
+
 	}
 
 	/**
@@ -59,7 +59,8 @@ public class ReservaHostalVO {
 	}
 
 	/**
-	 * @param id the id to set
+	 * @param id
+	 *            the id to set
 	 */
 	public void setId(Long id) {
 		this.id = id;
@@ -69,28 +70,30 @@ public class ReservaHostalVO {
 	 * @return the fechaI
 	 */
 	public String getFechaI() {
-		return fechaI;
+		return fechaInicio;
 	}
 
 	/**
-	 * @param fechaI the fechaI to set
+	 * @param fechaI
+	 *            the fechaI to set
 	 */
 	public void setFechaI(String fechaI) {
-		this.fechaI = fechaI;
+		this.fechaInicio = fechaI;
 	}
 
 	/**
 	 * @return the fechaF
 	 */
 	public String getFechaF() {
-		return fechaF;
+		return fechaFinal;
 	}
 
 	/**
-	 * @param fechaF the fechaF to set
+	 * @param fechaF
+	 *            the fechaF to set
 	 */
 	public void setFechaF(String fechaF) {
-		this.fechaF = fechaF;
+		this.fechaFinal = fechaF;
 	}
 
 	/**
@@ -101,7 +104,8 @@ public class ReservaHostalVO {
 	}
 
 	/**
-	 * @param cuarto the cuarto to set
+	 * @param cuarto
+	 *            the cuarto to set
 	 */
 	public void setCuarto(Long cuarto) {
 		this.cuarto = cuarto;
@@ -115,11 +119,11 @@ public class ReservaHostalVO {
 	}
 
 	/**
-	 * @param usuario the usuario to set
+	 * @param usuario
+	 *            the usuario to set
 	 */
 	public void setUsuario(Long usuario) {
 		this.usuario = usuario;
 	}
 
-	
 }

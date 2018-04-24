@@ -19,6 +19,7 @@ import dao.DAOContratoVecino;
 import dao.DAOContratoVivienda;
 import dao.DAOHotelRoom;
 import dao.DAOInmueble;
+import dao.DAORelMasiva;
 import dao.DAOReservaHostal;
 import dao.DAOReservaHotel;
 import dao.DAOReservaMasiva;
@@ -28,6 +29,7 @@ import vos.ContratoInmuebleVO;
 import vos.ContratoVecinoVO;
 import vos.ContratoViviendaVO;
 import vos.HotelRoomVO;
+import vos.RelMasivaVO;
 import vos.ReservaHostalVO;
 import vos.ReservaHotelVO;
 import vos.ReservaMasivaVO;
@@ -1241,6 +1243,137 @@ public class TransactionManager {
 		} finally {
 			try {
 				daoReservaMasiva.cerrarRecursos();
+				if (this.conn != null) {
+					this.conn.close();
+				}
+			} catch (SQLException exception) {
+				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+
+	}
+	
+	public List<RelMasivaVO> getRelMasiva() throws Exception {
+		DAORelMasiva daoRelMasiva = new DAORelMasiva();
+		List<RelMasivaVO> RelMasiva;
+		try {
+			this.conn = darConexion();
+			daoRelMasiva.setConn(conn);
+
+			// Por simplicidad, solamente se obtienen los primeros 50 resultados
+			// de la consulta
+			RelMasiva = daoRelMasiva.getRelMasivas();
+		} catch (SQLException sqlException) {
+			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
+			sqlException.printStackTrace();
+			throw sqlException;
+		} catch (Exception exception) {
+			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
+			exception.printStackTrace();
+			throw exception;
+		} finally {
+			try {
+				daoRelMasiva.cerrarRecursos();
+				if (this.conn != null) {
+					this.conn.close();
+				}
+			} catch (SQLException exception) {
+				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return RelMasiva;
+	}
+
+	public RelMasivaVO getRelMasiva(Long id) throws Exception {
+		DAORelMasiva daoRelMasiva = new DAORelMasiva();
+		RelMasivaVO RelMasiva = null;
+		try {
+			this.conn = darConexion();
+			daoRelMasiva.setConn(conn);
+			RelMasiva = daoRelMasiva.getRelMasiva(id);
+			if (RelMasiva == null) {
+				throw new Exception("El reservaHostal con la fecha inicial para el usuario = " + id
+						+ " no se encuentra persistido en la base de datos.");
+			}
+		} catch (SQLException sqlException) {
+			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
+			sqlException.printStackTrace();
+			throw sqlException;
+		} catch (Exception exception) {
+			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
+			exception.printStackTrace();
+			throw exception;
+		} finally {
+			try {
+				daoRelMasiva.cerrarRecursos();
+				if (this.conn != null) {
+					this.conn.close();
+				}
+			} catch (SQLException exception) {
+				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return RelMasiva;
+	}
+
+	public void addRelMasiva(RelMasivaVO contrato) throws Exception {
+
+		DAORelMasiva daoRelMasiva = new DAORelMasiva();
+		try {
+			this.conn = darConexion();
+			daoRelMasiva.setConn(conn);
+			daoRelMasiva.addRelMasiva(contrato);
+		} catch (SQLException sqlException) {
+			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
+			sqlException.printStackTrace();
+			throw sqlException;
+		} catch (Exception exception) {
+			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
+			exception.printStackTrace();
+			throw exception;
+		} finally {
+			try {
+				daoRelMasiva.cerrarRecursos();
+				if (this.conn != null) {
+					this.conn.close();
+				}
+			} catch (SQLException exception) {
+				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+
+	}
+
+	public void deleteRelMasiva(RelMasivaVO RelMasiva) throws Exception {
+		DAORelMasiva daoRelMasiva = new DAORelMasiva();
+		try {
+			this.conn = darConexion();
+			daoRelMasiva.setConn(conn);
+			RelMasiva = daoRelMasiva.getRelMasiva(RelMasiva.getId());
+			if (RelMasiva == null) {
+				throw new Exception(
+						"El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");
+			} else
+				daoRelMasiva.deleteRelMasiva(RelMasiva);
+		} catch (SQLException sqlException) {
+			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
+			sqlException.printStackTrace();
+			throw sqlException;
+		} catch (Exception exception) {
+			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
+			exception.printStackTrace();
+			throw exception;
+		} finally {
+			try {
+				daoRelMasiva.cerrarRecursos();
 				if (this.conn != null) {
 					this.conn.close();
 				}

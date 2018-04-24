@@ -26,7 +26,7 @@ public class ReservaHotelVO {
 	@JsonProperty(value="usuario")
 	private Long usuario;
 	
-	
+	/*
 	public ReservaHotelVO(
 			@JsonProperty(value="fechaI")String fechaI,
 			@JsonProperty(value="fechaF")String fechaF,
@@ -47,7 +47,10 @@ public class ReservaHotelVO {
 		this.fechaF = fechaF;
 		this.cuarto = cuarto;
 	}
-
+	*/
+	public ReservaHotelVO(){
+		
+	}
 	/**
 	 * @return the id
 	 */

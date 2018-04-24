@@ -4,12 +4,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 public class ContratoInmuebleVO {
 
-	
-	@JsonProperty(value = "ownerCedula")
-	private String ownerCedula;
 
-	@JsonProperty(value = "direccion")
-	private String direccion;
+	@JsonProperty(value = "IDINMUEBLE")
+	private Long IdInmueble;
 
 	@JsonProperty(value = "Id")
 	private Long Id;
@@ -68,20 +65,12 @@ public class ContratoInmuebleVO {
 		this.usrCedula = usrCedula;
 	}
 
-	public String getOwnerCedula() {
-		return ownerCedula;
+	public Long getIdInmueble() {
+		return IdInmueble;
 	}
 
-	public void setOwnerCedula(String ownerCedula) {
-		this.ownerCedula = ownerCedula;
-	}
-
-	public String getDireccion() {
-		return direccion;
-	}
-
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
+	public void setIdInmueble(Long idInmueble) {
+		IdInmueble = idInmueble;
 	}
 
 	public InmuebleVO getInmueble() {

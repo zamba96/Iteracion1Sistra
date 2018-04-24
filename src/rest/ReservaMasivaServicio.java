@@ -1,6 +1,3 @@
-/**
- * 
- */
 package rest;
 
 import java.util.List;
@@ -19,15 +16,11 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import tm.TransactionManager;
-import vos.ReservaHostalVO;
+import vos.ContratoVecinoVO;
+import vos.ReservaMasivaVO;
 
-/**
- * @author camilo
- *
- */
-@Path("reservasHostales")
-
-public class ReservaHostalService {
+@Path("ReservasMasivas")
+public class ReservaMasivaServicio {
 
 	// ----------------------------------------------------------------------------------------------------------------------------------
 	// ATRIBUTOS
@@ -62,74 +55,74 @@ public class ReservaHostalService {
 	// ----------------------------------------------------------------------------------------------------------------------------------
 
 	/**
-	 * Metodo GET que trae a todos los bebedores en la Base de datos. <br/>
+	 * Metodo GET que trae a todos los masiva en la Base de datos. <br/>
 	 * <b>Precondicion: </b> el archivo <em>'conectionData'</em> ha sido
 	 * inicializado con las credenciales del usuario <br/>
-	 * <b>URL: </b> http://localhost:8080/TutorialParranderos/rest/bebedores
+	 * <b>URL: </b> http://localhost:8080/TutorialParranderos/rest/masiva
 	 * <br/>
 	 * 
 	 * @return <b>Response Status 200</b> - JSON que contiene a todos los
-	 *         bebedores que estan en la Base de Datos <br/>
+	 *         masiva que estan en la Base de Datos <br/>
 	 *         <b>Response Status 500</b> - Excepcion durante el transcurso de
 	 *         la transaccion
 	 */
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getReservasHostales() {
+	public Response getReservasMasivas() {
 
 		try {
 			TransactionManager tm = new TransactionManager(getPath());
 
-			List<ReservaHostalVO> bebedores;
+			List<ReservaMasivaVO> masiva;
 			// Por simplicidad, solamente se obtienen los primeros 50 resultados
 			// de la consulta
-			bebedores = tm.getReservasHostales();
-			return Response.status(200).entity(bebedores).build();
+			masiva = tm.getReservasMasivas();
+			return Response.status(200).entity(masiva).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
 
 	/**
-	 * Metodo GET que trae al reserva en la Base de Datos con el ID dado por
+	 * Metodo GET que trae al contrato en la Base de Datos con el ID dado por
 	 * parametro <br/>
 	 * <b>Precondicion: </b> el archivo <em>'conectionData'</em> ha sido
 	 * inicializado con las credenciales del usuario <br/>
 	 * <b>URL: </b>
-	 * http://localhost:8080/TutorialParranderos/rest/bebedores/{id} <br/>
+	 * http://localhost:8080/TutorialParranderos/rest/masiva/{id} <br/>
 	 * 
-	 * @return <b>Response Status 200</b> - JSON ReservaHostalVO que contiene al
-	 *         reserva cuyo ID corresponda al parametro <br/>
+	 * @return <b>Response Status 200</b> - JSON ContratoVecinoVO que contiene
+	 *         al contrato cuyo ID corresponda al parametro <br/>
 	 *         <b>Response Status 500</b> - Excepcion durante el transcurso de
 	 *         la transaccion
 	 */
 	@GET
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getReservaHostalById(@PathParam("id") Long id) {
+	public Response getReservaMasivaById(@PathParam("id") Long id) {
 		try {
 			TransactionManager tm = new TransactionManager(getPath());
 
-			ReservaHostalVO reserva = tm.getReservaHostal(id);
-			return Response.status(200).entity(reserva).build();
+			ReservaMasivaVO contrato = tm.getReservaMasiva(id);
+			return Response.status(200).entity(contrato).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
 
 	/**
-	 * Metodo que recibe un reserva en formato JSON y lo agrega a la Base de
+	 * Metodo que recibe un contrato en formato JSON y lo agrega a la Base de
 	 * Datos <br/>
 	 * <b>Precondicion: </b> El archivo <em>'conectionData'</em> ha sido
 	 * inicializado con las credenciales del usuario <br/>
 	 * <b>Postcondicion: </b> Se agrega a la Base de datos la informacion
-	 * correspondiente al reserva. <br/>
-	 * <b>URL: </b> http://localhost:8080/TutorialParranderos/rest/bebedores
+	 * correspondiente al contrato. <br/>
+	 * <b>URL: </b> http://localhost:8080/TutorialParranderos/rest/masiva
 	 * <br/>
 	 * 
-	 * @param reserva
-	 *            JSON con la informacion del reserva que se desea agregar
-	 * @return <b>Response Status 200</b> - JSON que contiene al reserva que ha
+	 * @param contrato
+	 *            JSON con la informacion del contrato que se desea agregar
+	 * @return <b>Response Status 200</b> - JSON que contiene al contrato que ha
 	 *         sido agregado <br/>
 	 *         <b>Response Status 500</b> - Excepcion durante el transcurso de
 	 *         la transaccion
@@ -138,27 +131,27 @@ public class ReservaHostalService {
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response addReservaHostal(ReservaHostalVO reserva) {
+	public Response addReservaMasiva(ReservaMasivaVO contrato) {
 		try {
 			TransactionManager tm = new TransactionManager(getPath());
-			tm.addReservaHostal(reserva);
-			return Response.status(200).entity(reserva).build();
+			tm.addReservaMasiva(contrato);
+			return Response.status(200).entity(contrato).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
 
 	/**
-	 * Metodo que recibe un reserva en formato JSON y lo agrega a la Base de
+	 * Metodo que recibe un contrato en formato JSON y lo agrega a la Base de
 	 * Datos <br/>
 	 * <b>Precondicion: </b> El archivo <em>'conectionData'</em> ha sido
 	 * inicializado con las credenciales del usuario <br/>
 	 * <b>Postcondicion: </b> Se actualiza la Base de datos con la informacion
-	 * correspondiente al reserva.<br/>
+	 * correspondiente al contrato.<br/>
 	 * 
-	 * @param reserva
-	 *            JSON con la informacion del reserva que se desea agregar
-	 * @return <b>Response Status 200</b> - JSON que contiene al reserva que se
+	 * @param contrato
+	 *            JSON con la informacion del contrato que se desea agregar
+	 * @return <b>Response Status 200</b> - JSON que contiene al contrato que se
 	 *         desea modificar <br/>
 	 *         <b>Response Status 500</b> - Excepcion durante el transcurso de
 	 *         la transaccion
@@ -167,29 +160,29 @@ public class ReservaHostalService {
 	@PUT
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response updateReservaHostal(ReservaHostalVO reserva) {
+	public Response updateBebedor(ReservaMasivaVO contrato) {
 		try {
 			TransactionManager tm = new TransactionManager(getPath());
-			tm.updateReservaHostal(reserva);
-			return Response.status(200).entity(reserva).build();
+			// tm.updateContratoVecino(contrato);
+			return Response.status(200).entity(contrato).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
 
 	/**
-	 * Metodo que recibe un reserva en formato JSON y lo elimina de la Base de
+	 * Metodo que recibe un contrato en formato JSON y lo elimina de la Base de
 	 * Datos <br/>
 	 * <b>Precondicion: </b> El archivo <em>'conectionData'</em> ha sido
 	 * inicializado con las credenciales del usuario <br/>
-	 * <b>Postcondicion: </b> Se elimina de la Base de datos al reserva con la
+	 * <b>Postcondicion: </b> Se elimina de la Base de datos al contrato con la
 	 * informacion correspondiente.<br/>
-	 * <b>URL: </b> http://localhost:8080/TutorialParranderos/rest/bebedores
+	 * <b>URL: </b> http://localhost:8080/TutorialParranderos/rest/masiva
 	 * <br/>
 	 * 
-	 * @param reserva
-	 *            JSON con la informacion del reserva que se desea eliminar
-	 * @return <b>Response Status 200</b> - JSON que contiene al reserva que se
+	 * @param contrato
+	 *            JSON con la informacion del contrato que se desea eliminar
+	 * @return <b>Response Status 200</b> - JSON que contiene al contrato que se
 	 *         desea eliminar <br/>
 	 *         <b>Response Status 500</b> - Excepcion durante el transcurso de
 	 *         la transaccion
@@ -197,13 +190,14 @@ public class ReservaHostalService {
 	@DELETE
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response deleteReservaHostal(ReservaHostalVO reserva) {
+	public Response deleteReservaMasiva(ReservaMasivaVO contrato) {
 		try {
 			TransactionManager tm = new TransactionManager(getPath());
-			tm.deleteReservaHostal(reserva);
-			return Response.status(200).entity(reserva).build();
+			tm.deleteReservaMasiva(contrato);
+			return Response.status(200).entity(contrato).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 	}
+
 }

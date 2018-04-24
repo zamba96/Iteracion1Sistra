@@ -273,7 +273,19 @@ public class DAOHotelRoom {
 					Long id = Long.parseLong(ids);
 					Long hotel = Long.parseLong(hotelS);
 					
-					HotelRoomVO hostR = new HotelRoomVO(banera, yakuzi, sala, cocina, cable, precio, hotel, tipo, capacidad, cuarto);
+					HotelRoomVO hostR = new HotelRoomVO();
+					hostR.setBanera(banera);
+					hostR.setCable(cable);
+					hostR.setHotel(hotel);
+					hostR.setCapacidad(capacidad);
+					hostR.setCocina(cocina);
+					hostR.setCuarto(cuarto);
+					hostR.setId(id);
+					hostR.setPrecio(precio);
+					hostR.setSala(sala);
+					hostR.setYakuzi(yakuzi);
+					hostR.setTipo(tipo);
+					
 					return hostR;
 
 				} catch (Exception e) {

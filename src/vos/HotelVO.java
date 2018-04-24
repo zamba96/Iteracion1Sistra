@@ -32,7 +32,7 @@ public class HotelVO {
 	
 	@JsonProperty(value="cuartos")
 	private List<Long> cuartos;
-	
+	/*
 	public HotelVO(
 			@JsonProperty(value="desayuno")Boolean desayuno,
 			@JsonProperty(value="restaurante")Boolean restaurante,
@@ -52,7 +52,10 @@ public class HotelVO {
 		this.horario = horario;
 		this.cuartos = cuartos;
 	}
+	*/
+	public HotelVO() {
 
+	}
 	public HotelVO(
 			@JsonProperty(value="desayuno")Boolean desayuno,
 			@JsonProperty(value="restaurante")Boolean restaurante,

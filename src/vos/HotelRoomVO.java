@@ -41,7 +41,7 @@ public class HotelRoomVO {
 	
 	@JsonProperty(value="reservas")
 	private List<Long> reservas;
-	
+	/*
 	public HotelRoomVO(
 			@JsonProperty(value="banera")Boolean banera,
 			@JsonProperty(value="yakuzi")Boolean yakuzi,
@@ -89,7 +89,9 @@ public class HotelRoomVO {
 		this.capacidad = capacidad;
 		this.cuarto = cuarto;
 	}
-
+	*/
+	public HotelRoomVO() {
+	}
 	/**
 	 * @return the id
 	 */

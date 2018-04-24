@@ -24,7 +24,7 @@ public class ContratoViviendaVO {
 	@JsonProperty(value="relacionado")
 	private Long relacionado;
 	
-	
+	/*
 	public ContratoViviendaVO(@JsonProperty(value="fechaI")String fechaI,
 			@JsonProperty(value="fechaF")String fechaF,
 			@JsonProperty(value="cuarto")Long cuarto,
@@ -45,7 +45,11 @@ public class ContratoViviendaVO {
 		this.fechaF = fechaF;
 		this.cuarto = cuarto;
 	}
-
+	*/
+	
+	public ContratoViviendaVO(){
+		
+	}
 	/**
 	 * @return the id
 	 */

@@ -30,7 +30,7 @@ public class HostalRoomVO {
 	
 	@JsonProperty(value="reservas")
 	private List<Long> reservas;
-	
+	/*
 	public HostalRoomVO(
 			@JsonProperty(value="cuarto")Integer cuarto,
 			@JsonProperty(value="capacidad")Integer capacidad,
@@ -55,6 +55,10 @@ public class HostalRoomVO {
 		this.capacidad = capacidad;
 		this.hostal = hostal;
 		this.precio = precio;
+	}
+	*/
+	public HostalRoomVO(){
+		
 	}
 
 	/**

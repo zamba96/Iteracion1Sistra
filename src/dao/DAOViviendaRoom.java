@@ -258,9 +258,18 @@ public class DAOViviendaRoom {
 			Double precio = resultSet.getDouble("PRECIO");
 			Long vivienda = resultSet.getLong("VIVIENDA");
 			Long cuarto = resultSet.getLong("CUARTO");
-
+			Long id = resultSet.getLong("ID");
 			
-			ViviendaRoomVO hostR = new ViviendaRoomVO(compartida, restaurante, salaDeEstudio, salaDeEsparcimiento, gym, precio, vivienda, cuarto);
+			ViviendaRoomVO hostR = new ViviendaRoomVO();
+			hostR.setCompartida(compartida);
+			hostR.setCuarto(cuarto);
+			hostR.setGym(gym);
+			hostR.setPrecio(precio);
+			hostR.setRestaurante(restaurante);
+			hostR.setSalaDeEsparcimiento(salaDeEsparcimiento);
+			hostR.setSalaDeEstudio(salaDeEstudio);
+			hostR.setVivienda(vivienda);
+			hostR.setId(id);
 			return hostR;
 
 		} catch (Exception e) {

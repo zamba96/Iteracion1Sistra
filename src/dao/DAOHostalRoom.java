@@ -240,13 +240,18 @@ public class DAOHostalRoom {
 				Integer capacidad = resultSet.getInt("CAPACIDAD");
 				Double precio = resultSet.getDouble("PRECIO");
 				String hostalS = resultSet.getString("HOSTAL");
-				String nombre = resultSet.getString("NOMBRE");
 				String ids = resultSet.getString("ID");
 				
 				Long id = Long.parseLong(ids);
 				Long hostal = Long.parseLong(hostalS);
 				
-				HostalRoomVO hostR = new HostalRoomVO(cuarto, capacidad, precio, hostal,nombre);
+				HostalRoomVO hostR = new HostalRoomVO();
+				hostR.setCapacidad(capacidad);
+				hostR.setCuarto(cuarto);
+				hostR.setHostal(hostal);
+				hostR.setPrecio(precio);
+				hostR.setId(id);
+				
 				return hostR;
 
 			} catch (Exception e) {

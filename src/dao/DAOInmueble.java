@@ -84,11 +84,11 @@ public class DAOInmueble {
 	 * @throws SQLException SQLException Genera excepcion si hay error en la conexion o en la consulta SQL
 	 * @throws Exception Si se genera un error dentro del metodo.
 	 */
-	public InmuebleVO getInmueble(String dueno, String direccion) throws SQLException, Exception 
+	public InmuebleVO getInmueble(Long id) throws SQLException, Exception 
 	{
 		InmuebleVO inmueble = null;
 
-		String sql = String.format("SELECT * FROM INMUEBLE WHERE DUENO = '%2$s' AND DIRECCION = '%3$s'", USUARIO, dueno, direccion); 
+		String sql = String.format("SELECT * FROM INMUEBLE WHERE ID = '%2$s'", USUARIO, id); 
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);

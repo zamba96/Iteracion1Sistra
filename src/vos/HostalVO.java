@@ -32,7 +32,7 @@ public class HostalVO {
 	private String nombre;
 	
 	private List<Long> cuartos;
-	
+	/*
 	public HostalVO(
 			@JsonProperty(value="apertura")Integer apertura,
 			@JsonProperty(value="cierre")Integer cierre,
@@ -59,6 +59,10 @@ public class HostalVO {
 		this.direccion = direccion;
 		this.nombre = nombre;
 		this.cuartos = cuartos;
+	}
+	*/
+	public HostalVO(){
+		
 	}
 
 	/**

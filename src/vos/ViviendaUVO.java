@@ -24,7 +24,7 @@ public class ViviendaUVO {
 	
 	@JsonProperty(value="cuartos")
 	private List<Long> cuartos;
-	
+	/*
 	public ViviendaUVO(@JsonProperty(value="direccion")String direccion,
 			@JsonProperty(value="nombre")String nombre,
 			@JsonProperty(value="cuartos")List<Long> cuartos){
@@ -39,6 +39,10 @@ public class ViviendaUVO {
 		
 		this.direccion = direccion;
 		this.nombre = nombre;
+	}
+	*/
+	
+	public ViviendaUVO() {
 	}
 
 	/**

@@ -44,7 +44,7 @@ public class ViviendaRoomVO {
 	
 	@JsonProperty(value="reservas")
 	private List<Long> reservas;
-	
+	/*
 	public ViviendaRoomVO(
 			@JsonProperty(value="compartida")Integer compartida,
 			@JsonProperty(value="restaurante")Double restaurante,
@@ -84,7 +84,9 @@ public class ViviendaRoomVO {
 		this.vivienda = vivienda;
 		this.cuarto = cuarto;
 	}
-
+	*/
+	public ViviendaRoomVO() {
+	}
 	/**
 	 * @return the id
 	 */

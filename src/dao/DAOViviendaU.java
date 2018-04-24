@@ -209,8 +209,13 @@ public class DAOViviendaU {
 			
 				String direccion = resultSet.getString("DIRECCION");
 				String nombre = resultSet.getString("NOMBRE");
+				Long id = resultSet.getLong("ID");
+
 				
-				ViviendaUVO beb = new ViviendaUVO(direccion,nombre);
+				ViviendaUVO beb = new ViviendaUVO();
+				beb.setDireccion(direccion);
+				beb.setNombre(nombre);
+				beb.setId(id);
 
 				return beb;
 			}

@@ -20,7 +20,7 @@ import vos.ContratoVecinoVO;
 import vos.ReservaMasivaVO;
 
 @Path("ReservasMasivas")
-public class ReservaMasivaServicio {
+public class ReservaMasivaServicie {
 
 	// ----------------------------------------------------------------------------------------------------------------------------------
 	// ATRIBUTOS

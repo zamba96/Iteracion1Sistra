@@ -4,6 +4,7 @@ import org.codehaus.jackson.annotate.JsonProperty;
 
 public class ReservaMasivaVO {
 
+	//sadjsdnkas
 	@JsonProperty(value = "id")
 	public Long id;
 	
@@ -13,6 +14,12 @@ public class ReservaMasivaVO {
 	@JsonProperty(value = "descripcion")
 	public String descripcion;
 
+	@JsonProperty(value = "fechaInicio")
+	public String fechaInicio;
+	
+	@JsonProperty(value = "fechaFin")
+	public String fechaFin;
+	
 	@JsonProperty(value = "tipo")
 	public String tipo;
 	
@@ -73,6 +80,48 @@ public class ReservaMasivaVO {
 	 */
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
+	}
+
+	/**
+	 * @return the descripcion
+	 */
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	/**
+	 * @return the fechaInicio
+	 */
+	public String getFechaInicio() {
+		return fechaInicio;
+	}
+
+	/**
+	 * @return the fechaFin
+	 */
+	public String getFechaFin() {
+		return fechaFin;
+	}
+
+	/**
+	 * @param descripcion the descripcion to set
+	 */
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	/**
+	 * @param fechaInicio the fechaInicio to set
+	 */
+	public void setFechaInicio(String fechaInicio) {
+		this.fechaInicio = fechaInicio;
+	}
+
+	/**
+	 * @param fechaFin the fechaFin to set
+	 */
+	public void setFechaFin(String fechaFin) {
+		this.fechaFin = fechaFin;
 	}
 	
 	

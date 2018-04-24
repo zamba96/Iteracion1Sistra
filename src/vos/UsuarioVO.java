@@ -14,6 +14,10 @@ public class UsuarioVO {
 	@JsonProperty(value = "fechaNacimiento")
 	private String fechaNacimiento;
 
+	public UsuarioVO() {
+		
+	}
+	/*
 	public UsuarioVO(@JsonProperty(value = "cedula") String cedula, 
 					 @JsonProperty(value = "nombre") String nombre,
 					 @JsonProperty(value = "fechaNacimiento") String fechaNacimiento)
@@ -22,6 +26,7 @@ public class UsuarioVO {
 		this.nombre = nombre;
 		this.fechaNacimiento = fechaNacimiento;
 	}
+	*/
 	
 	public String getCedula() {
 		return cedula;

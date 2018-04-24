@@ -213,7 +213,11 @@ public class DAOContratoVecino {
 			ldao.setConn(conn);
 			UsuarioVO ussr = ldao.getUsuario(cedula);
 
-			ContratoVecinoVO beb = new ContratoVecinoVO(fechaI, fechaF, ussr, inmueble);
+			ContratoVecinoVO beb = new ContratoVecinoVO();
+			beb.setFechaFin(fechaF);
+			beb.setFechaInicio(fechaI);
+			beb.setUsuario(ussr);
+			beb.setRoom(inmueble);
 			return beb;
 		} catch (Exception e) {
 			e.printStackTrace();

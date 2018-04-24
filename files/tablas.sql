@@ -2,6 +2,7 @@
 
 --Hostal
 CREATE TABLE Hostal (
+    Id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
 	Apertura number, 
 	Cierre number, 
 	Direccion varchar(50), 
@@ -11,6 +12,7 @@ CREATE TABLE Hostal (
 
 /*Hotel*/
 CREATE TABLE Hotel (
+    Id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
 	Desayuno number,
 	Direccion varchar(50),
 	Restaurante number,
@@ -22,20 +24,23 @@ CREATE TABLE Hotel (
 
 /*ViviendaU*/
 CREATE TABLE ViviendaU (
+    Id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
 	Direccion varchar(50),
 	Nombre varchar(30)
 	);
 
 --HostalRoom
 CREATE TABLE HostalRoom (
+    Id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
 	Cuarto number,
 	Capacidad number,
 	Precio float,
-	NombreHostal varchar(30)
+	IDHOSTAL INTEGER
 	);
 	
 --HotelRoom
 CREATE TABLE HotelRoom (
+    Id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
     Tipo varchar(10),
 	Cuarto number,
 	Banera number,
@@ -45,11 +50,12 @@ CREATE TABLE HotelRoom (
 	Cable number,
 	Precio float,
 	Capacidad number,
-	NombreHotel varchar(30)
+	IDHOTEL INTEGER
 	);
 
 --ViviendaURoom
 CREATE TABLE ViviendaURoom (
+    Id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
 	Cuarto number,
 	Compartida float,
 	Restaurante float,
@@ -57,11 +63,12 @@ CREATE TABLE ViviendaURoom (
 	SalaEsparcimiento float,
 	Gym float,
 	Precio float,
-	NombreVivienda varchar(30) --FK
+	IDVIVIENDA INTEGER
 	);
 	
 --Inmueble
 CREATE TABLE Inmueble (
+    Id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
 	Amoblado number,
 	Servicios number,
 	Cable number,
@@ -73,6 +80,7 @@ CREATE TABLE Inmueble (
 	
 --VecinoRoom
 CREATE TABLE VecinoRoom (
+    Id INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
 	Habitaciones number,
 	Banos number,
 	Direccion varchar(50),
@@ -87,8 +95,7 @@ CREATE TABLE ReservaHostal (
     FechaInicio varchar(30),
 	FechaFin varchar(30),
 	Usuario VARCHAR(30), --USUARIO.CEDULA
-	Cuarto float, --FK HostalRoom.Id
-    Nombre varchar(30),
+    IDHOSTALROOM INTEGER,
     PrecioTotal float
 	);
 	
@@ -98,8 +105,7 @@ CREATE TABLE ReservaHotel (
     FechaInicio varchar(30),
 	FechaFin varchar(30),
 	Usuario VARCHAR(30),
-	Cuarto number, --FK HotelRoom.Id
-    Nombre varchar(30),
+    IDHOTELROOM INTEGER,
     PrecioTotal float
 	);
 	
@@ -109,8 +115,7 @@ CREATE TABLE ContratoResidencia (
     FechaInicio varchar(30),
 	FechaFin varchar(30),
 	Usuario VARCHAR(30),
-	Cuarto number, --FK Residencia.Id
-    Nombre VARCHAR(30),
+    IDVIVIENDAUROOM INTEGER,
     PrecioTotal float
 	);
 	
@@ -120,8 +125,7 @@ CREATE TABLE ContratoInmueble (
     FechaInicio varchar(30),
 	FechaFin varchar(30),
 	Usuario VARCHAR(30),
-	Dueno varchar(30),
-    Direccion varchar(30),
+	IDINMUEBLE INTEGER,
     PrecioTotal float
 	);
 	
@@ -183,7 +187,23 @@ CREATE TABLE CONTRATOVECINO (
     FechaInicio varchar(30),
 	FechaFin varchar(30),
 	Usuario VARCHAR(30),
-	Dueno varchar(30),
-    Direccion varchar(30)
+	IDVECINOROOM INTEGER
+    );
+    
+--OFERTA
+CREATE TABLE RESERVASMASIVAS(
+    ID INTEGER GENERATED ALWAYS AS IDENTITY (START WITH 1 INCREMENT BY 1),
+    CANTIDAD INTEGER,
+    DESCRIPCION VARCHAR (140),
+    TIPO VARCHAR(20)
+    );
+
+CREATE TABLE RELMASIVAS(
+    IDMASIVA INTEGER,
+    IDRESERVAHOTEL INTEGER,
+    IDRESERVAHOSTAL INTEGER,
+    IDCONTRATOINMUEBLE INTEGER,
+    IDCONTRATORESIDENCIA INTEGER,
+    IDCONTRATOVECINO INTEGER
     );
 	

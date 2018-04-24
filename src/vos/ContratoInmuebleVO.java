@@ -5,6 +5,18 @@ import org.codehaus.jackson.annotate.JsonProperty;
 public class ContratoInmuebleVO {
 
 	
+	@JsonProperty(value = "ownerCedula")
+	private String ownerCedula;
+
+	@JsonProperty(value = "direccion")
+	private String direccion;
+
+	@JsonProperty(value = "Id")
+	private Long Id;
+
+	@JsonProperty(value = "precioTotal")
+	private Long precioTotal;
+
 	@JsonProperty(value = "fechaInicio")
 	private String fechaInicio;
 
@@ -13,9 +25,64 @@ public class ContratoInmuebleVO {
 
 	@JsonProperty(value = "usuario")
 	private UsuarioVO usuario;
-	
+
 	@JsonProperty(value = "inmueble")
 	private InmuebleVO inmueble;
+
+	/**
+	 * JSON EXAMPLE:
+	 * {
+	 * 		"usrCedula":"cedulaUsuario",
+	 * 		"ownerCedula":"cedulaDueno",
+	 * 		"direccion":"direccionInmuele",
+	 * 		"fechaInicio":"fechaInicioContrato",
+	 * 		"fechaFinal":"fechaFinContrato",
+	 * 		"precioTotal":"precio"
+	 * 		
+	 */
+	
+	@JsonProperty(value = "usrCedula")
+	private String usrCedula;
+	
+	public Long getId() {
+		return Id;
+	}
+
+	public void setId(Long Id) {
+		this.Id = Id;
+	}
+
+	public Long getPrecioTotal() {
+		return precioTotal;
+	}
+
+	public void setPrecioTotal(Long precioTotal) {
+		this.precioTotal = precioTotal;
+	}
+
+	public String getUsrCedula() {
+		return usrCedula;
+	}
+
+	public void setUsrCedula(String usrCedula) {
+		this.usrCedula = usrCedula;
+	}
+
+	public String getOwnerCedula() {
+		return ownerCedula;
+	}
+
+	public void setOwnerCedula(String ownerCedula) {
+		this.ownerCedula = ownerCedula;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
 
 	public InmuebleVO getInmueble() {
 		return inmueble;
@@ -24,25 +91,26 @@ public class ContratoInmuebleVO {
 	public void setInmueble(InmuebleVO inmueble) {
 		this.inmueble = inmueble;
 	}
-
+	
+	public ContratoInmuebleVO() {
+		
+	}
+	/*
 	public ContratoInmuebleVO(@JsonProperty(value = "fechaInicio")String fechaInicio,
 			@JsonProperty(value = "fechaFinal") String fechaFinal,
 			@JsonProperty(value = "usuario") UsuarioVO usuario,
-			@JsonProperty(value = "inmueble") InmuebleVO inmueble)
+			@JsonProperty(value = "inmueble") InmuebleVO inmueble,
+			@JsonProperty(value = "Id") Long Id,
+			@JsonProperty(value = "precioTotal") Long precioTotal)
 	{
 		this.fechaInicio = fechaInicio;
 		this.fechaFinal = fechaFinal;
 		this.usuario = usuario;
 		this.inmueble = inmueble;
+		this.Id = Id;
+		this.precioTotal = precioTotal;
 	}
-
-	public ContratoInmuebleVO(@JsonProperty(value = "fechaInicio")String fechaInicio,
-			@JsonProperty(value = "fechaFinal") String fechaFinal)
-	{
-		this.fechaInicio = fechaInicio;
-		this.fechaFinal = fechaFinal;
-	}
-
+	*/
 	public String getFechaInicio() {
 		return fechaInicio;
 	}

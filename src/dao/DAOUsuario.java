@@ -205,7 +205,10 @@ public class DAOUsuario {
 
 		
 		
-		UsuarioVO beb = new UsuarioVO(cedula, nombre, fechaNacimiento);
+		UsuarioVO beb = new UsuarioVO();
+		beb.setCedula(cedula);
+		beb.setFechaNacimiento(fechaNacimiento);
+		beb.setNombre(nombre);
 
 		return beb;
 	}

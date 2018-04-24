@@ -1,5 +1,6 @@
 package vos;
 
+import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonProperty;
 
 public class InmuebleVO {
@@ -27,7 +28,12 @@ public class InmuebleVO {
 	@JsonProperty(value="dueno")
 	private UsuarioVO dueno;
 
-
+	public InmuebleVO() {
+		
+	}
+	
+	/*
+	@JsonCreator
 	public InmuebleVO(@JsonProperty(value="amoblado") Boolean amoblado, 
 			@JsonProperty(value="servicios")Boolean servicios,
 			@JsonProperty(value="cable") Boolean cable,
@@ -60,6 +66,7 @@ public class InmuebleVO {
 		this.direccion = direccion;
 	}
 
+	*/
 	//Getters And Setters
 	public Boolean getAmoblado() {
 		return amoblado;

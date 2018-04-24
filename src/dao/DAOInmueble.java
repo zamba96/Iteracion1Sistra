@@ -218,15 +218,21 @@ public class DAOInmueble {
 		
 
 		boolean amoblado = (amobladoI == 1)? true : false;
-		boolean servicios = (amobladoI == 1)? true : false;
+		boolean servicios = (serviciosI == 1)? true : false;
 		boolean cable = (cableI == 1)? true : false;
 		boolean administracion = (administracionI == 1)? true : false;
 		UsuarioVO dueno;
 		try {
 			daoUSSR.setConn(conn);
 			dueno = daoUSSR.getUsuario(cedula);
-			InmuebleVO beb = new InmuebleVO(amoblado, servicios, cable, administracion, precio, direccion, dueno); 
-
+			InmuebleVO beb = new InmuebleVO(); 
+			beb.setAdministracion(administracion);
+			beb.setAmoblado(amoblado);
+			beb.setCable(cable);
+			beb.setDireccion(direccion);
+			beb.setDueno(dueno);
+			beb.setPrecio(precio);
+			beb.setServicios(servicios);
 			return beb;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

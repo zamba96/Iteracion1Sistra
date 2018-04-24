@@ -16,6 +16,7 @@ public class ContratoVecinoVO {
 	@JsonProperty(value="room")
 	private VecinoRoomVO room;
 	
+	/*
 	public ContratoVecinoVO(@JsonProperty(value="fechaInicio") String fechaInicio,
 			@JsonProperty(value="fechaFin") String fechaFin, 
 			@JsonProperty(value="fechaFin") UsuarioVO usuario,
@@ -32,6 +33,10 @@ public class ContratoVecinoVO {
 	{
 		this.fechaInicio = fechaInicio;
 		this.fechaFin = fechaFin;
+	}
+	*/
+	public ContratoVecinoVO() {
+		
 	}
 
 	public String getFechaInicio() {

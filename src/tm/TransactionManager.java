@@ -9,18 +9,24 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
 import dao.DAOContratoInmueble;
 import dao.DAOContratoVecino;
 import dao.DAOContratoVivienda;
+import dao.DAOHotelRoom;
+import dao.DAOInmueble;
 import dao.DAOReservaHostal;
 import dao.DAOReservaHotel;
+import dao.DAOUsuario;
 import dao.DAOVecinoRoom;
 import vos.ContratoInmuebleVO;
 import vos.ContratoVecinoVO;
 import vos.ContratoViviendaVO;
+import vos.HotelRoomVO;
 import vos.ReservaHostalVO;
 import vos.ReservaHotelVO;
 import vos.VecinoRoomVO;
@@ -143,6 +149,33 @@ public class TransactionManager {
 	// METODOS TRANSACCIONALES
 	//----------------------------------------------------------------------------------------------------------------------------------
 
+	//REQ RESERVA MASIVA
+	/**
+	 * 
+	 */
+	public List<ReservaHotelVO> hacerReservaHotelMasiva(int cantidad, Date inicio, Date fin){
+		ArrayList<ReservaHotelVO> list = new ArrayList<>();
+		DAOHotelRoom daoHR = new DAOHotelRoom();
+		daoHR.setConn(conn);
+		
+		try {
+			ArrayList<HotelRoomVO> rooms = daoHR.getHotelRooms();
+			for(HotelRoomVO room: rooms) {
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+				
+		
+		return list;
+	}
+	
+	
 	/**
 	 * Metodo que modela la transaccion que retorna todos los reservasHostales de la base de datos. <br/>
 	 * @return List<ReservaHostalVO> - Lista de reservasHostales que contiene el resultado de la consulta.
@@ -239,7 +272,7 @@ public class TransactionManager {
 	 */
 	public void addReservaHostal(ReservaHostalVO reserva) throws Exception 
 	{
-
+		System.out.println(reserva);
 		DAOReservaHostal daoReservaHostal = new DAOReservaHostal( );
 		try
 		{
@@ -884,9 +917,15 @@ public class TransactionManager {
 
 	public void addContratoInmueble(ContratoInmuebleVO contrato) throws Exception {
 		DAOContratoInmueble daoContratoInmueble = new DAOContratoInmueble( );
+		DAOInmueble daoInmueble = new DAOInmueble();
+		DAOUsuario daoUssr = new DAOUsuario();
 		try
 		{
 			this.conn = darConexion();
+			daoInmueble.setConn(conn);
+			daoUssr.setConn(conn);
+			contrato.setInmueble(daoInmueble.getInmueble(contrato.getOwnerCedula(),contrato.getDireccion()));
+			contrato.setUsuario(daoUssr.getUsuario(contrato.getUsrCedula()));
 			daoContratoInmueble.setConn(conn);
 			daoContratoInmueble.addContratoInmueble(contrato);
 		}

@@ -106,15 +106,15 @@ public class DAOContratoInmueble {
 	 */
 	public void addContratoInmueble(ContratoInmuebleVO contrato) throws SQLException, Exception {
 
-		String sql = String.format("INSERT INTO CONTRATOINMUEBLE (FECHAINICIO, FECHAFIN, USUARIO, DUENO, DIRECCION) VALUES (%2$s, '%3$s', '%4$s', '%5$s', '%6$s')", 
+		String sql = String.format("INSERT INTO CONTRATOINMUEBLE (FECHAINICIO, FECHAFIN, USUARIO, DUENO, DIRECCION, PRECIOTOTAL) VALUES ('%2$s', '%3$s', '%4$s', '%5$s', '%6$s', '%7$s')", 
 				USUARIO, 
 				contrato.getFechaInicio(),
 				contrato.getFechaFinal(),
-				contrato.getUsuario(), 
+				contrato.getUsuario().getCedula(), 
 				contrato.getInmueble().getDueno().getCedula(),
-				contrato.getInmueble().getDireccion());
+				contrato.getInmueble().getDireccion(),
+				contrato.getPrecioTotal());
 		System.out.println(sql);
-
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
 		prepStmt.executeQuery();
@@ -202,17 +202,28 @@ public class DAOContratoInmueble {
 		DAOUsuario ldao = new DAOUsuario();
 		InmuebleVO inmueble;
 		try {
+			
 			String fechaI = resultSet.getString("FECHAINICIO");
 			String fechaF = resultSet.getString("FECHAFIN");
 			String dueno = resultSet.getString("DUENO");
 			String direccion = resultSet.getString("DIRECCION");
 			String cedula = resultSet.getString("USUARIO");
+			String precioS = resultSet.getString("PRECIOTOTAL");
+			Long precio = Long.parseLong(precioS);
+			String IdS = resultSet.getString("ID");
+			Long Id = Long.parseLong(IdS);
 			dao.setConn(conn);
 			inmueble = dao.getInmueble(dueno, direccion);
 			ldao.setConn(conn);
 			UsuarioVO ussr = ldao.getUsuario(cedula);
 
-			ContratoInmuebleVO beb = new ContratoInmuebleVO(fechaI, fechaF, ussr, inmueble);
+			ContratoInmuebleVO beb = new ContratoInmuebleVO();
+			beb.setFechaFinal(fechaF);
+			beb.setFechaInicio(fechaI);
+			beb.setId(Id);
+			beb.setInmueble(inmueble);
+			beb.setPrecioTotal(precio);
+			beb.setUsuario(ussr);
 			return beb;
 		} catch (Exception e) {
 			e.printStackTrace();

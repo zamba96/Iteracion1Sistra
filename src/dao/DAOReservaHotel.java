@@ -207,10 +207,19 @@ public class DAOReservaHotel {
 					String fechaI = resultSet.getString("FECHAINICIO");
 					String fechaF = resultSet.getString("FECHAFIN");
 					String cuartoS = resultSet.getString("CUARTO");
+					Long usuario = resultSet.getLong("USUARIO");
+					Long id = resultSet.getLong("ID");
+
 					
 					Long cuarto = Long.parseLong(cuartoS);
 					
-					ReservaHotelVO beb = new ReservaHotelVO(fechaI, fechaF, cuarto);
+					ReservaHotelVO beb = new ReservaHotelVO();
+					beb.setCuarto(cuarto);
+					beb.setFechaF(fechaF);
+					beb.setFechaI(fechaI);
+					beb.setId(id);
+					beb.setUsuario(usuario);
+					
 					return beb;
 				} catch (Exception e) {
 					e.printStackTrace();

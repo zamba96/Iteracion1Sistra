@@ -222,10 +222,18 @@ public class DAOHostal {
 			Integer desayunoI = resultSet.getInt("DESAYUNO");
 			String direccion = resultSet.getString("DIRECCION");
 			String nombre = resultSet.getString("NOMBRE");
-			
+			String ids = resultSet.getString("ID");
+
+			Long id = Long.parseLong(ids);
 			boolean desayuno = desayunoI == 1;
 			
-			HostalVO beb = new HostalVO(apertura, cierre, desayuno, direccion,nombre);
+			HostalVO beb = new HostalVO();
+			beb.setApertura(apertura);
+			beb.setCierre(cierre);
+			beb.setDesayuno(desayuno);
+			beb.setDireccion(direccion);
+			beb.setNombre(nombre);
+			beb.setId(id);
 
 			return beb;
 		}

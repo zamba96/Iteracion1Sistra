@@ -26,7 +26,7 @@ public class ReservaHostalVO {
 	@JsonProperty(value="usuario")
 	private Long usuario;
 	 
-	
+	/*
 	public ReservaHostalVO(
 			@JsonProperty(value="fechaI")String fechaI,
 			@JsonProperty(value="fechaF")String fechaF,
@@ -45,6 +45,10 @@ public class ReservaHostalVO {
 		this.fechaI = fechaI;
 		this.fechaF = fechaF;
 		this.cuarto = cuarto;
+	}
+	*/
+	public ReservaHostalVO(){
+		
 	}
 
 	/**

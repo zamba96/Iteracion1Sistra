@@ -208,11 +208,19 @@ public class DAOContratoVivienda {
 			String fechaF = resultSet.getString("FECHAFIN");
 			String cuartoS = resultSet.getString("CUARTO");
 			String relacionadoS = resultSet.getString("RELACIONADO");
+			String ids = resultSet.getString("ID");
 
 			Long cuarto = Long.parseLong(cuartoS);
 			Long relacionado = Long.parseLong(relacionadoS);
+			Long id = Long.parseLong(ids);
+
 			
-			ContratoViviendaVO beb = new ContratoViviendaVO(fechaI, fechaF, cuarto,relacionado);
+			ContratoViviendaVO beb = new ContratoViviendaVO();
+			beb.setCuarto(cuarto);
+			beb.setFechaF(fechaF);
+			beb.setFechaI(fechaI);
+			beb.setId(id);
+			beb.setUsuario(relacionado);
 			return beb;
 		} catch (Exception e) {
 			e.printStackTrace();

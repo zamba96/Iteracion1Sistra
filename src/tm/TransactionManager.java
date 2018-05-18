@@ -14,24 +14,14 @@ import java.util.Date;
 import java.util.List;
 import java.util.Properties;
 
-import dao.DAOContratoInmueble;
-import dao.DAOContratoVecino;
-import dao.DAOContratoVivienda;
 import dao.DAOHotelRoom;
 import dao.DAOInmueble;
-import dao.DAORelMasiva;
-import dao.DAOReservaHostal;
-import dao.DAOReservaHotel;
+import dao.DAOReserva;
 import dao.DAOReservaMasiva;
-import dao.DAOUsuario;
+import dao.DAOCliente;
 import dao.DAOVecinoRoom;
-import vos.ContratoInmuebleVO;
-import vos.ContratoVecinoVO;
-import vos.ContratoViviendaVO;
 import vos.HotelRoomVO;
-import vos.RelMasivaVO;
-import vos.ReservaHostalVO;
-import vos.ReservaHotelVO;
+import vos.ReservaVO;
 import vos.ReservaMasivaVO;
 import vos.VecinoRoomVO;
 
@@ -175,8 +165,8 @@ public class TransactionManager {
 	/**
 	 * 
 	 */
-	public List<ReservaHotelVO> hacerReservaHotelMasiva(int cantidad, Date inicio, Date fin) {
-		ArrayList<ReservaHotelVO> list = new ArrayList<>();
+	public List<ReservaVO> hacerReservaHotelMasiva(int cantidad, Date inicio, Date fin) {
+		ArrayList<ReservaVO> list = new ArrayList<>();
 		DAOHotelRoom daoHR = new DAOHotelRoom();
 		daoHR.setConn(conn);
 
@@ -197,24 +187,24 @@ public class TransactionManager {
 	}
 
 	/**
-	 * Metodo que modela la transaccion que retorna todos los reservasHostales
+	 * Metodo que modela la transaccion que retorna todos los reservases
 	 * de la base de datos. <br/>
 	 * 
-	 * @return List<ReservaHostalVO> - Lista de reservasHostales que contiene el
+	 * @return List<ReservaVO> - Lista de reservases que contiene el
 	 *         resultado de la consulta.
 	 * @throws Exception
 	 *             - Cualquier error que se genere durante la transaccion
 	 */
-	public List<ReservaHostalVO> getReservasHostales() throws Exception {
-		DAOReservaHostal daoReservaHostal = new DAOReservaHostal();
-		List<ReservaHostalVO> reservasHostales;
+	public List<ReservaVO> getReservases() throws Exception {
+		DAOReserva daoReserva = new DAOReserva();
+		List<ReservaVO> reservases;
 		try {
 			this.conn = darConexion();
-			daoReservaHostal.setConn(conn);
+			daoReserva.setConn(conn);
 
 			// Por simplicidad, solamente se obtienen los primeros 50 resultados
 			// de la consulta
-			reservasHostales = daoReservaHostal.getReservasHostales();
+			reservases = daoReserva.getReservases();
 		} catch (SQLException sqlException) {
 			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
 			sqlException.printStackTrace();
@@ -225,7 +215,7 @@ public class TransactionManager {
 			throw exception;
 		} finally {
 			try {
-				daoReservaHostal.cerrarRecursos();
+				daoReserva.cerrarRecursos();
 				if (this.conn != null) {
 					this.conn.close();
 				}
@@ -235,30 +225,30 @@ public class TransactionManager {
 				throw exception;
 			}
 		}
-		return reservasHostales;
+		return reservases;
 	}
 
 	/**
-	 * Metodo que modela la transaccion que busca el reservaHostal en la base de
+	 * Metodo que modela la transaccion que busca el reserva en la base de
 	 * datos que tiene el ID dado por parametro. <br/>
 	 * 
 	 * @param name
-	 *            -id del reservaHostal a buscar. id != null
-	 * @return ReservaHostalVO - ReservaHostalVO que se obtiene como resultado
+	 *            -id del reserva a buscar. id != null
+	 * @return ReservaVO - ReservaVO que se obtiene como resultado
 	 *         de la consulta.
 	 * @throws Exception
 	 *             - cualquier error que se genere durante la transaccion
 	 */
-	public ReservaHostalVO getReservaHostal(Long id) throws Exception {
-		DAOReservaHostal daoReservaHostal = new DAOReservaHostal();
-		ReservaHostalVO reservaHostal = null;
+	public ReservaVO getReserva(Long id) throws Exception {
+		DAOReserva daoReserva = new DAOReserva();
+		ReservaVO reserva = null;
 		try {
 			this.conn = darConexion();
-			daoReservaHostal.setConn(conn);
-			reservaHostal = daoReservaHostal.getReservaHostal(id);
-			if (reservaHostal == null) {
+			daoReserva.setConn(conn);
+			reserva = daoReserva.getReserva(id);
+			if (reserva == null) {
 				throw new Exception(
-						"El reservaHostal con id = " + id + " no se encuentra persistido en la base de datos.");
+						"El reserva con id = " + id + " no se encuentra persistido en la base de datos.");
 			}
 		} catch (SQLException sqlException) {
 			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
@@ -270,7 +260,7 @@ public class TransactionManager {
 			throw exception;
 		} finally {
 			try {
-				daoReservaHostal.cerrarRecursos();
+				daoReserva.cerrarRecursos();
 				if (this.conn != null) {
 					this.conn.close();
 				}
@@ -280,27 +270,27 @@ public class TransactionManager {
 				throw exception;
 			}
 		}
-		return reservaHostal;
+		return reserva;
 	}
 
 	/**
-	 * Metodo que modela la transaccion que agrega un reservaHostal a la base de
+	 * Metodo que modela la transaccion que agrega un reserva a la base de
 	 * datos. <br/>
-	 * <b> post: </b> se ha agregado el reservaHostal que entra como parametro
+	 * <b> post: </b> se ha agregado el reserva que entra como parametro
 	 * <br/>
 	 * 
-	 * @param reservaHostal
-	 *            - el reservaHostal a agregar. reservaHostal != null
+	 * @param reserva
+	 *            - el reserva a agregar. reserva != null
 	 * @throws Exception
-	 *             - Cualquier error que se genere agregando el reservaHostal
+	 *             - Cualquier error que se genere agregando el reserva
 	 */
-	public void addReservaHostal(ReservaHostalVO reserva) throws Exception {
+	public void addReserva(ReservaVO reserva) throws Exception {
 		System.out.println(reserva);
-		DAOReservaHostal daoReservaHostal = new DAOReservaHostal();
+		DAOReserva daoReserva = new DAOReserva();
 		try {
 			this.conn = darConexion();
-			daoReservaHostal.setConn(conn);
-			daoReservaHostal.addReservaHostal(reserva);
+			daoReserva.setConn(conn);
+			daoReserva.addReserva(reserva);
 		} catch (SQLException sqlException) {
 			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
 			sqlException.printStackTrace();
@@ -311,7 +301,7 @@ public class TransactionManager {
 			throw exception;
 		} finally {
 			try {
-				daoReservaHostal.cerrarRecursos();
+				daoReserva.cerrarRecursos();
 				if (this.conn != null) {
 					this.conn.close();
 				}
@@ -325,29 +315,29 @@ public class TransactionManager {
 
 	/**
 	 * Metodo que modela la transaccion que actualiza en la base de datos al
-	 * reservaHostal que entra por parametro.<br/>
-	 * Solamente se actualiza si existe el reservaHostal en la Base de Datos
+	 * reserva que entra por parametro.<br/>
+	 * Solamente se actualiza si existe el reserva en la Base de Datos
 	 * <br/>
-	 * <b> post: </b> se ha actualizado el reservaHostal que entra como
+	 * <b> post: </b> se ha actualizado el reserva que entra como
 	 * parametro <br/>
 	 * 
-	 * @param reservaHostal
-	 *            - ReservaHostalVO a actualizar. reservaHostal != null
+	 * @param reserva
+	 *            - ReservaVO a actualizar. reserva != null
 	 * @throws Exception
 	 *             - Cualquier error que se genere actualizando al
-	 *             reservaHostal.
+	 *             reserva.
 	 */
-	public void updateReservaHostal(ReservaHostalVO reservaHostal) throws Exception {
-		DAOReservaHostal daoReservaHostal = new DAOReservaHostal();
+	public void updateReserva(ReservaVO reserva) throws Exception {
+		DAOReserva daoReserva = new DAOReserva();
 		try {
 			this.conn = darConexion();
-			daoReservaHostal.setConn(conn);
-			reservaHostal = daoReservaHostal.getReservaHostal(reservaHostal.getId());
-			if (reservaHostal == null) {
+			daoReserva.setConn(conn);
+			reserva = daoReserva.getReserva(reserva.getId());
+			if (reserva == null) {
 				throw new Exception(
-						"El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");
+						"El reserva con el id seleccionado no se encuentra persistido en la base de datos.");
 			} else
-				daoReservaHostal.updateReservaHostal(reservaHostal);
+				daoReserva.updateReserva(reserva);
 		} catch (SQLException sqlException) {
 			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
 			sqlException.printStackTrace();
@@ -358,7 +348,7 @@ public class TransactionManager {
 			throw exception;
 		} finally {
 			try {
-				daoReservaHostal.cerrarRecursos();
+				daoReserva.cerrarRecursos();
 				if (this.conn != null) {
 					this.conn.close();
 				}
@@ -372,28 +362,28 @@ public class TransactionManager {
 
 	/**
 	 * Metodo que modela la transaccion que elimina de la base de datos al
-	 * reservaHostal que entra por parametro. <br/>
-	 * Solamente se actualiza si existe el reservaHostal en la Base de Datos
+	 * reserva que entra por parametro. <br/>
+	 * Solamente se actualiza si existe el reserva en la Base de Datos
 	 * <br/>
-	 * <b> post: </b> se ha eliminado el reservaHostal que entra por parametro
+	 * <b> post: </b> se ha eliminado el reserva que entra por parametro
 	 * <br/>
 	 * 
-	 * @param ReservaHostalVO
-	 *            - reservaHostal a eliminar. reservaHostal != null
+	 * @param ReservaVO
+	 *            - reserva a eliminar. reserva != null
 	 * @throws Exception
-	 *             - Cualquier error que se genere eliminando al reservaHostal.
+	 *             - Cualquier error que se genere eliminando al reserva.
 	 */
-	public void deleteReservaHostal(ReservaHostalVO reservaHostal) throws Exception {
-		DAOReservaHostal daoReservaHostal = new DAOReservaHostal();
+	public void deleteReserva(ReservaVO reserva) throws Exception {
+		DAOReserva daoReserva = new DAOReserva();
 		try {
 			this.conn = darConexion();
-			daoReservaHostal.setConn(conn);
-			reservaHostal = daoReservaHostal.getReservaHostal(reservaHostal.getId());
-			if (reservaHostal == null) {
+			daoReserva.setConn(conn);
+			reserva = daoReserva.getReserva(reserva.getId());
+			if (reserva == null) {
 				throw new Exception(
-						"El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");
+						"El reserva con el id seleccionado no se encuentra persistido en la base de datos.");
 			} else
-				daoReservaHostal.deleteReservaHostal(reservaHostal);
+				daoReserva.deleteReserva(reserva);
 		} catch (SQLException sqlException) {
 			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
 			sqlException.printStackTrace();
@@ -404,7 +394,7 @@ public class TransactionManager {
 			throw exception;
 		} finally {
 			try {
-				daoReservaHostal.cerrarRecursos();
+				daoReserva.cerrarRecursos();
 				if (this.conn != null) {
 					this.conn.close();
 				}
@@ -416,713 +406,7 @@ public class TransactionManager {
 		}
 	}
 
-	/**
-	 * Metodo que modela la transaccion que retorna todos los reservasHostales
-	 * de la base de datos. <br/>
-	 * 
-	 * @return List<ReservaHostalVO> - Lista de reservasHostales que contiene el
-	 *         resultado de la consulta.
-	 * @throws Exception
-	 *             - Cualquier error que se genere durante la transaccion
-	 */
-	public List<ReservaHotelVO> getReservasHoteles() throws Exception {
-		DAOReservaHotel daoReservaHostal = new DAOReservaHotel();
-		List<ReservaHotelVO> reservasHoteles;
-		try {
-			this.conn = darConexion();
-			daoReservaHostal.setConn(conn);
-
-			// Por simplicidad, solamente se obtienen los primeros 50 resultados
-			// de la consulta
-			reservasHoteles = daoReservaHostal.getReservasHoteles();
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoReservaHostal.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-		return reservasHoteles;
-	}
-
-	/**
-	 * Metodo que modela la transaccion que busca el reservaHostal en la base de
-	 * datos que tiene el ID dado por parametro. <br/>
-	 * 
-	 * @param name
-	 *            -id del reservaHostal a buscar. id != null
-	 * @return ReservaHostalVO - ReservaHostalVO que se obtiene como resultado
-	 *         de la consulta.
-	 * @throws Exception
-	 *             - cualquier error que se genere durante la transaccion
-	 */
-	public ReservaHotelVO getReservaHotel(Long id) throws Exception {
-		DAOReservaHotel daoReservaHotel = new DAOReservaHotel();
-		ReservaHotelVO reservaHotel = null;
-		try {
-			this.conn = darConexion();
-			daoReservaHotel.setConn(conn);
-			reservaHotel = daoReservaHotel.getReservaHotel(id);
-			if (reservaHotel == null) {
-				throw new Exception("El reservaHostal con la fecha inicial para el usuario = " + id
-						+ " no se encuentra persistido en la base de datos.");
-			}
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoReservaHotel.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-		return reservaHotel;
-	}
-
-	/**
-	 * Metodo que modela la transaccion que agrega un reservaHostal a la base de
-	 * datos. <br/>
-	 * <b> post: </b> se ha agregado el reservaHostal que entra como parametro
-	 * <br/>
-	 * 
-	 * @param reservaHostal
-	 *            - el reservaHostal a agregar. reservaHostal != null
-	 * @throws Exception
-	 *             - Cualquier error que se genere agregando el reservaHostal
-	 */
-	public void addReservaHotel(ReservaHotelVO reserva) throws Exception {
-
-		DAOReservaHotel daoReservaHotel = new DAOReservaHotel();
-		try {
-			this.conn = darConexion();
-			daoReservaHotel.setConn(conn);
-			daoReservaHotel.addReservaHotel(reserva);
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoReservaHotel.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-	}
-
-	/**
-	 * Metodo que modela la transaccion que actualiza en la base de datos al
-	 * reservaHostal que entra por parametro.<br/>
-	 * Solamente se actualiza si existe el reservaHostal en la Base de Datos
-	 * <br/>
-	 * <b> post: </b> se ha actualizado el reservaHostal que entra como
-	 * parametro <br/>
-	 * 
-	 * @param reservaHostal
-	 *            - ReservaHostalVO a actualizar. reservaHostal != null
-	 * @throws Exception
-	 *             - Cualquier error que se genere actualizando al
-	 *             reservaHostal.
-	 */
-	public void updateReservaHotel(ReservaHotelVO reservaHotel) throws Exception {
-		DAOReservaHotel daoReservaHotel = new DAOReservaHotel();
-		try {
-			this.conn = darConexion();
-			daoReservaHotel.setConn(conn);
-			reservaHotel = daoReservaHotel.getReservaHotel(reservaHotel.getId());
-			if (reservaHotel == null) {
-				throw new Exception(
-						"El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");
-			} else
-				daoReservaHotel.updateReservaHotel(reservaHotel);
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoReservaHotel.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-	}
-
-	/**
-	 * Metodo que modela la transaccion que elimina de la base de datos al
-	 * reservaHostal que entra por parametro. <br/>
-	 * Solamente se actualiza si existe el reservaHostal en la Base de Datos
-	 * <br/>
-	 * <b> post: </b> se ha eliminado el reservaHostal que entra por parametro
-	 * <br/>
-	 * 
-	 * @param ReservaHostalVO
-	 *            - reservaHostal a eliminar. reservaHostal != null
-	 * @throws Exception
-	 *             - Cualquier error que se genere eliminando al reservaHostal.
-	 */
-	public void deleteReservaHotel(ReservaHotelVO reservaHotel) throws Exception {
-		DAOReservaHotel daoReservaHotel = new DAOReservaHotel();
-		try {
-			this.conn = darConexion();
-			daoReservaHotel.setConn(conn);
-			reservaHotel = daoReservaHotel.getReservaHotel(reservaHotel.getId());
-			if (reservaHotel == null) {
-				throw new Exception(
-						"El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");
-			} else
-				daoReservaHotel.deleteReservaHostal(reservaHotel);
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoReservaHotel.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-	}
-
-	/**
-	 * Metodo que modela la transaccion que retorna todos los reservasHostales
-	 * de la base de datos. <br/>
-	 * 
-	 * @return List<ReservaHostalVO> - Lista de reservasHostales que contiene el
-	 *         resultado de la consulta.
-	 * @throws Exception
-	 *             - Cualquier error que se genere durante la transaccion
-	 */
-	public List<ContratoViviendaVO> getContratosViviendas() throws Exception {
-		DAOContratoVivienda daoContratoVivienda = new DAOContratoVivienda();
-		List<ContratoViviendaVO> contratosViviendas;
-		try {
-			this.conn = darConexion();
-			daoContratoVivienda.setConn(conn);
-
-			// Por simplicidad, solamente se obtienen los primeros 50 resultados
-			// de la consulta
-			contratosViviendas = daoContratoVivienda.getContratosVivienda();
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoContratoVivienda.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-		return contratosViviendas;
-	}
-
-	/**
-	 * Metodo que modela la transaccion que busca el reservaHostal en la base de
-	 * datos que tiene el ID dado por parametro. <br/>
-	 * 
-	 * @param name
-	 *            -id del reservaHostal a buscar. id != null
-	 * @return ReservaHostalVO - ReservaHostalVO que se obtiene como resultado
-	 *         de la consulta.
-	 * @throws Exception
-	 *             - cualquier error que se genere durante la transaccion
-	 */
-	public ContratoViviendaVO getContratoVivienda(Long id) throws Exception {
-		DAOContratoVivienda daoContratoVivienda = new DAOContratoVivienda();
-		ContratoViviendaVO contratoVivienda = null;
-		try {
-			this.conn = darConexion();
-			daoContratoVivienda.setConn(conn);
-			contratoVivienda = daoContratoVivienda.getContratoVivienda(id);
-			if (contratoVivienda == null) {
-				throw new Exception("El reservaHostal con la fecha inicial para el usuario = " + id
-						+ " no se encuentra persistido en la base de datos.");
-			}
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoContratoVivienda.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-		return contratoVivienda;
-	}
-
-	/**
-	 * Metodo que modela la transaccion que agrega un reservaHostal a la base de
-	 * datos. <br/>
-	 * <b> post: </b> se ha agregado el reservaHostal que entra como parametro
-	 * <br/>
-	 * 
-	 * @param reservaHostal
-	 *            - el reservaHostal a agregar. reservaHostal != null
-	 * @throws Exception
-	 *             - Cualquier error que se genere agregando el reservaHostal
-	 */
-	public void addContratoVivienda(ContratoViviendaVO contrato) throws Exception {
-
-		DAOContratoVivienda daoContratoVivienda = new DAOContratoVivienda();
-		try {
-			this.conn = darConexion();
-			daoContratoVivienda.setConn(conn);
-			daoContratoVivienda.addContratoVivienda(contrato);
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoContratoVivienda.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-	}
-
-	/**
-	 * Metodo que modela la transaccion que actualiza en la base de datos al
-	 * reservaHostal que entra por parametro.<br/>
-	 * Solamente se actualiza si existe el reservaHostal en la Base de Datos
-	 * <br/>
-	 * <b> post: </b> se ha actualizado el reservaHostal que entra como
-	 * parametro <br/>
-	 * 
-	 * @param reservaHostal
-	 *            - ReservaHostalVO a actualizar. reservaHostal != null
-	 * @throws Exception
-	 *             - Cualquier error que se genere actualizando al
-	 *             reservaHostal.
-	 */
-	public void updateContratoVivienda(ContratoViviendaVO contratoVivienda) throws Exception {
-		DAOContratoVivienda daoContratoVivienda = new DAOContratoVivienda();
-		try {
-			this.conn = darConexion();
-			daoContratoVivienda.setConn(conn);
-			contratoVivienda = daoContratoVivienda.getContratoVivienda(contratoVivienda.getId());
-			if (contratoVivienda == null) {
-				throw new Exception(
-						"El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");
-			} else
-				daoContratoVivienda.updateContratoVivienda(contratoVivienda);
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoContratoVivienda.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-	}
-
-	/**
-	 * Metodo que modela la transaccion que elimina de la base de datos al
-	 * reservaHostal que entra por parametro. <br/>
-	 * Solamente se actualiza si existe el reservaHostal en la Base de Datos
-	 * <br/>
-	 * <b> post: </b> se ha eliminado el reservaHostal que entra por parametro
-	 * <br/>
-	 * 
-	 * @param ReservaHostalVO
-	 *            - reservaHostal a eliminar. reservaHostal != null
-	 * @throws Exception
-	 *             - Cualquier error que se genere eliminando al reservaHostal.
-	 */
-	public void deleteContratoVivienda(ContratoViviendaVO contratoVivienda) throws Exception {
-		DAOContratoVivienda daoContratoVivienda = new DAOContratoVivienda();
-		try {
-			this.conn = darConexion();
-			daoContratoVivienda.setConn(conn);
-			contratoVivienda = daoContratoVivienda.getContratoVivienda(contratoVivienda.getId());
-			if (contratoVivienda == null) {
-				throw new Exception(
-						"El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");
-			} else
-				daoContratoVivienda.deleteContratoVivienda(contratoVivienda);
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoContratoVivienda.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-	}
-
-	public List<ContratoInmuebleVO> getContratosInmuebles() throws Exception {
-		DAOContratoInmueble daoContratoInmueble = new DAOContratoInmueble();
-		List<ContratoInmuebleVO> contratosInmuebles;
-		try {
-			this.conn = darConexion();
-			daoContratoInmueble.setConn(conn);
-
-			// Por simplicidad, solamente se obtienen los primeros 50 resultados
-			// de la consulta
-			contratosInmuebles = daoContratoInmueble.getContratosInmueble();
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoContratoInmueble.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-		return contratosInmuebles;
-	}
-
-	public ContratoInmuebleVO getContratoInmueble(String fechaI, String fechaF, String usuario) throws Exception {
-		DAOContratoInmueble daoContratoInmueble = new DAOContratoInmueble();
-		ContratoInmuebleVO contratoInmueble = null;
-		try {
-			this.conn = darConexion();
-			daoContratoInmueble.setConn(conn);
-			contratoInmueble = daoContratoInmueble.getContratoInmueble(fechaI, fechaF, usuario);
-			if (contratoInmueble == null) {
-				throw new Exception("El reservaHostal con la fecha inicial para el usuario = " + fechaI + ", " + usuario
-						+ " no se encuentra persistido en la base de datos.");
-			}
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoContratoInmueble.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-		return contratoInmueble;
-	}
-
-	public void addContratoInmueble(ContratoInmuebleVO contrato) throws Exception {
-		DAOContratoInmueble daoContratoInmueble = new DAOContratoInmueble();
-		DAOInmueble daoInmueble = new DAOInmueble();
-		DAOUsuario daoUssr = new DAOUsuario();
-		try {
-			this.conn = darConexion();
-			daoInmueble.setConn(conn);
-			daoUssr.setConn(conn);
-			contrato.setInmueble(daoInmueble.getInmueble(contrato.getIdInmueble()));
-			contrato.setUsuario(daoUssr.getUsuario(contrato.getUsrCedula()));
-			daoContratoInmueble.setConn(conn);
-			daoContratoInmueble.addContratoInmueble(contrato);
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoContratoInmueble.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-
-	}
-
-	public void deleteContratoInmueble(ContratoInmuebleVO contratoInmueble) throws Exception {
-		DAOContratoInmueble daoContratoInmueble = new DAOContratoInmueble();
-		try {
-			this.conn = darConexion();
-			daoContratoInmueble.setConn(conn);
-			contratoInmueble = daoContratoInmueble.getContratoInmueble(contratoInmueble.getFechaInicio(),
-					contratoInmueble.getFechaFinal(), contratoInmueble.getUsuario().getCedula());
-			if (contratoInmueble == null) {
-				throw new Exception(
-						"El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");
-			} else
-				daoContratoInmueble.deleteContratoInmueble(contratoInmueble);
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoContratoInmueble.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-	}
-
-	public List<ContratoVecinoVO> getContratosVecinos() throws Exception {
-		DAOContratoVecino daoContratoVecino = new DAOContratoVecino();
-		List<ContratoVecinoVO> contratosVecinos;
-		try {
-			this.conn = darConexion();
-			daoContratoVecino.setConn(conn);
-
-			// Por simplicidad, solamente se obtienen los primeros 50 resultados
-			// de la consulta
-			contratosVecinos = daoContratoVecino.getContratosVecino();
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoContratoVecino.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-		return contratosVecinos;
-	}
-
-	public ContratoVecinoVO getContratoVecino(String fechaI, String fechaF, String usuario) throws Exception {
-		DAOContratoVecino daoContratoVecino = new DAOContratoVecino();
-		ContratoVecinoVO contratoVecino = null;
-		try {
-			this.conn = darConexion();
-			daoContratoVecino.setConn(conn);
-			contratoVecino = daoContratoVecino.getContratoVecino(fechaI, fechaF, usuario);
-			if (contratoVecino == null) {
-				throw new Exception("El reservaHostal con la fecha inicial para el usuario = " + fechaI + ", " + usuario
-						+ " no se encuentra persistido en la base de datos.");
-			}
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoContratoVecino.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-		return contratoVecino;
-	}
-
-	public void addContratoVecino(ContratoVecinoVO contrato) throws Exception {
-
-		DAOContratoVecino daoContratoVecino = new DAOContratoVecino();
-		try {
-			this.conn = darConexion();
-			daoContratoVecino.setConn(conn);
-			daoContratoVecino.addContratoVecino(contrato);
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoContratoVecino.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-
-	}
-
-	public void deleteContratoVecino(ContratoVecinoVO contratoVecino) throws Exception {
-		DAOContratoVecino daoContratoVecino = new DAOContratoVecino();
-		try {
-			this.conn = darConexion();
-			daoContratoVecino.setConn(conn);
-			contratoVecino = daoContratoVecino.getContratoVecino(contratoVecino.getFechaInicio(),
-					contratoVecino.getFechaFin(), contratoVecino.getUsuario().getCedula());
-			if (contratoVecino == null) {
-				throw new Exception(
-						"El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");
-			} else
-				daoContratoVecino.deleteContratoVecino(contratoVecino);
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoContratoVecino.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-
-	}
+	
 
 	public List<ReservaMasivaVO> getReservasMasivas() throws Exception {
 		DAOReservaMasiva daoReservaMasiva = new DAOReservaMasiva();
@@ -1165,7 +449,7 @@ public class TransactionManager {
 			daoReservaMasiva.setConn(conn);
 			ReservaMasiva = daoReservaMasiva.getReservaMasiva(id);
 			if (ReservaMasiva == null) {
-				throw new Exception("El reservaHostal con la fecha inicial para el usuario = " + id
+				throw new Exception("El reserva con la fecha inicial para el usuario = " + id
 						+ " no se encuentra persistido en la base de datos.");
 			}
 		} catch (SQLException sqlException) {
@@ -1229,7 +513,7 @@ public class TransactionManager {
 			ReservaMasiva = daoReservaMasiva.getReservaMasiva(ReservaMasiva.getId());
 			if (ReservaMasiva == null) {
 				throw new Exception(
-						"El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");
+						"El reserva con el id seleccionado no se encuentra persistido en la base de datos.");
 			} else
 				daoReservaMasiva.deleteReservaMasiva(ReservaMasiva);
 		} catch (SQLException sqlException) {
@@ -1255,135 +539,6 @@ public class TransactionManager {
 
 	}
 	
-	public List<RelMasivaVO> getRelMasiva() throws Exception {
-		DAORelMasiva daoRelMasiva = new DAORelMasiva();
-		List<RelMasivaVO> RelMasiva;
-		try {
-			this.conn = darConexion();
-			daoRelMasiva.setConn(conn);
-
-			// Por simplicidad, solamente se obtienen los primeros 50 resultados
-			// de la consulta
-			RelMasiva = daoRelMasiva.getRelMasivas();
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoRelMasiva.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-		return RelMasiva;
-	}
-
-	public RelMasivaVO getRelMasiva(Long id) throws Exception {
-		DAORelMasiva daoRelMasiva = new DAORelMasiva();
-		RelMasivaVO RelMasiva = null;
-		try {
-			this.conn = darConexion();
-			daoRelMasiva.setConn(conn);
-			RelMasiva = daoRelMasiva.getRelMasiva(id);
-			if (RelMasiva == null) {
-				throw new Exception("El reservaHostal con la fecha inicial para el usuario = " + id
-						+ " no se encuentra persistido en la base de datos.");
-			}
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoRelMasiva.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-		return RelMasiva;
-	}
-
-	public void addRelMasiva(RelMasivaVO contrato) throws Exception {
-
-		DAORelMasiva daoRelMasiva = new DAORelMasiva();
-		try {
-			this.conn = darConexion();
-			daoRelMasiva.setConn(conn);
-			daoRelMasiva.addRelMasiva(contrato);
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoRelMasiva.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-
-	}
-
-	public void deleteRelMasiva(RelMasivaVO RelMasiva) throws Exception {
-		DAORelMasiva daoRelMasiva = new DAORelMasiva();
-		try {
-			this.conn = darConexion();
-			daoRelMasiva.setConn(conn);
-			RelMasiva = daoRelMasiva.getRelMasiva(RelMasiva.getId());
-			if (RelMasiva == null) {
-				throw new Exception(
-						"El reservaHostal con el id seleccionado no se encuentra persistido en la base de datos.");
-			} else
-				daoRelMasiva.deleteRelMasiva(RelMasiva);
-		} catch (SQLException sqlException) {
-			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
-			sqlException.printStackTrace();
-			throw sqlException;
-		} catch (Exception exception) {
-			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
-			exception.printStackTrace();
-			throw exception;
-		} finally {
-			try {
-				daoRelMasiva.cerrarRecursos();
-				if (this.conn != null) {
-					this.conn.close();
-				}
-			} catch (SQLException exception) {
-				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
-				exception.printStackTrace();
-				throw exception;
-			}
-		}
-
-	}
+	
 
 }

@@ -7,8 +7,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import vos.ReservaMasivaVO;
+import vos.ReservaVO;
 import vos.InmuebleVO;
-import vos.UsuarioVO;
+import vos.ClienteVO;
 
 public class DAOReservaMasiva {
 	// ----------------------------------------------------------------------------------------------------------------------------------
@@ -129,22 +130,28 @@ public class DAOReservaMasiva {
 				"COMMIT;\r\n" + 
 				"SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;\r\n" + 
 				"select * from(\r\n" + 
-				"select INMUEBLE.ID from INMUEBLE\r\n" + 
+				"select  INMUEBLE.ID from INMUEBLE\r\n" + 
 				"    LEFT JOIN CONTRATOINMUEBLE\r\n" + 
 				"    ON INMUEBLE.ID = CONTRATOINMUEBLE.IDINMUEBLE\r\n" + 
 				"    WHERE FECHAINICIO IS NULL OR FECHAFIN < TO_TIMESTAMP('%1$s', 'DD-MM-RRRR') OR FECHAINICIO > TO_TIMESTAMP('%2$s', 'DD-MM-RRRR')\r\n" + 
 				"    )where ROWNUM <= %3$s;\r\n" + 
 				"    \r\n" + 
-				"commit;\r\n" + 
-				"SET AUTOCOMMIT 1;", "01-01-1991", "05-05-1991", "100");
+				"SET AUTOCOMMIT 1;", contrato.getFechaInicio(), contrato.getFechaFin(), contrato.getCantidad());
 		
-		String sql = String.format(
-				"INSERT INTO RESERVASMASIVAS (CANTIDAD, DESCRIPCION, TIPO) VALUES ('%2$s', '%3$s', '%4$s')", USUARIO,
-				contrato.getCantidad(), contrato.getDescrpcion(), contrato.getTipo());
-		System.out.println(sql);
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		
+		System.out.println(sqlChevere);
+		PreparedStatement prepStmt = conn.prepareStatement(sqlChevere);
 		recursos.add(prepStmt);
-		prepStmt.executeQuery();
+		ResultSet rs = prepStmt.executeQuery();
+		DAOReserva inmueble = new DAOReserva();
+		while(rs.next()){
+			ReservaVO vo = new ReservaVO();
+			vo.setCuarto(Long.parseLong(rs.getString("ID")));
+			vo.setFechaI(contrato.getFechaInicio());
+			vo.setFechaF(contrato.getFechaFin());
+			
+			inmueble.addReserva(vo);
+		}
 
 	}
 

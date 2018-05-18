@@ -13,10 +13,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
  * @author camilo
  *
  */
-public class ViviendaRoomVO {
+public class ViviendaRoomVO extends AlojamientoVO{
 
-	@JsonProperty(value = "id")
-	private Long id;
+
 	
 	@JsonProperty(value="compartida")
 	private Integer compartida;
@@ -33,8 +32,6 @@ public class ViviendaRoomVO {
 	@JsonProperty(value="gym")
 	private Double gym;
 	
-	@JsonProperty(value="precio")
-	private Double precio;
 	
 	@JsonProperty(value="vivienda")
 	private Long vivienda;
@@ -86,20 +83,9 @@ public class ViviendaRoomVO {
 	}
 	*/
 	public ViviendaRoomVO() {
-	}
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
+		super();
 	}
 
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	/**
 	 * @return the compartida
@@ -169,20 +155,6 @@ public class ViviendaRoomVO {
 	 */
 	public void setGym(Double gym) {
 		this.gym = gym;
-	}
-
-	/**
-	 * @return the precio
-	 */
-	public Double getPrecio() {
-		return precio;
-	}
-
-	/**
-	 * @param precio the precio to set
-	 */
-	public void setPrecio(Double precio) {
-		this.precio = precio;
 	}
 
 	/**

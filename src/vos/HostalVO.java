@@ -11,10 +11,9 @@ import org.codehaus.jackson.annotate.JsonProperty;
  * @author camilo
  *
  */
-public class HostalVO {
+public class HostalVO extends OperadorVO{
 
-	@JsonProperty(value = "id")
-	private Long id;
+	
 	
 	@JsonProperty(value="apertura")
 	private Integer apertura;
@@ -25,11 +24,6 @@ public class HostalVO {
 	@JsonProperty(value="desayuno")
 	private Boolean desayuno;
 	
-	@JsonProperty(value="direccion")
-	private String direccion;
-	
-	@JsonProperty(value="nombre")
-	private String nombre;
 	
 	private List<Long> cuartos;
 	/*
@@ -62,22 +56,9 @@ public class HostalVO {
 	}
 	*/
 	public HostalVO(){
-		
+		super();
 	}
 
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	/**
 	 * @return the apertura
@@ -119,34 +100,6 @@ public class HostalVO {
 	 */
 	public void setDesayuno(Boolean desayuno) {
 		this.desayuno = desayuno;
-	}
-
-	/**
-	 * @return the direccion
-	 */
-	public String getDireccion() {
-		return direccion;
-	}
-
-	/**
-	 * @param direccion the direccion to set
-	 */
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
-	}
-
-	/**
-	 * @return the nombre
-	 */
-	public String getNombre() {
-		return nombre;
-	}
-
-	/**
-	 * @param nombre the nombre to set
-	 */
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
 	}
 
 	/**

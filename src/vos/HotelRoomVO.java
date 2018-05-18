@@ -4,11 +4,8 @@ import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class HotelRoomVO {
+public class HotelRoomVO extends AlojamientoVO{
 
-	@JsonProperty(value = "id")
-	private Long id;
-	
 	@JsonProperty(value="banera")
 	private Boolean banera;
 	
@@ -23,19 +20,13 @@ public class HotelRoomVO {
 	
 	@JsonProperty(value="cable")
 	private Boolean cable;
-	 
-	@JsonProperty(value="precio")
-	private Double precio;
 	
 	@JsonProperty(value="hotel")
 	private Long hotel;
 	
 	@JsonProperty(value="tipo")
 	private String tipo;
-	
-	@JsonProperty(value="capacidad")
-	private Integer capacidad;
-	
+
 	@JsonProperty(value="cuarto")
 	private Integer cuarto;
 	
@@ -92,19 +83,7 @@ public class HotelRoomVO {
 	*/
 	public HotelRoomVO() {
 	}
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
 
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
 
 	/**
 	 * @return the banera
@@ -176,19 +155,6 @@ public class HotelRoomVO {
 		this.cable = cable;
 	}
 
-	/**
-	 * @return the precio
-	 */
-	public Double getPrecio() {
-		return precio;
-	}
-
-	/**
-	 * @param precio the precio to set
-	 */
-	public void setPrecio(Double precio) {
-		this.precio = precio;
-	}
 
 	/**
 	 * @return the hotel
@@ -218,19 +184,6 @@ public class HotelRoomVO {
 		this.tipo = tipo;
 	}
 
-	/**
-	 * @return the capacidad
-	 */
-	public Integer getCapacidad() {
-		return capacidad;
-	}
-
-	/**
-	 * @param capacidad the capacidad to set
-	 */
-	public void setCapacidad(Integer capacidad) {
-		this.capacidad = capacidad;
-	}
 
 	/**
 	 * @return the cuarto

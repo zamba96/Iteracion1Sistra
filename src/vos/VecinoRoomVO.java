@@ -2,16 +2,14 @@ package vos;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class VecinoRoomVO {
+public class VecinoRoomVO extends AlojamientoVO{
 
 	@JsonProperty(value="habiataciones")
 	private Integer habitaciones;
 	
 	@JsonProperty(value="banos")
 	private Integer banos;
-	
-	@JsonProperty(value="precio")
-	private Integer precio;
+
 	
 	@JsonProperty(value="menaje")
 	private String menaje;
@@ -21,7 +19,7 @@ public class VecinoRoomVO {
 	
 	@JsonProperty(value="dueno")
 	private VecinoVO dueno;
-	
+	/*
 	public VecinoRoomVO(@JsonProperty(value="habiataciones") Integer habitaciones, 
 			@JsonProperty(value="banos") Integer banos,
 			@JsonProperty(value="precio") Integer precio, 
@@ -48,8 +46,12 @@ public class VecinoRoomVO {
 		this.precio = precio;
 		this.menaje = menaje;
 		this.direccion = direccion;
-	}
+	}*/
 
+	public VecinoRoomVO(){
+		super();
+	}
+	
 	public Integer getHabitaciones() {
 		return habitaciones;
 	}
@@ -64,14 +66,6 @@ public class VecinoRoomVO {
 
 	public void setBanos(Integer banos) {
 		this.banos = banos;
-	}
-
-	public Integer getPrecio() {
-		return precio;
-	}
-
-	public void setPrecio(Integer precio) {
-		this.precio = precio;
 	}
 
 	public String getMenaje() {

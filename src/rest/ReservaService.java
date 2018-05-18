@@ -19,15 +19,15 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import tm.TransactionManager;
-import vos.ReservaHostalVO;
+import vos.ReservaVO;
 
 /**
  * @author camilo
  *
  */
-@Path("reservasHostales")
+@Path("reservases")
 
-public class ReservaHostalService {
+public class ReservaService {
 
 	// ----------------------------------------------------------------------------------------------------------------------------------
 	// ATRIBUTOS
@@ -75,15 +75,15 @@ public class ReservaHostalService {
 	 */
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getReservasHostales() {
+	public Response getReservases() {
 
 		try {
 			TransactionManager tm = new TransactionManager(getPath());
 
-			List<ReservaHostalVO> bebedores;
+			List<ReservaVO> bebedores;
 			// Por simplicidad, solamente se obtienen los primeros 50 resultados
 			// de la consulta
-			bebedores = tm.getReservasHostales();
+			bebedores = tm.getReservases();
 			return Response.status(200).entity(bebedores).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -98,7 +98,7 @@ public class ReservaHostalService {
 	 * <b>URL: </b>
 	 * http://localhost:8080/TutorialParranderos/rest/bebedores/{id} <br/>
 	 * 
-	 * @return <b>Response Status 200</b> - JSON ReservaHostalVO que contiene al
+	 * @return <b>Response Status 200</b> - JSON ReservaVO que contiene al
 	 *         reserva cuyo ID corresponda al parametro <br/>
 	 *         <b>Response Status 500</b> - Excepcion durante el transcurso de
 	 *         la transaccion
@@ -106,11 +106,11 @@ public class ReservaHostalService {
 	@GET
 	@Path("{id}")
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getReservaHostalById(@PathParam("id") Long id) {
+	public Response getReservaById(@PathParam("id") Long id) {
 		try {
 			TransactionManager tm = new TransactionManager(getPath());
 
-			ReservaHostalVO reserva = tm.getReservaHostal(id);
+			ReservaVO reserva = tm.getReserva(id);
 			return Response.status(200).entity(reserva).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -138,10 +138,10 @@ public class ReservaHostalService {
 	@POST
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response addReservaHostal(ReservaHostalVO reserva) {
+	public Response addReserva(ReservaVO reserva) {
 		try {
 			TransactionManager tm = new TransactionManager(getPath());
-			tm.addReservaHostal(reserva);
+			tm.addReserva(reserva);
 			return Response.status(200).entity(reserva).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -167,10 +167,10 @@ public class ReservaHostalService {
 	@PUT
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response updateReservaHostal(ReservaHostalVO reserva) {
+	public Response updateReserva(ReservaVO reserva) {
 		try {
 			TransactionManager tm = new TransactionManager(getPath());
-			tm.updateReservaHostal(reserva);
+			tm.updateReserva(reserva);
 			return Response.status(200).entity(reserva).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
@@ -197,10 +197,10 @@ public class ReservaHostalService {
 	@DELETE
 	@Consumes({ MediaType.APPLICATION_JSON })
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response deleteReservaHostal(ReservaHostalVO reserva) {
+	public Response deleteReserva(ReservaVO reserva) {
 		try {
 			TransactionManager tm = new TransactionManager(getPath());
-			tm.deleteReservaHostal(reserva);
+			tm.deleteReserva(reserva);
 			return Response.status(200).entity(reserva).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();

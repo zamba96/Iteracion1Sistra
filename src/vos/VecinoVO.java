@@ -2,49 +2,29 @@ package vos;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class VecinoVO {
+public class VecinoVO extends PersonaVO{
 
-	@JsonProperty(value="cedula")	
-	private String cedula;
+	public VecinoVO(){
+		super();
+	}
 	
-	@JsonProperty(value="nombre")
-	private String nombre;
+	@JsonProperty(value = "idOperador")
+	private Long idOperador;
+
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return idOperador;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.idOperador = id;
+	}
 	
-	@JsonProperty(value="fechaNacimiento")
-	private String fechaNacimiento;
-	
-	public VecinoVO(@JsonProperty(value="cedula") String cedula, 
-			@JsonProperty(value="nombre") String nombre, 
-			@JsonProperty(value="fechaNacimiento") String fechaNacimiento)
-	{
-		this.cedula = cedula;
-		this.nombre = nombre;
-		this.fechaNacimiento = fechaNacimiento;
-	}
-
-	public String getCedula() {
-		return cedula;
-	}
-
-	public void setCedula(String cedula) {
-		this.cedula = cedula;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
-
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
-
-	public String getFechaNacimiento() {
-		return fechaNacimiento;
-	}
-
-	public void setFechaNacimiento(String fechaNacimiento) {
-		this.fechaNacimiento = fechaNacimiento;
-	}
 	
 	
 	

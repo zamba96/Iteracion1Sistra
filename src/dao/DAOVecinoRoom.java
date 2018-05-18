@@ -210,13 +210,22 @@ public class DAOVecinoRoom {
 		Integer precio = resultSet.getInt("PRECIO");
 		String menaje = resultSet.getString("MENAJE");
 		String direccion = resultSet.getString("DIRECCION");
+		String capacidadS = resultSet.getString("CAPACIDAD");
 		
+		Integer capacidad = Integer.parseInt(capacidadS);
 		DAOVecino ldao = new DAOVecino();
 		ldao.setConn(conn);
 		VecinoVO veci;
 		try {
 			veci = ldao.getVecino(resultSet.getString("DUENO"));
-			beb = new VecinoRoomVO(habitaciones, banos, precio, menaje, direccion, veci);
+			beb = new VecinoRoomVO();
+			beb.setBanos(banos);
+			beb.setCapacidad(capacidad);
+			beb.setDireccion(direccion);
+			beb.setHabitaciones(habitaciones);
+			beb.setMenaje(menaje);
+			beb.setPrecio(precio);
+			beb.setDueno(veci);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

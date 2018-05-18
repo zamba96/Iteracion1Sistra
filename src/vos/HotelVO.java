@@ -4,13 +4,8 @@ import java.util.List;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class HotelVO {
+public class HotelVO extends OperadorVO{
 
-	@JsonProperty(value = "id")
-	private Long id;
-	
-	@JsonProperty(value="direccion")
-	private String direccion;
 	
 	@JsonProperty(value="desayuno")
 	private Boolean desayuno;
@@ -26,9 +21,6 @@ public class HotelVO {
 	
 	@JsonProperty(value="horario")
 	private Boolean horario;
-	
-	@JsonProperty(value="nombre")
-	private String nombre;
 	
 	@JsonProperty(value="cuartos")
 	private List<Long> cuartos;
@@ -54,53 +46,7 @@ public class HotelVO {
 	}
 	*/
 	public HotelVO() {
-
-	}
-	public HotelVO(
-			@JsonProperty(value="desayuno")Boolean desayuno,
-			@JsonProperty(value="restaurante")Boolean restaurante,
-			@JsonProperty(value="piscina")Boolean piscina,
-			@JsonProperty(value="direccion")String direccion,
-			@JsonProperty(value="nombre")String nombre,
-			@JsonProperty(value="parqueadero")Boolean parqueadero,
-			@JsonProperty(value="horario")Boolean horario) 
-	{
-		this.restaurante = restaurante;
-		this.desayuno = desayuno;
-		this.piscina = piscina;
-		this.direccion = direccion;
-		this.nombre = nombre;
-		this.parqueadero = parqueadero;
-		this.horario = horario;
-	}
-
-	
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	/**
-	 * @return the direccion
-	 */
-	public String getDireccion() {
-		return direccion;
-	}
-
-	/**
-	 * @param direccion the direccion to set
-	 */
-	public void setDireccion(String direccion) {
-		this.direccion = direccion;
+		super();
 	}
 
 	/**
@@ -173,19 +119,6 @@ public class HotelVO {
 		this.horario = horario;
 	}
 
-	/**
-	 * @return the nombre
-	 */
-	public String getNombre() {
-		return nombre;
-	}
-
-	/**
-	 * @param nombre the nombre to set
-	 */
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
 
 	/**
 	 * @return the cuartos

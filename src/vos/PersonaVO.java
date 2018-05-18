@@ -2,7 +2,7 @@ package vos;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class UsuarioVO {
+public class PersonaVO {
 
 	
 	@JsonProperty(value = "cedula")
@@ -14,19 +14,9 @@ public class UsuarioVO {
 	@JsonProperty(value = "fechaNacimiento")
 	private String fechaNacimiento;
 
-	public UsuarioVO() {
+	public PersonaVO() {
 		
 	}
-	/*
-	public UsuarioVO(@JsonProperty(value = "cedula") String cedula, 
-					 @JsonProperty(value = "nombre") String nombre,
-					 @JsonProperty(value = "fechaNacimiento") String fechaNacimiento)
-	{
-		this.cedula = cedula;
-		this.nombre = nombre;
-		this.fechaNacimiento = fechaNacimiento;
-	}
-	*/
 	
 	public String getCedula() {
 		return cedula;

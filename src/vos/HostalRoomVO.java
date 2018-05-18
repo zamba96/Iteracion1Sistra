@@ -11,19 +11,13 @@ import org.codehaus.jackson.annotate.JsonProperty;
  * @author camilo
  *
  */
-public class HostalRoomVO {
+public class HostalRoomVO extends AlojamientoVO{
 
-	@JsonProperty(value = "id")
-	private Long id;
+	
 	
 	@JsonProperty(value="cuarto")
 	private Integer cuarto;
 	
-	@JsonProperty(value="capacidad")
-	private Integer capacidad;
-	
-	@JsonProperty(value="precio")
-	private Double precio;
 	
 	@JsonProperty(value="hostal")
 	private Long hostal;
@@ -58,22 +52,10 @@ public class HostalRoomVO {
 	}
 	*/
 	public HostalRoomVO(){
-		
+		super();
 	}
 
-	/**
-	 * @return the id
-	 */
-	public Long getId() {
-		return id;
-	}
-
-	/**
-	 * @param id the id to set
-	 */
-	public void setId(Long id) {
-		this.id = id;
-	}
+	
 
 	/**
 	 * @return the cuarto
@@ -89,33 +71,6 @@ public class HostalRoomVO {
 		this.cuarto = cuarto;
 	}
 
-	/**
-	 * @return the capacidad
-	 */
-	public Integer getCapacidad() {
-		return capacidad;
-	}
-
-	/**
-	 * @param capacidad the capacidad to set
-	 */
-	public void setCapacidad(Integer capacidad) {
-		this.capacidad = capacidad;
-	}
-
-	/**
-	 * @return the precio
-	 */
-	public Double getPrecio() {
-		return precio;
-	}
-
-	/**
-	 * @param precio the precio to set
-	 */
-	public void setPrecio(Double precio) {
-		this.precio = precio;
-	}
 
 	/**
 	 * @return the hostal

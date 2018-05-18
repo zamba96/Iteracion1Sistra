@@ -3,7 +3,7 @@ package vos;
 import org.codehaus.jackson.annotate.JsonCreator;
 import org.codehaus.jackson.annotate.JsonProperty;
 
-public class InmuebleVO {
+public class InmuebleVO extends AlojamientoVO{
 
 
 	//ATRIBUTOS
@@ -19,17 +19,14 @@ public class InmuebleVO {
 	@JsonProperty(value="administracion")
 	private Boolean administracion;
 
-	@JsonProperty(value="precio")
-	private Integer precio;
-
 	@JsonProperty(value="direccion")
 	private String direccion;
 
 	@JsonProperty(value="dueno")
-	private UsuarioVO dueno;
+	private ClienteVO dueno;
 
 	public InmuebleVO() {
-		
+		super();
 	}
 	
 	/*
@@ -40,7 +37,7 @@ public class InmuebleVO {
 			@JsonProperty(value="administracion") Boolean administracion,
 			@JsonProperty(value="precio") Integer precio,
 			@JsonProperty(value="direccion") String direccion,
-			@JsonProperty(value="dueno") UsuarioVO dueno) 
+			@JsonProperty(value="dueno") ClienteVO dueno) 
 	{
 		this.amoblado = amoblado;
 		this.servicios = servicios;
@@ -67,6 +64,7 @@ public class InmuebleVO {
 	}
 
 	*/
+	
 	//Getters And Setters
 	public Boolean getAmoblado() {
 		return amoblado;
@@ -100,14 +98,6 @@ public class InmuebleVO {
 		this.administracion = administracion;
 	}
 
-	public Integer getPrecio() {
-		return precio;
-	}
-
-	public void setPrecio(Integer precio) {
-		this.precio = precio;
-	}
-
 	public String getDireccion() {
 		return direccion;
 	}
@@ -116,11 +106,11 @@ public class InmuebleVO {
 		this.direccion = direccion;
 	}
 
-	public UsuarioVO getDueno() {
+	public ClienteVO getDueno() {
 		return dueno;
 	}
 
-	public void setDueno(UsuarioVO dueno) {
+	public void setDueno(ClienteVO dueno) {
 		this.dueno = dueno;
 	}
 

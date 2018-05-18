@@ -238,7 +238,7 @@ public class DAOHostalRoom {
 			try {
 				Integer cuarto = resultSet.getInt("CUARTO");
 				Integer capacidad = resultSet.getInt("CAPACIDAD");
-				Double precio = resultSet.getDouble("PRECIO");
+				Integer precio = resultSet.getInt("PRECIO");
 				String hostalS = resultSet.getString("HOSTAL");
 				String ids = resultSet.getString("ID");
 				

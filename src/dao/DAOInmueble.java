@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import vos.InmuebleVO;
-import vos.UsuarioVO;
+import vos.ClienteVO;
 
 public class DAOInmueble {
 
@@ -206,7 +206,7 @@ public class DAOInmueble {
 	 */
 	public InmuebleVO convertResultSetToInmueble(ResultSet resultSet) throws SQLException {
 		
-		DAOUsuario daoUSSR = new DAOUsuario();
+		DAOCliente daoUSSR = new DAOCliente();
 		
 		Integer amobladoI = resultSet.getInt("AMOBLADO");
 		Integer serviciosI = resultSet.getInt("SERVICIOS");
@@ -221,10 +221,10 @@ public class DAOInmueble {
 		boolean servicios = (serviciosI == 1)? true : false;
 		boolean cable = (cableI == 1)? true : false;
 		boolean administracion = (administracionI == 1)? true : false;
-		UsuarioVO dueno;
+		ClienteVO dueno;
 		try {
 			daoUSSR.setConn(conn);
-			dueno = daoUSSR.getUsuario(cedula);
+			dueno = daoUSSR.getCliente(cedula);
 			InmuebleVO beb = new InmuebleVO(); 
 			beb.setAdministracion(administracion);
 			beb.setAmoblado(amoblado);

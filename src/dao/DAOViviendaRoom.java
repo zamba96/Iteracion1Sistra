@@ -255,7 +255,7 @@ public class DAOViviendaRoom {
 			Double salaDeEstudio = resultSet.getDouble("SALADEESTUDIO");
 			Double salaDeEsparcimiento = resultSet.getDouble("SALADEESPARCIMIENTO");
 			Double gym = resultSet.getDouble("GYM");
-			Double precio = resultSet.getDouble("PRECIO");
+			Integer precio = resultSet.getInt("PRECIO");
 			Long vivienda = resultSet.getLong("VIVIENDA");
 			Long cuarto = resultSet.getLong("CUARTO");
 			Long id = resultSet.getLong("ID");

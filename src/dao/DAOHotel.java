@@ -226,14 +226,25 @@ public class DAOHotel {
 				Integer parqueaderoI = resultSet.getInt("PARQUEDAERO");
 				Integer horarioI = resultSet.getInt("HORARIO");
 				String nombre = resultSet.getString("NOMBRE");
+				String idS = resultSet.getString("ID");
 				
+				Long id = Long.parseLong(idS);
 				boolean desayuno = desayunoI == 1;
 				boolean restaurante = restauranteI ==1;
 				boolean piscina = piscinaI==1;
 				boolean parqueadero = parqueaderoI==1;
 				boolean horario = horarioI==1;
 				
-				HotelVO beb = new HotelVO(desayuno, restaurante, piscina, direccion,nombre,parqueadero,horario);
+				HotelVO beb = new HotelVO();
+				//beb.setCuartos(cuartos);
+				beb.setDesayuno(desayuno);
+				beb.setDireccion(direccion);
+				beb.setHorario(horario);
+				beb.setId(id);
+				beb.setNombre(nombre);
+				beb.setParqueadero(parqueadero);
+				beb.setPiscina(piscina);
+				beb.setRestaurante(restaurante);
 
 				return beb;
 			}

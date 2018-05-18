@@ -205,8 +205,10 @@ public class DAOVecino {
 
 
 
-		VecinoVO beb = new VecinoVO(cedula, nombre, fechaNacimiento);
-
+		VecinoVO beb = new VecinoVO();
+		beb.setCedula(cedula);
+		beb.setFechaNacimiento(fechaNacimiento);
+		beb.setNombre(nombre);
 		return beb;
 	}
 

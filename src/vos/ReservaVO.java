@@ -1,13 +1,15 @@
+/**
+ * 
+ */
 package vos;
 
 import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
- * 
  * @author camilo
  *
  */
-public class ContratoViviendaVO {
+public class ReservaVO {
 
 	@JsonProperty(value = "id")
 	private Long id;
@@ -21,33 +23,32 @@ public class ContratoViviendaVO {
 	@JsonProperty(value="cuarto")
 	private Long cuarto;
 	
-	@JsonProperty(value="relacionado")
-	private Long relacionado;
+	@JsonProperty(value="usuario")
+	private Long usuario;
 	
 	/*
-	public ContratoViviendaVO(@JsonProperty(value="fechaI")String fechaI,
+	public ReservaHotelVO(
+			@JsonProperty(value="fechaI")String fechaI,
 			@JsonProperty(value="fechaF")String fechaF,
 			@JsonProperty(value="cuarto")Long cuarto,
-			@JsonProperty(value="usuario")Long relacionado
+			@JsonProperty(value="usuario")Long usuario
 			) {
 		this.fechaI = fechaI;
 		this.fechaF = fechaF;
 		this.cuarto = cuarto;
-		this.relacionado = relacionado;
+		this.usuario = usuario;
 	}
 
-	public ContratoViviendaVO(
+	public ReservaHotelVO(
 			@JsonProperty(value="fechaI")String fechaI,
 			@JsonProperty(value="fechaF")String fechaF,
 			@JsonProperty(value="cuarto")Long cuarto) {
-		
 		this.fechaI = fechaI;
 		this.fechaF = fechaF;
 		this.cuarto = cuarto;
 	}
 	*/
-	
-	public ContratoViviendaVO(){
+	public ReservaVO(){
 		
 	}
 	/**
@@ -110,14 +111,14 @@ public class ContratoViviendaVO {
 	 * @return the usuario
 	 */
 	public Long getUsuario() {
-		return relacionado;
+		return usuario;
 	}
 
 	/**
 	 * @param usuario the usuario to set
 	 */
-	public void setUsuario(Long relacionado) {
-		this.relacionado = relacionado;
+	public void setUsuario(Long usuario) {
+		this.usuario = usuario;
 	}
 	
 	

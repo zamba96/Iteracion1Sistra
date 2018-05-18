@@ -257,7 +257,7 @@ public class DAOHotelRoom {
 					Integer salaI = resultSet.getInt("SALA");
 					Integer cocinaI = resultSet.getInt("COCINA");
 					Integer cableI = resultSet.getInt("CABLE");
-					Double precio = resultSet.getDouble("PRECIO");
+					Integer precio = resultSet.getInt("PRECIO");
 					String hotelS = resultSet.getString("HOTEL");
 					String tipo = resultSet.getString("TIPO");
 					Integer capacidad = resultSet.getInt("CAPACIDAD");

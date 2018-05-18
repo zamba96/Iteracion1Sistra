@@ -9,13 +9,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import vos.ReservaHostalVO;
+import vos.ReservaVO;
 
 /**
  * @author camilo
  *
  */
-public class DAOReservaHostal {
+public class DAOReserva {
 
 	// ----------------------------------------------------------------------------------------------------------------------------------
 	// CONSTANTES
@@ -47,7 +47,7 @@ public class DAOReservaHostal {
 	/**
 	 * Metodo constructor de la clase DAOBebedor <br/>
 	 */
-	public DAOReservaHostal() {
+	public DAOReserva() {
 		recursos = new ArrayList<Object>();
 	}
 
@@ -64,8 +64,8 @@ public class DAOReservaHostal {
 	 * @throws Exception
 	 *             Si se genera un error dentro del metodo.
 	 */
-	public ArrayList<ReservaHostalVO> getReservasHostales() throws SQLException, Exception {
-		ArrayList<ReservaHostalVO> reservas = new ArrayList<ReservaHostalVO>();
+	public ArrayList<ReservaVO> getReservases() throws SQLException, Exception {
+		ArrayList<ReservaVO> reservas = new ArrayList<ReservaVO>();
 
 		// Aclaracion: Por simplicidad, solamente se obtienen los primeros 50
 		// resultados de la consulta
@@ -76,7 +76,7 @@ public class DAOReservaHostal {
 		ResultSet rs = prepStmt.executeQuery();
 
 		while (rs.next()) {
-			reservas.add(convertResultSetToReservaHostal(rs));
+			reservas.add(convertResultSetToReserva(rs));
 		}
 		return reservas;
 	}
@@ -97,8 +97,8 @@ public class DAOReservaHostal {
 	 * @throws Exception
 	 *             Si se genera un error dentro del metodo.
 	 */
-	public ReservaHostalVO getReservaHostal(Long id) throws SQLException, Exception {
-		ReservaHostalVO reserva = null;
+	public ReservaVO getReserva(Long id) throws SQLException, Exception {
+		ReservaVO reserva = null;
 
 		String sql = String.format("SELECT * FROM RESERVAHOSTAL WHERE Id = '%2$s'", USUARIO, id);
 
@@ -107,7 +107,7 @@ public class DAOReservaHostal {
 		ResultSet rs = prepStmt.executeQuery();
 
 		if (rs.next()) {
-			reserva = convertResultSetToReservaHostal(rs);
+			reserva = convertResultSetToReserva(rs);
 		}
 
 		return reserva;
@@ -119,14 +119,14 @@ public class DAOReservaHostal {
 	 * <b>Precondicion: </b> la conexion a sido inicializadoa <br/>
 	 * 
 	 * @param reserva
-	 *            ReservaHostalVO que desea agregar a la Base de Datos
+	 *            ReservaVO que desea agregar a la Base de Datos
 	 * @throws SQLException
 	 *             SQLException Genera excepcion si hay error en la conexion o
 	 *             en la consulta SQL
 	 * @throws Exception
 	 *             Si se genera un error dentro del metodo.
 	 */
-	public void addReservaHostal(ReservaHostalVO reserva) throws SQLException, Exception {
+	public void addReserva(ReservaVO reserva) throws SQLException, Exception {
 
 		String sql = String.format(
 				"INSERT INTO RESERVAHOSTAL (FECHAINICIO, FECHAFIN, IDHOSTALROOM, USUARIO) VALUES (%2$s, '%3$s', '%4$s', '%5$s')",
@@ -144,14 +144,14 @@ public class DAOReservaHostal {
 	 * <b>Precondicion: </b> la conexion a sido inicializadoa <br/>
 	 * 
 	 * @param reserva
-	 *            ReservaHostalVO que desea actualizar a la Base de Datos
+	 *            ReservaVO que desea actualizar a la Base de Datos
 	 * @throws SQLException
 	 *             SQLException Genera excepcion si hay error en la conexion o
 	 *             en la consulta SQL
 	 * @throws Exception
 	 *             Si se genera un error dentro del metodo.
 	 */
-	public void updateReservaHostal(ReservaHostalVO reserva) throws SQLException, Exception {
+	public void updateReserva(ReservaVO reserva) throws SQLException, Exception {
 
 		StringBuilder sql = new StringBuilder();
 		sql.append(String.format("UPDATE RESERVAHOSTAL SET ", USUARIO));
@@ -171,14 +171,14 @@ public class DAOReservaHostal {
 	 * <b>Precondicion: </b> la conexion a sido inicializadoa <br/>
 	 * 
 	 * @param reserva
-	 *            ReservaHostalVO que desea actualizar a la Base de Datos
+	 *            ReservaVO que desea actualizar a la Base de Datos
 	 * @throws SQLException
 	 *             SQLException Genera excepcion si hay error en la conexion o
 	 *             en la consulta SQL
 	 * @throws Exception
 	 *             Si se genera un error dentro del metodo.
 	 */
-	public void deleteReservaHostal(ReservaHostalVO reserva) throws SQLException, Exception {
+	public void deleteReserva(ReservaVO reserva) throws SQLException, Exception {
 
 		String sql = String.format("DELETE FROM RESERVAHOSTAL WHERE ID = %2$d", USUARIO, reserva.getId());
 
@@ -225,18 +225,18 @@ public class DAOReservaHostal {
 
 	/**
 	 * Metodo que transforma el resultado obtenido de una consulta SQL (sobre la
-	 * tabla RESERVAHOSTAL) en una instancia de la clase ReservaHostalVO.
+	 * tabla RESERVAHOSTAL) en una instancia de la clase ReservaVO.
 	 * 
 	 * @param resultSet
 	 *            ResultSet con la informacion de un reserva que se obtuvo de la
 	 *            base de datos.
-	 * @return ReservaHostalVO cuyos atributos corresponden a los valores
+	 * @return ReservaVO cuyos atributos corresponden a los valores
 	 *         asociados a un registro particular de la tabla RESERVAHOSTAL.
 	 * @throws SQLException
 	 *             Si existe algun problema al extraer la informacion del
 	 *             ResultSet.
 	 */
-	public ReservaHostalVO convertResultSetToReservaHostal(ResultSet resultSet) throws SQLException {
+	public ReservaVO convertResultSetToReserva(ResultSet resultSet) throws SQLException {
 
 		try {
 			String fechaI = resultSet.getString("FECHAINICIO");
@@ -248,7 +248,7 @@ public class DAOReservaHostal {
 			Long id = Long.parseLong(ids);
 			Long cuarto = Long.parseLong(cuartoS);
 
-			ReservaHostalVO beb = new ReservaHostalVO();
+			ReservaVO beb = new ReservaVO();
 			beb.setCuarto(cuarto);
 			beb.setFechaF(fechaF);
 			beb.setFechaI(fechaI);

@@ -152,7 +152,7 @@ public class DAOHostal {
 					hostal.getDesayuno(),
 					hostal.getDireccion(),
 					hostal.getNombre(),
-					hostal.getCuartos()));
+					hostal.getCuartos()));hostal.getId();
 			
 			System.out.println(sql);
 			

@@ -25,7 +25,7 @@ import vos.ReservaVO;
  * @author camilo
  *
  */
-@Path("reservases")
+@Path("reservas")
 
 public class ReservaService {
 
@@ -75,7 +75,7 @@ public class ReservaService {
 	 */
 	@GET
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response getReservases() {
+	public Response getReservas() {
 
 		try {
 			TransactionManager tm = new TransactionManager(getPath());
@@ -83,7 +83,7 @@ public class ReservaService {
 			List<ReservaVO> bebedores;
 			// Por simplicidad, solamente se obtienen los primeros 50 resultados
 			// de la consulta
-			bebedores = tm.getReservases();
+			bebedores = tm.getReservas();
 			return Response.status(200).entity(bebedores).build();
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();

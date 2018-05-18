@@ -1,5 +1,7 @@
 package vos;
 
+import java.util.List;
+
 import org.codehaus.jackson.annotate.JsonProperty;
 
 public class ReservaMasivaVO {
@@ -22,6 +24,12 @@ public class ReservaMasivaVO {
 	
 	@JsonProperty(value = "tipo")
 	public String tipo;
+	
+	@JsonProperty(value = "reservas")
+	public List<Long> reservas;
+	
+	@JsonProperty(value = "cliente")
+	public Long cliente;
 	
 	public ReservaMasivaVO() {
 	}
@@ -122,6 +130,34 @@ public class ReservaMasivaVO {
 	 */
 	public void setFechaFin(String fechaFin) {
 		this.fechaFin = fechaFin;
+	}
+
+	/**
+	 * @return the reservas
+	 */
+	public List<Long> getReservas() {
+		return reservas;
+	}
+
+	/**
+	 * @param reservas the reservas to set
+	 */
+	public void setReservas(List<Long> reservas) {
+		this.reservas = reservas;
+	}
+
+	/**
+	 * @return the cliente
+	 */
+	public Long getCliente() {
+		return cliente;
+	}
+
+	/**
+	 * @param cliente the cliente to set
+	 */
+	public void setCliente(Long cliente) {
+		this.cliente = cliente;
 	}
 	
 	

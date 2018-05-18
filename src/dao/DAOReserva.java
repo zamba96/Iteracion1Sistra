@@ -64,12 +64,12 @@ public class DAOReserva {
 	 * @throws Exception
 	 *             Si se genera un error dentro del metodo.
 	 */
-	public ArrayList<ReservaVO> getReservases() throws SQLException, Exception {
+	public ArrayList<ReservaVO> getReservas() throws SQLException, Exception {
 		ArrayList<ReservaVO> reservas = new ArrayList<ReservaVO>();
 
 		// Aclaracion: Por simplicidad, solamente se obtienen los primeros 50
 		// resultados de la consulta
-		String sql = String.format("SELECT * FROM RESERVAHOSTAL WHERE ROWNUM <= 50", USUARIO);
+		String sql = String.format("SELECT * FROM RESERVA WHERE ROWNUM <= 50", USUARIO);
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -100,7 +100,7 @@ public class DAOReserva {
 	public ReservaVO getReserva(Long id) throws SQLException, Exception {
 		ReservaVO reserva = null;
 
-		String sql = String.format("SELECT * FROM RESERVAHOSTAL WHERE Id = '%2$s'", USUARIO, id);
+		String sql = String.format("SELECT * FROM RESERVA WHERE Id = '%2$s'", USUARIO, id);
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
@@ -129,8 +129,8 @@ public class DAOReserva {
 	public void addReserva(ReservaVO reserva) throws SQLException, Exception {
 
 		String sql = String.format(
-				"INSERT INTO RESERVAHOSTAL (FECHAINICIO, FECHAFIN, IDHOSTALROOM, USUARIO) VALUES (%2$s, '%3$s', '%4$s', '%5$s')",
-				USUARIO, reserva.getFechaI(), reserva.getFechaF(), reserva.getCuarto(), reserva.getUsuario());
+				"INSERT INTO RESERVA (FECHAINICIO, FECHAFIN, Cedula, Cuarto) VALUES (%2$s, '%3$s', '%4$s', '%5$s')",
+				USUARIO, reserva.getFechaI(), reserva.getFechaF(), reserva.getUsuario(), reserva.getCuarto());
 		System.out.println(sql);
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
@@ -154,7 +154,7 @@ public class DAOReserva {
 	public void updateReserva(ReservaVO reserva) throws SQLException, Exception {
 
 		StringBuilder sql = new StringBuilder();
-		sql.append(String.format("UPDATE RESERVAHOSTAL SET ", USUARIO));
+		sql.append(String.format("UPDATE RESERVA SET ", USUARIO));
 		sql.append(String.format("FECHAINICIO = '%2$s' AND FECHAFIN = '%3$s' AND CUARTO = '%4$s' AND USUARIO = '%5$s' ",
 				reserva.getFechaI(), reserva.getFechaF(), reserva.getCuarto()));
 
@@ -180,7 +180,7 @@ public class DAOReserva {
 	 */
 	public void deleteReserva(ReservaVO reserva) throws SQLException, Exception {
 
-		String sql = String.format("DELETE FROM RESERVAHOSTAL WHERE ID = %2$d", USUARIO, reserva.getId());
+		String sql = String.format("DELETE FROM RESERVA WHERE ID = %2$d", USUARIO, reserva.getId());
 
 		System.out.println(sql);
 
@@ -225,13 +225,13 @@ public class DAOReserva {
 
 	/**
 	 * Metodo que transforma el resultado obtenido de una consulta SQL (sobre la
-	 * tabla RESERVAHOSTAL) en una instancia de la clase ReservaVO.
+	 * tabla RESERVA) en una instancia de la clase ReservaVO.
 	 * 
 	 * @param resultSet
 	 *            ResultSet con la informacion de un reserva que se obtuvo de la
 	 *            base de datos.
 	 * @return ReservaVO cuyos atributos corresponden a los valores
-	 *         asociados a un registro particular de la tabla RESERVAHOSTAL.
+	 *         asociados a un registro particular de la tabla RESERVA.
 	 * @throws SQLException
 	 *             Si existe algun problema al extraer la informacion del
 	 *             ResultSet.

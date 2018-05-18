@@ -187,24 +187,24 @@ public class TransactionManager {
 	}
 
 	/**
-	 * Metodo que modela la transaccion que retorna todos los reservases
+	 * Metodo que modela la transaccion que retorna todos los reservas
 	 * de la base de datos. <br/>
 	 * 
-	 * @return List<ReservaVO> - Lista de reservases que contiene el
+	 * @return List<ReservaVO> - Lista de reservas que contiene el
 	 *         resultado de la consulta.
 	 * @throws Exception
 	 *             - Cualquier error que se genere durante la transaccion
 	 */
-	public List<ReservaVO> getReservases() throws Exception {
+	public List<ReservaVO> getReservas() throws Exception {
 		DAOReserva daoReserva = new DAOReserva();
-		List<ReservaVO> reservases;
+		List<ReservaVO> reservas;
 		try {
 			this.conn = darConexion();
 			daoReserva.setConn(conn);
 
 			// Por simplicidad, solamente se obtienen los primeros 50 resultados
 			// de la consulta
-			reservases = daoReserva.getReservases();
+			reservas = daoReserva.getReservas();
 		} catch (SQLException sqlException) {
 			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
 			sqlException.printStackTrace();
@@ -225,7 +225,7 @@ public class TransactionManager {
 				throw exception;
 			}
 		}
-		return reservases;
+		return reservas;
 	}
 
 	/**

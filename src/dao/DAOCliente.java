@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import vos.ClienteVO;
+import vos.FechasVO;
 
 public class DAOCliente {
 	// ----------------------------------------------------------------------------------------------------------------------------------
@@ -185,14 +186,66 @@ public class DAOCliente {
 		prepStmt.executeQuery();
 	}
 
-	public List<ClienteVO> getCosumoPorFecha(String fechaI, String fechaF) {
+	public List<ClienteVO> getCosumoPorFecha(FechasVO fechas) {
 		List<ClienteVO> clientes = new ArrayList<>();
-
+		String fechaI = fechas.getFechaI();
+		String fechaF = fechas.getFechaF();
+		String cliente = fechas.getCliente();
+		String tipo = fechas.getTipo();
 		try {
+			String cons = "";
+			if(cliente != null){
+				cons = "Order by Persona."+cliente;
+			}
 			String sql = String.format(
-					"Select * From Cliente Where cedula in (Select Cedula From Reserva Where FECHAINICIO Between %1$s AND %2$s Or FECHAFIN Between %1$s AND '%2$s);",
-					fechaI, fechaF);
+					"Select * "
+					+ "From Cliente inner join Persona "
+					+ "on Cliente.CEDULA = Persona.CEDULA "
+					+ "Where Cliente.CEDULA in (Select Cedula "
+					+ "From Reserva inner join Alojamiento "
+					+ "On Reserva.CUARTO = Alojamiento.ID "
+					+ "Where (FECHAINICIO Between '%1$s' AND '%2$s' "
+					+ "Or FECHAFIN Between '%1$s' AND '%2$s') "
+					+ "AND Alojamiento.DTYPE = '%3$s') "+cons,
+					fechaI, fechaF,tipo);
+			System.out.println(sql);
+			PreparedStatement prepStmt;
+			prepStmt = conn.prepareStatement(sql);
+			recursos.add(prepStmt);
+			ResultSet rs = prepStmt.executeQuery();
 
+			while (rs.next()) {
+				clientes.add(convertResultSetToCliente(rs));
+			}
+			return clientes;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public List<ClienteVO> getCosumoPorFechaNo(FechasVO fechas) {
+		List<ClienteVO> clientes = new ArrayList<>();
+		String fechaI = fechas.getFechaI();
+		String fechaF = fechas.getFechaF();
+		String cliente = fechas.getCliente();
+		String tipo = fechas.getTipo();
+		try {
+			String cons = "";
+			if(cliente != null){
+				cons = "Order by Persona."+cliente;
+			}
+			String sql = String.format(
+					"Select * "
+					+ "From Cliente inner join Persona "
+					+ "on Cliente.CEDULA = Persona.CEDULA "
+					+ "Where Cliente.CEDULA not in (Select Cedula "
+					+ "From Reserva inner join Alojamiento "
+					+ "On Reserva.CUARTO = Alojamiento.ID "
+					+ "Where (FECHAINICIO Between '%1$s' AND '%2$s' "
+					+ "Or FECHAFIN Between '%1$s' AND '%2$s') "
+					+ "AND Alojamiento.DTYPE = '%3$s') "+cons,
+					fechaI, fechaF,tipo);
 			PreparedStatement prepStmt;
 			prepStmt = conn.prepareStatement(sql);
 			recursos.add(prepStmt);

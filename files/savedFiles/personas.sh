@@ -1,0 +1,1 @@
+sqlldr CONTROL=personas.ctl LOG=C:\Users\juandavid\OneDrive - Universidad de Los Andes\SISTRANS\REPOS\Iter1\isis2304-tutorial-arquitectura\files\logs\personas.log BAD=C:\Users\juandavid\OneDrive - Universidad de Los Andes\SISTRANS\REPOS\Iter1\isis2304-tutorial-arquitectura\files\badFiles\personas.bad skip=1   

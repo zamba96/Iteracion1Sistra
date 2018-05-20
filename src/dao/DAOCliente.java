@@ -260,6 +260,25 @@ public class DAOCliente {
 			return null;
 		}
 	}
+	
+	public List<ClienteVO> getBuenosClientes( ) {
+		List<ClienteVO> clientes = new ArrayList<>();
+		try {
+			String sql = String.format("");
+			PreparedStatement prepStmt;
+			prepStmt = conn.prepareStatement(sql);
+			recursos.add(prepStmt);
+			ResultSet rs = prepStmt.executeQuery();
+
+			while (rs.next()) {
+				clientes.add(convertResultSetToCliente(rs));
+			}
+			return clientes;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	// ----------------------------------------------------------------------------------------------------------------------------------
 	// METODOS AUXILIARES

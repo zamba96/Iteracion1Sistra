@@ -55,8 +55,7 @@ CREATE TABLE HotelRoom (
 	Jacuzzi number,
 	Sala number,
 	Cocina number,
-	Cable number,
-	Precio float,
+	Cable number
 	IDHOTEL INTEGER -- fk hotel
 	);
 

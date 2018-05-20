@@ -2,14 +2,12 @@ Select Cliente.Cedula, Persona.Nombre, Persona.ROL
 From Cliente
 Inner join Persona
 On Cliente.CEDULA = Persona.CEDULA
-where Cliente.cedula in (Select Cedula
-                 From Reserva
-                 inner join HOTELROOM
-                 On Reserva.Cuarto = HotelRoom.ID
-                 Group by Tipo,Reserva.CEDULA
-                 Having count(*)=1
-                        and tipo = 'Suite');
-         
+where Cliente.cedula in (Select Reserva.CEDULA
+                         From Reserva
+                         inner join HOTELROOM
+                         On Reserva.Cuarto = HotelRoom.ID
+                         Group by RESERVA.CEDULA, HOTELROOM.TIPO
+                         Having HOTELROOM.TIPO = 'Suite');
 
 Select Cliente.Cedula, Persona.Nombre, Persona.ROL
 From Cliente
@@ -21,9 +19,34 @@ Where Cliente.Cedula in (Select Cedula
                          Having AVG(Precio) > 80000);
 
 
-select r.cedula
+(select r.cedula
 from Reserva r
 where r.fechainicio >= trunc(sysdate, 'YYYY') - interval '10' year and
       r.fechainicio < trunc(sysdate, 'YYYY')
 group by r.cedula
-having count(distinct trunc(r.fechainicio, 'MM')) = 12;
+having count(distinct trunc(r.fechainicio, 'MM')) = 12);
+-----
+
+
+Select Cliente.Cedula, Persona.Nombre, Persona.ROL
+From Cliente
+Inner join Persona
+On Cliente.CEDULA = Persona.CEDULA
+where Cliente.cedula in((Select Cedula
+                        From Reserva
+                        inner join HOTELROOM
+                        On Reserva.Cuarto = HotelRoom.ID
+                        Group by Tipo,Reserva.CEDULA
+                        Having tipo = 'Suite')
+                        Union
+                        (Select Cedula
+                        From Reserva
+                        Group by CEDULA
+                        Having AVG(Precio) > 80000)
+                        Union
+                        (select r.cedula
+                        from Reserva r
+                        where r.fechainicio >= trunc(sysdate, 'YYYY') - interval '10' year and
+                            r.fechainicio < trunc(sysdate, 'YYYY')
+                        group by r.cedula
+                        having count(distinct trunc(r.fechainicio, 'MM')) = 12));

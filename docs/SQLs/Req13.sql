@@ -6,8 +6,8 @@ where Cliente.cedula in (Select Reserva.CEDULA
                          From Reserva
                          inner join HOTELROOM
                          On Reserva.Cuarto = HotelRoom.ID
-                         Group by RESERVA.CEDULA, HOTELROOM.TIPO
-                         Having HOTELROOM.TIPO = 'Suite');
+                         Group by RESERVA.CEDULA
+                         Having 9 < count(case Tipo When 'Suite' then 1 else 0 end));
 
 Select Cliente.Cedula, Persona.Nombre, Persona.ROL
 From Cliente
@@ -28,16 +28,16 @@ having count(distinct trunc(r.fechainicio, 'MM')) = 12);
 -----
 
 
-Select Cliente.Cedula, Persona.Nombre, Persona.ROL
+Select Cliente.Cedula, Persona.Nombre, Persona.ROL,Persona.FECHANACIMIENTO
 From Cliente
 Inner join Persona
 On Cliente.CEDULA = Persona.CEDULA
-where Cliente.cedula in((Select Cedula
+where Cliente.cedula in((Select Reserva.CEDULA
                         From Reserva
                         inner join HOTELROOM
                         On Reserva.Cuarto = HotelRoom.ID
-                        Group by Tipo,Reserva.CEDULA
-                        Having tipo = 'Suite')
+                        Group by RESERVA.CEDULA
+                        Having 9 < count(case Tipo When 'Suite' then 1 else 0 end))
                         Union
                         (Select Cedula
                         From Reserva

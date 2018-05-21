@@ -16,6 +16,7 @@ import java.util.Properties;
 
 import dao.DAOHotelRoom;
 import dao.DAOInmueble;
+import dao.DAOOperador;
 import dao.DAOReserva;
 import dao.DAOReservaMasiva;
 import dao.DAOCliente;
@@ -23,6 +24,7 @@ import dao.DAOVecinoRoom;
 import vos.ClienteVO;
 import vos.FechasVO;
 import vos.HotelRoomVO;
+import vos.MejoresVO;
 import vos.ReservaVO;
 import vos.ReservaMasivaVO;
 import vos.VecinoRoomVO;
@@ -648,6 +650,49 @@ public class TransactionManager {
 			// de la consulta
 			
 			reservas = daoCliente.getBuenosClientes();
+		} catch (SQLException sqlException) {
+			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
+			sqlException.printStackTrace();
+			throw sqlException;
+		} catch (Exception exception) {
+			System.err.println("[EXCEPTION] General Exception:" + exception.getMessage());
+			exception.printStackTrace();
+			throw exception;
+		} finally {
+			try {
+				daoCliente.cerrarRecursos();
+				if (this.conn != null) {
+					this.conn.close();
+				}
+			} catch (SQLException exception) {
+				System.err.println("[EXCEPTION] SQLException While Closing Resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return reservas;
+	}
+	
+	/**
+	 * Metodo que modela la transaccion que retorna todos los reservas
+	 * de la base de datos. <br/>
+	 * 
+	 * @return List<ReservaVO> - Lista de reservas que contiene el
+	 *         resultado de la consulta.
+	 * @throws Exception
+	 *             - Cualquier error que se genere durante la transaccion
+	 */
+	public List<MejoresVO> getMejoresOperadores( ) throws Exception {
+		DAOOperador daoCliente = new DAOOperador();
+		List<MejoresVO> reservas;
+		try {
+			this.conn = darConexion();
+			daoCliente.setConn(conn);
+
+			// Por simplicidad, solamente se obtienen los primeros 50 resultados
+			// de la consulta
+			
+			reservas = daoCliente.getMejoresOperadores();
 		} catch (SQLException sqlException) {
 			System.err.println("[EXCEPTION] SQLException:" + sqlException.getMessage());
 			sqlException.printStackTrace();
